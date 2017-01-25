@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Fujitsu.New;
 
 namespace NCSU
 {
-    class AsdfClass2
+    class AsdfClass
     {
         public void asdf()
         {
