@@ -10,7 +10,7 @@ public class ModelIdentifier : Attribute
     // Private fields.
     private string name;
 
-    // This constructor defines two required parameters: name and level.
+    // This constructor defines two required parameters: name
 
     public ModelIdentifier(string name)
     {
@@ -19,7 +19,6 @@ public class ModelIdentifier : Attribute
 
     // Define Name property.
     // This is a read-only attribute.
-
     public virtual string Name
     {
         get { return name; }
