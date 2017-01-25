@@ -2,3 +2,4 @@ C:\Users\Christopher Lupo\Documents\Visual Studio 2015\Projects\2017SpringTeam25
 C:\Users\Christopher Lupo\Documents\Visual Studio 2015\Projects\2017SpringTeam25\FujitsuSDKOld\bin\Debug\FujitsuSDKOld.pdb
 C:\Users\Christopher Lupo\Documents\Visual Studio 2015\Projects\2017SpringTeam25\FujitsuSDKOld\obj\Debug\FujitsuSDKOld.dll
 C:\Users\Christopher Lupo\Documents\Visual Studio 2015\Projects\2017SpringTeam25\FujitsuSDKOld\obj\Debug\FujitsuSDKOld.pdb
+C:\Users\Christopher Lupo\Documents\Visual Studio 2015\Projects\2017SpringTeam25\FujitsuSDKOld\obj\Debug\FujitsuSDKOld.csprojResolveAssemblyReference.cache

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FujitsuSDKNew", "FujitsuSDK
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customer", "Customer\Customer.csproj", "{E19F979A-366B-4195-974F-DC54EF1A6645}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NamespaceRefactorer", "NamespaceRefactorer\NamespaceRefactorer.csproj", "{F7E6C29D-5156-42E1-9100-E836455DF26D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,8 +31,15 @@ Global
 		{E19F979A-366B-4195-974F-DC54EF1A6645}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E19F979A-366B-4195-974F-DC54EF1A6645}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E19F979A-366B-4195-974F-DC54EF1A6645}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7E6C29D-5156-42E1-9100-E836455DF26D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7E6C29D-5156-42E1-9100-E836455DF26D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7E6C29D-5156-42E1-9100-E836455DF26D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7E6C29D-5156-42E1-9100-E836455DF26D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F7E6C29D-5156-42E1-9100-E836455DF26D} = {AA6D0B86-96FF-4212-A871-85AAC38BA9A8}
 	EndGlobalSection
 EndGlobal

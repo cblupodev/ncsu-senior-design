@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Asdf")]
+[assembly: AssemblyTitle("NamespaceRefactorer")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Asdf")]
+[assembly: AssemblyProduct("NamespaceRefactorer")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("bbc1bfe5-356a-4a5e-86c8-15cd3cac99e6")]
+[assembly: Guid("f7e6c29d-5156-42e1-9100-e836455df26d")]
 
 // Version information for an assembly consists of the following four values:
 //

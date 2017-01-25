@@ -51,6 +51,16 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FujitsuSDKNew\FujitsuSDKNew.csproj">
+      <Project>{1d33cd7b-13ea-4534-83e9-40d07478eaad}</Project>
+      <Name>FujitsuSDKNew</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FujitsuSDKOld\FujitsuSDKOld.csproj">
+      <Project>{2b93607f-5dc6-493c-a62a-8d5b3f813ef4}</Project>
+      <Name>FujitsuSDKOld</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
