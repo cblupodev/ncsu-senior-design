@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 // this is an assembly https://youtu.be/NRAXHoXT0IM?t=1705
 
-namespace Fujitsu.Old
+namespace FujitsuSDKOld
 {
-    class Sample
+    public class Sample
     {
         // do nothing
     }

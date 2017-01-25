@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Fujitsu.New
 {
-    class Sample
+    public class Sample
     {
     }
 }
