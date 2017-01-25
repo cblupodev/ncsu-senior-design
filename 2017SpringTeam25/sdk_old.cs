@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _2017SpringTeam25
+namespace Fujitsu.Old
 {
-    class sdk_old
+    class Sample
     {
+        // do nothing
     }
 }

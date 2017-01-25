@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _2017SpringTeam25
+namespace Fujitsu.New
 {
-    class sdk_new
+    class Sample
     {
     }
 }

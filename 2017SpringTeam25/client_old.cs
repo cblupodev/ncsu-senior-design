@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Fujitsu.Old;
 
-namespace _2017SpringTeam25
+namespace NCSU
 {
-    class client_old
+    class AsdfClass
     {
+        public void asdf()
+        {
+            var x = new Sample();
+        }
     }
 }
