@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2017SpringTeam25", "2017SpringTeam25\2017SpringTeam25.csproj", "{637390BB-E993-4206-A43D-8806E2B10A4F}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AA6D0B86-96FF-4212-A871-85AAC38BA9A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FujitsuClint", "FujitsuClint\FujitsuClint.csproj", "{071D5269-1EF3-4A7E-A22D-BC2614A1425E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FujitsuClient", "FujitsuClint\FujitsuClient.csproj", "{071D5269-1EF3-4A7E-A22D-BC2614A1425E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FujitsuSDKOld", "ClassLibrary1\FujitsuSDKOld.csproj", "{B70ED87A-F3F6-4913-8ED4-7C7D243FDAA2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FujitsuSDKNew", "ClassLibrary2\FujitsuSDKNew.csproj", "{7B842302-3EDF-4C74-86B4-8470C558EB41}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,14 +17,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{637390BB-E993-4206-A43D-8806E2B10A4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{637390BB-E993-4206-A43D-8806E2B10A4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{637390BB-E993-4206-A43D-8806E2B10A4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{637390BB-E993-4206-A43D-8806E2B10A4F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{071D5269-1EF3-4A7E-A22D-BC2614A1425E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{071D5269-1EF3-4A7E-A22D-BC2614A1425E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{071D5269-1EF3-4A7E-A22D-BC2614A1425E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{071D5269-1EF3-4A7E-A22D-BC2614A1425E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B70ED87A-F3F6-4913-8ED4-7C7D243FDAA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B70ED87A-F3F6-4913-8ED4-7C7D243FDAA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B70ED87A-F3F6-4913-8ED4-7C7D243FDAA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B70ED87A-F3F6-4913-8ED4-7C7D243FDAA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B842302-3EDF-4C74-86B4-8470C558EB41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B842302-3EDF-4C74-86B4-8470C558EB41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B842302-3EDF-4C74-86B4-8470C558EB41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B842302-3EDF-4C74-86B4-8470C558EB41}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
