@@ -14,8 +14,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FujitsuSDKNew", "FujitsuSDK
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customer", "Customer\Customer.csproj", "{E19F979A-366B-4195-974F-DC54EF1A6645}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication1", "ConsoleApplication1\ConsoleApplication1.csproj", "{77616B3E-487A-4C2C-90F7-5D3CBF201E4A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,12 +46,6 @@ Global
 		{E19F979A-366B-4195-974F-DC54EF1A6645}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E19F979A-366B-4195-974F-DC54EF1A6645}.Release|x86.ActiveCfg = Release|Any CPU
 		{E19F979A-366B-4195-974F-DC54EF1A6645}.Release|x86.Build.0 = Release|Any CPU
-		{77616B3E-487A-4C2C-90F7-5D3CBF201E4A}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{77616B3E-487A-4C2C-90F7-5D3CBF201E4A}.Debug|x86.ActiveCfg = Debug|x86
-		{77616B3E-487A-4C2C-90F7-5D3CBF201E4A}.Debug|x86.Build.0 = Debug|x86
-		{77616B3E-487A-4C2C-90F7-5D3CBF201E4A}.Release|Any CPU.ActiveCfg = Release|x86
-		{77616B3E-487A-4C2C-90F7-5D3CBF201E4A}.Release|x86.ActiveCfg = Release|x86
-		{77616B3E-487A-4C2C-90F7-5D3CBF201E4A}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
