@@ -66,7 +66,7 @@ namespace NamespaceRefactorer
                                 var newUsing = oldUsing.WithName(name2);
                                 root = root.ReplaceNode(oldUsing, newUsing);
 
-                                File.WriteAllText(path, root.ToFullString());
+                                File.WriteAllText(path, root.ToFullString()); // http://stackoverflow.com/questions/18295837/c-sharp-roslyn-api-reading-a-cs-file-updating-a-class-writing-back-to-cs-fi
                             }
                         }
                         try
