@@ -1,5 +1,0 @@
-C:\Users\Christopher Lupo\documents\visual studio 2015\Projects\2017SpringTeam25\FujitsuSDKNew\bin\Release\FujitsuSDKNew.dll
-C:\Users\Christopher Lupo\documents\visual studio 2015\Projects\2017SpringTeam25\FujitsuSDKNew\bin\Release\FujitsuSDKNew.pdb
-C:\Users\Christopher Lupo\documents\visual studio 2015\Projects\2017SpringTeam25\FujitsuSDKNew\obj\Release\FujitsuSDKNew.csprojResolveAssemblyReference.cache
-C:\Users\Christopher Lupo\documents\visual studio 2015\Projects\2017SpringTeam25\FujitsuSDKNew\obj\Release\FujitsuSDKNew.dll
-C:\Users\Christopher Lupo\documents\visual studio 2015\Projects\2017SpringTeam25\FujitsuSDKNew\obj\Release\FujitsuSDKNew.pdb

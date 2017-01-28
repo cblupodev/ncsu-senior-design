@@ -1,4 +1,0 @@
-C:\Users\Christopher Lupo\documents\visual studio 2015\Projects\2017SpringTeam25\FujitsuSDKOld\bin\Release\FujitsuSDKOld.dll
-C:\Users\Christopher Lupo\documents\visual studio 2015\Projects\2017SpringTeam25\FujitsuSDKOld\bin\Release\FujitsuSDKOld.pdb
-C:\Users\Christopher Lupo\documents\visual studio 2015\Projects\2017SpringTeam25\FujitsuSDKOld\obj\Release\FujitsuSDKOld.dll
-C:\Users\Christopher Lupo\documents\visual studio 2015\Projects\2017SpringTeam25\FujitsuSDKOld\obj\Release\FujitsuSDKOld.pdb
