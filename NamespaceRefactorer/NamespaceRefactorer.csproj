@@ -91,6 +91,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileTransform.cs" />
+    <Compile Include="Mapping.cs" />
+    <Compile Include="ModelIdentifier.cs" />
     <Compile Include="ProjectTransform.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

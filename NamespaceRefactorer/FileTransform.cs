@@ -21,9 +21,10 @@ namespace NamespaceRefactorer
         private CompilationUnitSyntax root;
         private SemanticModel semanticModel;
         private string clientFilePath;
-        private IEnumerable<string> oldSDKUsings;
+        private object customAttributeName = "ModelIdentifier";
 
-        // param 1 = the path to the old sdk dll with the custom attributes
+        // param 0 = the path to the old sdk dll with the custom attributes
+        // param 1 = the path to tne new sdk dll with the custom attributes
         // param 2 = the path to the old client code that you want to transform
         // http://stackoverflow.com/questions/4791140/how-do-i-start-a-program-with-arguments-when-debugging
         static void Main(string[] args)
@@ -34,30 +35,38 @@ namespace NamespaceRefactorer
 
         private void run(string[] args)
         {
-            findCustomerAttributes(args[0]);
-            loadVariables(args[1]);
-            findOldUsingsAndReplacIfCertainClassesFound();
+            findCustomerAttributes(args[0], args[1]);
+            loadVariables(args[2]);
+
+            string[] mockOldUsings = { "FujitsuSDKOld" }; // magic
+
+            findOldUsingsAndReplacIfCertainClassesFound(mockOldUsings);
         }
 
         // search for using statements with the old sdk. Then if they are found then look for classes that coresponded to the custom attributes
         // if classes are found then replace the old using statement with the new one
-        private void findOldUsingsAndReplacIfCertainClassesFound()
+        // oldSDKUsings is a list of the old sdk using statements
+        private void findOldUsingsAndReplacIfCertainClassesFound(IEnumerable<string> oldSDKUsings)
         {
-            foreach (var usingDirective in root.Usings)
+            foreach (var usingDirective in root.Usings) // iterate over each using statement
             {
-                var name = semanticModel.GetSymbolInfo(usingDirective.Name);
+                var name = semanticModel.GetSymbolInfo(usingDirective.Name); // https://github.com/dotnet/roslyn/wiki/Getting-Started-C%23-Semantic-Analysis
                 if (name.Symbol == null) // I don't know why I have to do this. I don't know why our namespace is diffrent than the System ones, magic
                 {
+                    // get the text for the using
                     IdentifierNameSyntax ins = (IdentifierNameSyntax)usingDirective.Name;
                     var valueText = ins.Identifier.ValueText;
-                    foreach (var oldUse in oldSDKUsings)
+                    foreach (var oldUse in oldSDKUsings) // iterate over the old usings, provided as the input
                     {
+                        // if an old using is located in the file then seek for object creations that use classes that are tagged
                         if (valueText.Equals(oldUse))
                         {
                             IEnumerable<ObjectCreationExpressionSyntax> objectCreations = root.DescendantNodes().OfType<ObjectCreationExpressionSyntax>();
-                            foreach (var item in objectCreations)
+                            foreach (ObjectCreationExpressionSyntax item in objectCreations) // iterate over all object creations in the file
                             {
-
+                                var semanticObjCreation = semanticModel.GetSymbolInfo(item.Type);
+                                //semanticObcCreation
+                                // if find a class that was tagged then replace the old using with the new one
                                 var descendentTokens = item.DescendantTokens().OfType<SyntaxToken>(); // TODO use the semantic model instead of this way
                                 if (descendentTokens.ElementAt(1).Value.Equals("Sample")) // [1] gets the identifier syntax, magic
                                 {
@@ -94,6 +103,7 @@ namespace NamespaceRefactorer
         {
             verifyFileExists(clientFilePath);
             SyntaxTree tree;
+            this.clientFilePath = clientFilePath;
 
             using (var stream = File.OpenRead(clientFilePath))
             {
@@ -106,28 +116,62 @@ namespace NamespaceRefactorer
             var compilation = CSharpCompilation.Create("client_old").AddReferences(
                                                     MetadataReference.CreateFromFile(
                                                         typeof(object).Assembly.Location))
-                                                    .AddSyntaxTrees(tree);
-
+                                                    .AddSyntaxTrees(tree);            
             semanticModel = compilation.GetSemanticModel(tree);
         }
 
         // return array of custom atribute strings that exist in the file
-        private string[] findCustomerAttributes(string dllPath)
+        private List<Mapping> findCustomerAttributes(string oldDllPath, string newDllPath)
         {
-            verifyFileExists(dllPath);
-            var assem = Assembly.LoadFile(@"C:\Users\Christopher Lupo\Documents\Visual Studio 2015\Projects\2017SpringTeam25\FujitsuSDKOld\bin\Debug\FujitsuSDKOld.dll"); // the .dll file
+            List<Mapping> mappings = new List<Mapping>();
 
-            var types = assem.GetTypes(); // the types will tell you if there are custom data attributes           
+            verifyFileExists(oldDllPath);
+            verifyFileExists(newDllPath);
+            var oldassem = Assembly.LoadFile(oldDllPath);
+            var newassem = Assembly.LoadFile(newDllPath);
 
-            // TODO return array of custom atributes that exist in the file
-            return null;
+            var types = oldassem.GetTypes(); // the types will tell you if there are custom data attributes
+            foreach(var type in types) // itereate over old dll to find custom attributes
+            {
+                foreach(var attr in type.CustomAttributes)
+                {                   
+                    if (attr.AttributeType.Name.Equals(customAttributeName))
+                    {
+                        Mapping mapping = new Mapping();
+                        mapping.ModelIdentifierGUID = (string)attr.ConstructorArguments.First().Value;
+                        mapping.ClassName = type.Name;
+                        mapping.OldNamespace = type.Namespace;
+                        mappings.Add(mapping);
+                    }
+                }
+            }
+
+            types = newassem.GetTypes();
+            foreach(var type in types) // iterate new dll to find the custom attribute mappings
+            {
+                foreach(var attr in type.CustomAttributes)
+                {
+                    if (attr.AttributeType.Name.Equals(customAttributeName))
+                    {
+                        foreach (var mapping in mappings)
+                        {
+                            if (mapping.ModelIdentifierGUID.Equals((string)attr.ConstructorArguments.First().Value)) // if an existing GUID equals the guid then associate the namespace to the old mapping
+                            {
+                                mapping.NewNamespace = type.Namespace; // assoicate the model identifier to the new namespace
+                            }
+                        }
+                    }
+                }
+            }
+
+            return mappings;
         }
 
         private void verifyFileExists(string filePath)
         {
             if (!File.Exists(filePath))
             {
-                throw new FileNotFoundException("file doesn't exist: {0}", filePath);
+                throw new FileNotFoundException("file doesn't exist", filePath);
             }
         }
     }
