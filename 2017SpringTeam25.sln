@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customer", "Customer\Custom
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NamespaceRefactorer", "NamespaceRefactorer\NamespaceRefactorer.csproj", "{D023C7EE-09CE-42B4-BCC6-4EC0383316DE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WorkingSample", "WorkingSample", "{74492AA4-127B-4B9A-A7A0-C7E0A3CE4FB7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,5 +56,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2B93607F-5DC6-493C-A62A-8D5B3F813EF4} = {74492AA4-127B-4B9A-A7A0-C7E0A3CE4FB7}
+		{1D33CD7B-13EA-4534-83E9-40D07478EAAD} = {74492AA4-127B-4B9A-A7A0-C7E0A3CE4FB7}
+		{E19F979A-366B-4195-974F-DC54EF1A6645} = {74492AA4-127B-4B9A-A7A0-C7E0A3CE4FB7}
 	EndGlobalSection
 EndGlobal
