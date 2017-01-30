@@ -21,26 +21,27 @@ namespace NamespaceRefactorer
         private CompilationUnitSyntax root;
         private SemanticModel semanticModel;
         private string clientFilePath;
-        private object customAttributeName = "ModelIdentifier";
+        private string fileName;
 
-        // param 0 = the path to the old sdk dll with the custom attributes
-        // param 1 = the path to tne new sdk dll with the custom attributes
-        // param 2 = the path to the old client code that you want to transform
-        // http://stackoverflow.com/questions/4791140/how-do-i-start-a-program-with-arguments-when-debugging
-        static void Main(string[] args)
+        public FileTransform(string fileName)
         {
-            FileTransform fileTransform = new FileTransform();
-            fileTransform.run(args);
-        }
+            Helper.verifyFileExists(clientFilePath);
+            SyntaxTree tree;
+            this.clientFilePath = fileName;
 
-        private void run(string[] args)
-        {
-            findCustomerAttributes(args[0], args[1]);
-            loadVariables(args[2]);
+            using (var stream = File.OpenRead(clientFilePath))
+            {
+                tree = CSharpSyntaxTree.ParseText(SourceText.From(stream), path: clientFilePath);
+            }
 
-            string[] mockOldUsings = { "FujitsuSDKOld" }; // magic
+            root = (CompilationUnitSyntax)tree.GetRoot();
 
-            findOldUsingsAndReplacIfCertainClassesFound(mockOldUsings);
+            // https://github.com/dotnet/roslyn/wiki/Getting-Started-C%23-Semantic-Analysis
+            var compilation = CSharpCompilation.Create("client_old").AddReferences(
+                                                    MetadataReference.CreateFromFile(
+                                                        typeof(object).Assembly.Location))
+                                                    .AddSyntaxTrees(tree);
+            semanticModel = compilation.GetSemanticModel(tree);
         }
 
         // search for using statements with the old sdk. Then if they are found then look for classes that coresponded to the custom attributes
@@ -89,90 +90,13 @@ namespace NamespaceRefactorer
 
         private void replaceOldUsingWithNew(UsingDirectiveSyntax usingDirective)
         {
-            NameSyntax name2 = IdentifierName("FujitsuSDKNew"); // Magic
+            NameSyntax mockName2 = IdentifierName("FujitsuSDKNew"); // Magic
 
             var oldUsing = usingDirective;
-            var newUsing = oldUsing.WithName(name2);
+            var newUsing = oldUsing.WithName(mockName2);
             root = root.ReplaceNode(oldUsing, newUsing);
 
             File.WriteAllText(clientFilePath, root.ToFullString()); // http://stackoverflow.com/questions/18295837/c-sharp-roslyn-api-reading-a-cs-file-updating-a-class-writing-back-to-cs-fi
-        }
-
-        // initialize the important roslyn variables
-        private void loadVariables(string clientFilePath)
-        {
-            verifyFileExists(clientFilePath);
-            SyntaxTree tree;
-            this.clientFilePath = clientFilePath;
-
-            using (var stream = File.OpenRead(clientFilePath))
-            {
-                tree = CSharpSyntaxTree.ParseText(SourceText.From(stream), path: clientFilePath);
-            }
-
-            root = (CompilationUnitSyntax)tree.GetRoot();
-
-            // https://github.com/dotnet/roslyn/wiki/Getting-Started-C%23-Semantic-Analysis
-            var compilation = CSharpCompilation.Create("client_old").AddReferences(
-                                                    MetadataReference.CreateFromFile(
-                                                        typeof(object).Assembly.Location))
-                                                    .AddSyntaxTrees(tree);            
-            semanticModel = compilation.GetSemanticModel(tree);
-        }
-
-        // return array of custom atribute strings that exist in the file
-        private List<Mapping> findCustomerAttributes(string oldDllPath, string newDllPath)
-        {
-            List<Mapping> mappings = new List<Mapping>();
-
-            verifyFileExists(oldDllPath);
-            verifyFileExists(newDllPath);
-            var oldassem = Assembly.LoadFile(oldDllPath);
-            var newassem = Assembly.LoadFile(newDllPath);
-
-            var types = oldassem.GetTypes(); // the types will tell you if there are custom data attributes
-            foreach(var type in types) // itereate over old dll to find custom attributes
-            {
-                foreach(var attr in type.CustomAttributes)
-                {                   
-                    if (attr.AttributeType.Name.Equals(customAttributeName))
-                    {
-                        Mapping mapping = new Mapping();
-                        mapping.ModelIdentifierGUID = (string)attr.ConstructorArguments.First().Value;
-                        mapping.ClassName = type.Name;
-                        mapping.OldNamespace = type.Namespace;
-                        mappings.Add(mapping);
-                    }
-                }
-            }
-
-            types = newassem.GetTypes();
-            foreach(var type in types) // iterate new dll to find the custom attribute mappings
-            {
-                foreach(var attr in type.CustomAttributes)
-                {
-                    if (attr.AttributeType.Name.Equals(customAttributeName))
-                    {
-                        foreach (var mapping in mappings)
-                        {
-                            if (mapping.ModelIdentifierGUID.Equals((string)attr.ConstructorArguments.First().Value)) // if an existing GUID equals the guid then associate the namespace to the old mapping
-                            {
-                                mapping.NewNamespace = type.Namespace; // assoicate the model identifier to the new namespace
-                            }
-                        }
-                    }
-                }
-            }
-
-            return mappings;
-        }
-
-        private void verifyFileExists(string filePath)
-        {
-            if (!File.Exists(filePath))
-            {
-                throw new FileNotFoundException("file doesn't exist", filePath);
-            }
         }
     }
 }
