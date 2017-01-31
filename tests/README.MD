@@ -18,3 +18,6 @@ There is no difference between the SDK versions.
 
 ###oldConflicts
 Client code has a class name matching a class name in the old SDK.
+
+###unused
+Client code does not use the SDK.  Tests that we're not making assumptions about a first element existing.
