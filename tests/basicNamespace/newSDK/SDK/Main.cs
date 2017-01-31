@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace newNameSpace
+namespace NewNameSpace
 {
 
     [ModelIdentifier("00000000-0000-4000-8000-00000001")]

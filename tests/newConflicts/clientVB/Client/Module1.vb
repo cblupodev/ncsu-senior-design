@@ -1,6 +1,6 @@
 ﻿Imports SDK
 Module Module1
-    Class test1
+    Class Change1
 
     End Class
     Sub Main()
