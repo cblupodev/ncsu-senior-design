@@ -7,7 +7,7 @@ using SDK;
 
 namespace Client
 {
-    class test1
+    class Change1
     {
 
     }
