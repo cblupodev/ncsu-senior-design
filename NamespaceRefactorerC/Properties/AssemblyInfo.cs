@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CreateMappingsTests")]
+[assembly: AssemblyTitle("NamespaceRefactorerC")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("CreateMappingsTests")]
+[assembly: AssemblyProduct("NamespaceRefactorerC")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("bec3e167-31bb-47c9-a661-1896752228a6")]
+[assembly: Guid("5c2e2338-e81a-4223-b26b-bedd64b2df88")]
 
 // Version information for an assembly consists of the following four values:
 //
