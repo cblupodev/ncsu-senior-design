@@ -90,12 +90,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ReadAssemblies\BuildSDKMappings.cs" />
-    <Compile Include="TranformClient\FileTransform.cs" />
     <Compile Include="Helper.cs" />
-    <Compile Include="ReadAssemblies\Mapping.cs" />
-    <Compile Include="ReadAssemblies\ModelIdentifier.cs" />
-    <Compile Include="TranformClient\ProjectTransform.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

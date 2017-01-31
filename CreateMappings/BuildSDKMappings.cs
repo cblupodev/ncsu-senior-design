@@ -4,21 +4,29 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using NamespaceRefactorer;
 
 namespace NamespaceRefactorer
 {
-    class BuildSDKMappings
+    public class BuildSDKMappings
     {
+        // param 0 = old sdk dll file
+        // param 1 = new sdk dll file
+        public static void Main(string[] args)
+        {
+            BuildSDKMappings bsm = new BuildSDKMappings();
+            bsm.run(args[0], args[1]);
+        }
 
         private object customAttributeName = "ModelIdentifier";
 
-        public BuildSDKMappings(string oldSDK, string newSDK)
+        public void run(string oldSDK, string newSDK)
         {
             string[] mockOldUsings = { "FujitsuSDKOld" }; // magic
         }
 
         // return list of custom atribute strings that exist in the file
-        private List<Mapping> findCustomerAttributes(string oldDllPath, string newDllPath)
+        public List<Mapping> findCustomerAttributes(string oldDllPath, string newDllPath)
         {
             List<Mapping> mappings = new List<Mapping>();
 
@@ -34,10 +42,8 @@ namespace NamespaceRefactorer
                 {
                     if (attr.AttributeType.Name.Equals(customAttributeName))
                     {
-                        Mapping mapping = new Mapping();
-                        mapping.ModelIdentifierGUID = (string)attr.ConstructorArguments.First().Value;
-                        mapping.ClassName = type.Name;
-                        mapping.OldNamespace = type.Namespace;
+                        // Mapping mapping = new Mapping();
+                        Mapping mapping = new NamespaceRefactorer.Mapping(type.Namespace, (string)attr.ConstructorArguments.First().Value, type.Name);
                         mappings.Add(mapping);
                     }
                 }

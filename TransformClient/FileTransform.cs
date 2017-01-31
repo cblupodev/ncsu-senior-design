@@ -11,11 +11,12 @@ using System.IO;
 using System.Diagnostics;
 using System;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
+using NamespaceRefactorer;
 
 
 namespace NamespaceRefactorer
 {
-    class FileTransform
+    public class FileTransform
     {
 
         private CompilationUnitSyntax root;
@@ -47,7 +48,7 @@ namespace NamespaceRefactorer
         // search for using statements with the old sdk. Then if they are found then look for classes that coresponded to the custom attributes
         // if classes are found then replace the old using statement with the new one
         // oldSDKUsings is a list of the old sdk using statements
-        private void findOldUsingsAndReplacIfCertainClassesFound(IEnumerable<string> oldSDKUsings)
+        public void findOldUsingsAndReplacIfCertainClassesFound(IEnumerable<string> oldSDKUsings)
         {
             foreach (var usingDirective in root.Usings) // iterate over each using statement
             {
@@ -80,7 +81,6 @@ namespace NamespaceRefactorer
                 try
                 {
                     var systemSymbol = (INamespaceSymbol)name.Symbol;
-                    Debug.WriteLine(systemSymbol.Name);
                 }
                 catch (NullReferenceException)
                 {

@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace NamespaceRefactorer
 {
-    class Helper
+    public class Helper
     {
+        public static void Main(string[] args) { }
         public static void verifyFileExists(string filePath)
         {
             if (!File.Exists(filePath))

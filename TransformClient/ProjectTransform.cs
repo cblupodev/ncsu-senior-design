@@ -9,7 +9,7 @@ namespace NamespaceRefactorer
 {
     // param 0 = folder path
     // interacts with the entire project to run the refactorer
-    class ProjectTransform
+    public class ProjectTransform
     {
         // TODO launch the FileTransform from here
         // TODO put the Main method in here instead of the FileTransform
@@ -17,7 +17,6 @@ namespace NamespaceRefactorer
         {
             ProjectTransform projectTransform = new ProjectTransform();
             projectTransform.run(args);
-
         }
 
         // http://stackoverflow.com/questions/4791140/how-do-i-start-a-program-with-arguments-when-debugging
