@@ -10,8 +10,20 @@ Class name changes between versions.
 ###basicNamespace
 Root namespace changes between versions.
 
+###casting
+The client code casts to a class in the SDK.
+
+###extendsSDKClass
+The client code extends an SDK class.
+
 ###fullyQualified
 Client uses fully qualified name for SDK class (rather than using a 'using' statement).
+
+###fullyQualifiedModelIdentifier
+The ModelIdentifier in the new and old SDK uses the full path of the ModelIdentifier, rather than relying on using/namespace sharing.
+
+###instantiatesSDKClass
+The client creates a new instance of an SDK class.
 
 ###newConflicts
 Client code has class name matching a class name in the new SDK.
@@ -24,6 +36,9 @@ There is no difference between the SDK versions.
 
 ###oldConflicts
 Client code has a class name matching a class name in the old SDK.
+
+###typeof
+The client uses the typeof expression with an SDK class as the parameter.
 
 ###unused
 Client code does not use the SDK.  Tests that we're not making assumptions about a first element existing.
