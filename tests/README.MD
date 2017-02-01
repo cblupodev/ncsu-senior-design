@@ -1,6 +1,9 @@
 ###alias
 Client code uses alias to reference the SDK.
 
+###assemblyChange
+The name of the output assembly is changed between the SDK versions
+
 ###basic
 Class name changes between versions.
 
@@ -12,6 +15,9 @@ Client uses fully qualified name for SDK class (rather than using a 'using' stat
 
 ###newConflicts
 Client code has class name matching a class name in the new SDK.
+
+###nonRootUsing
+The client's "using SDK" statement is inside of the namespace block.  This test only applies to the C# client, the VB client only exists for consistency
 
 ###nothing
 There is no difference between the SDK versions.
