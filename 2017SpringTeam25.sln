@@ -11,13 +11,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FujitsuSDKNew", "FujitsuSDK
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customer", "Customer\Customer.csproj", "{E19F979A-366B-4195-974F-DC54EF1A6645}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WorkingSampleC", "WorkingSampleC", "{0F79F59B-0BAF-47D1-A2C5-CEDD9D41160A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WorkingSample", "WorkingSample", "{0F79F59B-0BAF-47D1-A2C5-CEDD9D41160A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateMappings", "CreateMappingsC\CreateMappings.csproj", "{1C52DF0C-67FD-4A54-9160-732FF0A5143F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NamespaceRefactorer", "NamespaceRefactorerC\NamespaceRefactorer.csproj", "{5C2E2338-E81A-4223-B26B-BEDD64B2DF88}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransformClient2", "TransformClient2\TransformClient2.csproj", "{7375D960-5EE1-4D1B-B668-7B2093E02B7A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateMappingsTests", "CreateMappingsTests1\CreateMappingsTests.csproj", "{29A68EDF-D5B4-4DAC-AE3E-3A01112BCF9B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,6 +75,14 @@ Global
 		{7375D960-5EE1-4D1B-B668-7B2093E02B7A}.Release|Any CPU.ActiveCfg = Release|x86
 		{7375D960-5EE1-4D1B-B668-7B2093E02B7A}.Release|x86.ActiveCfg = Release|x86
 		{7375D960-5EE1-4D1B-B668-7B2093E02B7A}.Release|x86.Build.0 = Release|x86
+		{29A68EDF-D5B4-4DAC-AE3E-3A01112BCF9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29A68EDF-D5B4-4DAC-AE3E-3A01112BCF9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29A68EDF-D5B4-4DAC-AE3E-3A01112BCF9B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{29A68EDF-D5B4-4DAC-AE3E-3A01112BCF9B}.Debug|x86.Build.0 = Debug|Any CPU
+		{29A68EDF-D5B4-4DAC-AE3E-3A01112BCF9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29A68EDF-D5B4-4DAC-AE3E-3A01112BCF9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29A68EDF-D5B4-4DAC-AE3E-3A01112BCF9B}.Release|x86.ActiveCfg = Release|Any CPU
+		{29A68EDF-D5B4-4DAC-AE3E-3A01112BCF9B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

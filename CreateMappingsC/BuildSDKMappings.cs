@@ -18,11 +18,12 @@ namespace NamespaceRefactorer
             bsm.run(args[0], args[1]);
         }
 
-        private object customAttributeName = "ModelIdentifier";
+        private const string customAttributeName = "ModelIdentifier";
 
         public void run(string oldSDK, string newSDK)
         {
             string[] mockOldUsings = { "FujitsuSDKOld" }; // magic
+            findCustomerAttributes(oldSDK, newSDK);
         }
 
         // return list of custom atribute strings that exist in the file
@@ -43,7 +44,7 @@ namespace NamespaceRefactorer
                     if (attr.AttributeType.Name.Equals(customAttributeName))
                     {
                         // Mapping mapping = new Mapping();
-                        Mapping mapping = new NamespaceRefactorer.Mapping(type.Namespace, (string)attr.ConstructorArguments.First().Value, type.Name);
+                        Mapping mapping = new Mapping(type.Namespace, (string)attr.ConstructorArguments.First().Value, type.Name);
                         mappings.Add(mapping);
                     }
                 }
@@ -61,6 +62,7 @@ namespace NamespaceRefactorer
                             if (mapping.ModelIdentifierGUID.Equals((string)attr.ConstructorArguments.First().Value)) // if an existing GUID equals the guid then associate the namespace to the old mapping
                             {
                                 mapping.NewNamespace = type.Namespace; // assoicate the model identifier to the new namespace
+                                mapping.NewClassName = type.Name; // assoicate the model identifier to the new class name
                             }
                         }
                     }
