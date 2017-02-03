@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransformClient2", "Transfo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateMappingsTests", "CreateMappingsTests1\CreateMappingsTests.csproj", "{29A68EDF-D5B4-4DAC-AE3E-3A01112BCF9B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject1", "UnitTestProject1\UnitTestProject1.csproj", "{92C6F12A-DE3E-4D59-A952-4D22753139E2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,14 @@ Global
 		{29A68EDF-D5B4-4DAC-AE3E-3A01112BCF9B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{29A68EDF-D5B4-4DAC-AE3E-3A01112BCF9B}.Release|x86.ActiveCfg = Release|Any CPU
 		{29A68EDF-D5B4-4DAC-AE3E-3A01112BCF9B}.Release|x86.Build.0 = Release|Any CPU
+		{92C6F12A-DE3E-4D59-A952-4D22753139E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92C6F12A-DE3E-4D59-A952-4D22753139E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92C6F12A-DE3E-4D59-A952-4D22753139E2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{92C6F12A-DE3E-4D59-A952-4D22753139E2}.Debug|x86.Build.0 = Debug|Any CPU
+		{92C6F12A-DE3E-4D59-A952-4D22753139E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92C6F12A-DE3E-4D59-A952-4D22753139E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92C6F12A-DE3E-4D59-A952-4D22753139E2}.Release|x86.ActiveCfg = Release|Any CPU
+		{92C6F12A-DE3E-4D59-A952-4D22753139E2}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
