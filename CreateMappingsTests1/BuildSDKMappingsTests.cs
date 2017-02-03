@@ -14,7 +14,7 @@ namespace NamespaceRefactorer.Tests
         [TestMethod()]
         public void findCustomerAttributesTest()
         {
-            BuildSDKMappings bsdkm = new BuildSDKMappings();
+            ReadFile bsdkm = new ReadFile();
             List<Mapping> mappingsExpected = new List<Mapping>();
             mappingsExpected.Add(new Mapping("SDK", "SDK", "00000000-0000-4000-8000-00000001", "Sample1", "Change1"));
             List<Mapping> mappingsActual = bsdkm.findCustomerAttributes("alias_old.dll", "alias_new.dll");
