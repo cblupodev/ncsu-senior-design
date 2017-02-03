@@ -22,6 +22,9 @@ The client code casts to a class in the SDK.
 ###extendsSDKClass
 The client code extends an SDK class.
 
+###extraLibrary
+The client code uses a dll file that's not from the SDK.
+
 ###fullyQualified
 Client uses fully qualified name for SDK class (rather than using a 'using' statement).
 
