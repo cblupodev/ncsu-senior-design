@@ -4,6 +4,12 @@ Client code uses alias to reference the SDK.
 ###assemblyChange
 The name of the output assembly is changed between the SDK versions
 
+###assemblyMerge
+The old SDK uses mutiple assemblies (dll files), but those are merged into a single assembly (dll file) in the new SDK.
+
+###assemblySplit
+The old SDK uses a single assembly (dll file), but that's split into two assemblies (dll files) in the new SDK.
+
 ###basic
 Class name changes between versions.
 
@@ -24,6 +30,9 @@ The ModelIdentifier in the new and old SDK uses the full path of the ModelIdenti
 
 ###instantiatesSDKClass
 The client creates a new instance of an SDK class.
+
+###multiAssembly
+The SDK uses multiple assemblies (dll files).
 
 ###newConflicts
 Client code has class name matching a class name in the new SDK.
