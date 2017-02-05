@@ -47,7 +47,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ReadFile.cs" />
-    <Compile Include="Mapping.cs" />
     <Compile Include="ModelIdentifier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReadProject.cs" />
@@ -56,6 +55,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DBConnector\DBConnector.csproj">
+      <Project>{fdf3cc16-26a0-47ce-a129-4a06f829db12}</Project>
+      <Name>DBConnector</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NamespaceRefactorerC\NamespaceRefactorer.csproj">
       <Project>{5c2e2338-e81a-4223-b26b-bedd64b2df88}</Project>
       <Name>NamespaceRefactorer</Name>

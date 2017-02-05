@@ -46,8 +46,8 @@ namespace DBConnector
             foreach (var q in query)
             {
                 Console.WriteLine(q.model_identifier);
-                Console.WriteLine(q.old_sdk);
-                Console.WriteLine(q.new_sdk);
+                Console.WriteLine(q.old_namespace);
+                Console.WriteLine(q.new_namespace);
                 Console.ReadLine();
             }
         }
