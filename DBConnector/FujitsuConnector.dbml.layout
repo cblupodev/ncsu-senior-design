@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="FujitsuConnector">
+  <DataContextMoniker Name="/FujitsuConnectorDataContext" />
+  <nestedChildShapes>
+    <classShape Id="2d9c75a9-a2ad-4466-aad9-6f63fcce9291" absoluteBounds="6.625, 0.5, 2, 1.3862939453125">
+      <DataClassMoniker Name="/FujitsuConnectorDataContext/sdk_mapping" />
+      <nestedChildShapes>
+        <elementListCompartment Id="add019a2-e551-430f-be2f-8da37804fa6a" absoluteBounds="6.64, 0.96, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="58de0bb2-a07d-454f-bc50-194357d4fdd7" absoluteBounds="3.375, 0.75, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/FujitsuConnectorDataContext/sdk" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e201a85f-6db0-42cc-acdd-15f518818b4e" absoluteBounds="3.3899999999999997, 1.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>
