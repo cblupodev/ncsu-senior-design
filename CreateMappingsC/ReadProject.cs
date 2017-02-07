@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DBConnector;
 
 namespace CreateMappings
 {
@@ -12,8 +13,16 @@ namespace CreateMappings
     // param 1 = new sdk dlls
     public class ReadProject
     {
+
+        public static string CustomAttributeName = "ModelIdentifier";
+
+        // key = model identifier
+        // value = mapping
+        // http://stackoverflow.com/questions/1273139/c-sharp-java-hashmap-equivalent
+        public static Dictionary<string, Mapping> Mappings = new Dictionary<string, Mapping>();
+
         // param 0 = folder for client project
-        // param 1 = fodler for new sdk
+        // param 1 = folder for new sdk
         public static void Main(string[] args)
         {
             ReadProject rp = new ReadProject();
@@ -24,14 +33,9 @@ namespace CreateMappings
         {
             readFolderDllFiles(clientFolderPath);
             readFolderDllFiles(newSDKFolderPath);
+
+            SDKMappingSQLConnector.GetInstance().SaveSDKMappings(Mappings.Values.ToList());
         }
-
-        public static string CustomAttributeName = "ModelIdentifier";
-
-        // key = model identifier
-        // value = mapping
-        // http://stackoverflow.com/questions/1273139/c-sharp-java-hashmap-equivalent
-        public static Dictionary<string, Mapping> Mappings = new Dictionary<string, Mapping>();
 
         // itereate over all the dll files in a folder
         // for each file ,find the custom attributes
