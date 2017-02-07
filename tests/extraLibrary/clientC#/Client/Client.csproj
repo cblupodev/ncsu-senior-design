@@ -34,11 +34,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="extraLibrary">
-      <HintPath>..\lib\extraLibrary.dll</HintPath>
+      <HintPath>..\libs\extraLibrary.dll</HintPath>
     </Reference>
     <Reference Include="SDK, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\SDK.dll</HintPath>
+      <HintPath>..\libs\SDK.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
