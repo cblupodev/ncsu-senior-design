@@ -160,5 +160,18 @@ namespace UnitTest.BlackBox
             testFolder = "nothing";
             RunTest();
         }
+
+
+        // this method exists so that we reference some dlls
+        // otherwise visual studio doesn't know that we need them
+        // and won't coppy them to the test directory
+        private static void DoNothing()
+        {
+            Action<Type> noop = _ => { };
+            // Microsoft.CodeAnalysis.CSharp
+            noop(typeof(Microsoft.CodeAnalysis.CSharp.CSharpCommandLineArguments));
+            // Microsoft.CodeAnalysis.CSharp.Workspaces
+            noop(typeof(Microsoft.CodeAnalysis.CSharp.Formatting.CSharpFormattingOptions));
+        }
     }
 }
