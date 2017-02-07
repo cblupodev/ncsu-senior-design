@@ -9,16 +9,21 @@ using Microsoft.CodeAnalysis;
 namespace UnitTest.BlackBox
 {
     [TestClass]
-    public abstract class BlackBoxTest
+    public class BlackBoxTest
     {
         // this must be deployed using the attribute
         // [DeploymentItem(test_folder)]
         // on the test method
-        public abstract string TestFolder
+        public string TestFolder
         {
-            get;
+            get
+            {
+                return testFolder;
+            }
         }
 
+
+        static string testFolder;
         static string pathToCreateMappings = @""; //TODO fill in
         static string pathToTransformClient = @""; //TODO fill in
 
@@ -146,6 +151,14 @@ namespace UnitTest.BlackBox
             Setup();
             RunProgram();
             VerifyResult();
+        }
+
+        [TestMethod]
+        [DeploymentItem("tests/nothing")]
+        public void TestNothing()
+        {
+            testFolder = "nothing";
+            RunTest();
         }
     }
 }
