@@ -154,7 +154,7 @@ namespace UnitTest.BlackBox
         }
 
         [TestMethod]
-        [DeploymentItem("tests/nothing")]
+        [DeploymentItem("tests/nothing","nothing")]
         public void TestNothing()
         {
             testFolder = "nothing";
