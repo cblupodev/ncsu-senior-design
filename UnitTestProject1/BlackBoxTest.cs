@@ -9,6 +9,10 @@ using Microsoft.CodeAnalysis;
 namespace UnitTest.BlackBox
 {
     [TestClass]
+    [DeploymentItem("Microsoft.CodeAnalysis.CSharp.dll")]
+    [DeploymentItem("Microsoft.CodeAnalysis.CSharp.Workspaces.dll")]
+    [DeploymentItem("Microsoft.CodeAnalysis.VisualBasic.dll")]
+    [DeploymentItem("Microsoft.CodeAnalysis.VisualBasic.Workspaces.dll")]
     public class BlackBoxTest
     {
         // this must be deployed using the attribute
@@ -33,6 +37,21 @@ namespace UnitTest.BlackBox
             if (File.Exists(proj.OutputFilePath))
                 File.Delete(proj.OutputFilePath);
             comp.Emit(proj.OutputFilePath);
+            var solnDir = new FileInfo(proj.FilePath).Directory.Parent;
+            var outDir = new FileInfo(proj.OutputFilePath).Directory;
+            foreach (MetadataReference reference in comp.ExternalReferences)
+            {
+                if (reference is PortableExecutableReference)
+                {
+                    var refPath = new FileInfo(((PortableExecutableReference)reference).FilePath);
+                    if ( refPath.Directory.FullName.StartsWith(solnDir.FullName))
+                    {
+                        // this reference is inside of the solution directory
+                        // so we probably need to include it in the output directory
+                        File.Copy(refPath.FullName, Path.Combine(outDir.FullName, refPath.Name), true);
+                    }
+                }
+            }
             return proj.OutputFilePath;
         }
         public IEnumerable<string> CompileSolution(string solnPath)
@@ -54,6 +73,7 @@ namespace UnitTest.BlackBox
             proc.StartInfo.FileName = result;
             proc.StartInfo.UseShellExecute = false;
             proc.StartInfo.RedirectStandardOutput = true;
+            proc.Start();
             var expectedOut = new StreamReader(expectedPath);
             while ( ! proc.StandardOutput.EndOfStream && ! expectedOut.EndOfStream)
             {
@@ -76,10 +96,12 @@ namespace UnitTest.BlackBox
             var toRemove = new LinkedList<string>();
             foreach (string dll in CompileSolution(Path.Combine(TestFolder, "oldSDK", "SDK.sln")))
             {
-                File.Copy(dll, Path.Combine(TestFolder, "clientC#", "libs"));
-                File.Copy(dll, Path.Combine(TestFolder, "clientVB", "libs"));
-                toRemove.AddLast(Path.Combine(TestFolder, "clientC#", "libs", Path.GetFileName(dll)));
-                toRemove.AddLast(Path.Combine(TestFolder, "clientVB", "libs", Path.GetFileName(dll)));
+                var csFile = Path.Combine(TestFolder, "clientC#", "libs", Path.GetFileName(dll));
+                var vbFile = Path.Combine(TestFolder, "clientVB", "libs", Path.GetFileName(dll));
+                File.Copy(dll, csFile);
+                File.Copy(dll, vbFile);
+                toRemove.AddLast(csFile);
+                toRemove.AddLast(vbFile);
             }
             dllsToRemove = toRemove;
         }
@@ -108,8 +130,8 @@ namespace UnitTest.BlackBox
 
             foreach (string dll in CompileSolution(Path.Combine(TestFolder, "newSDK", "SDK.sln")))
             {
-                File.Copy(dll, Path.Combine(TestFolder, "clientC#", "libs"));
-                File.Copy(dll, Path.Combine(TestFolder, "clientVB", "libs"));
+                File.Copy(dll, Path.Combine(TestFolder, "clientC#", "libs", Path.GetFileName(dll)));
+                File.Copy(dll, Path.Combine(TestFolder, "clientVB", "libs", Path.GetFileName(dll)));
             }
         }
 
@@ -120,11 +142,13 @@ namespace UnitTest.BlackBox
             createMapping.StartInfo.Arguments = ""; //TODO fill in
             createMapping.Start();
             createMapping.WaitForExit();
+            Assert.AreEqual(0, createMapping.ExitCode);
             var translateClient = new Process();
             translateClient.StartInfo.FileName = pathToTransformClient;
             translateClient.StartInfo.Arguments = ""; //TODO fill in
             translateClient.Start();
             translateClient.WaitForExit();
+            Assert.AreEqual(0, translateClient.ExitCode);
         }
 
         public virtual void VerifyResult()
@@ -160,18 +184,6 @@ namespace UnitTest.BlackBox
             testFolder = "nothing";
             RunTest();
         }
-
-
-        // this method exists so that we reference some dlls
-        // otherwise visual studio doesn't know that we need them
-        // and won't coppy them to the test directory
-        private static void DoNothing()
-        {
-            Action<Type> noop = _ => { };
-            // Microsoft.CodeAnalysis.CSharp
-            noop(typeof(Microsoft.CodeAnalysis.CSharp.CSharpCommandLineArguments));
-            // Microsoft.CodeAnalysis.CSharp.Workspaces
-            noop(typeof(Microsoft.CodeAnalysis.CSharp.Formatting.CSharpFormattingOptions));
-        }
+        
     }
 }
