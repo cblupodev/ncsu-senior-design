@@ -67,6 +67,10 @@
       <Project>{1c52df0c-67fd-4a54-9160-732ff0a5143f}</Project>
       <Name>CreateMappings</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DBConnector\DBConnector.csproj">
+      <Project>{FDF3CC16-26A0-47CE-A129-4A06F829DB12}</Project>
+      <Name>DBConnector</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FujitsuSDKNew\FujitsuSDKNew.csproj">
       <Project>{1d33cd7b-13ea-4534-83e9-40d07478eaad}</Project>
       <Name>FujitsuSDKNew</Name>
