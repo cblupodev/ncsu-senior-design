@@ -37,6 +37,9 @@ The client creates a new instance of an SDK class.
 ###multiAssembly
 The SDK uses multiple assemblies (dll files).
 
+###namespaceInNamespace
+The SDK has a namespace directive inside of a namespace directive, creating an implicit nesting.
+
 ###newConflicts
 Client code has class name matching a class name in the new SDK.
 
