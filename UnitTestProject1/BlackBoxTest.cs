@@ -65,7 +65,13 @@ namespace UnitTest.BlackBox
             return result;
         }
 
-        public void verifyProject(string projectPath, string expectedPath)
+        public void CleanProject(string projectPath)
+        {
+            var proj = MSBuildWorkspace.Create().OpenProjectAsync(projectPath).Result;
+            Directory.Delete(new FileInfo(proj.OutputFilePath).Directory.FullName, true);
+        }
+
+        public void VerifyProject(string projectPath, string expectedPath)
         {
             var proj = MSBuildWorkspace.Create().OpenProjectAsync(projectPath).Result;
             var result = CompileProject(proj);
@@ -117,8 +123,8 @@ namespace UnitTest.BlackBox
                     Assert.Fail("No file containing expected output.");
                 }
             }
-            verifyProject(Path.Combine(TestFolder, "clientC#", "Client", "Client.csproj"), expectedPath);
-            verifyProject(Path.Combine(TestFolder, "clientVB", "Client", "Client.vbproj"), expectedPath);
+            VerifyProject(Path.Combine(TestFolder, "clientC#", "Client", "Client.csproj"), expectedPath);
+            VerifyProject(Path.Combine(TestFolder, "clientVB", "Client", "Client.vbproj"), expectedPath);
         }
 
         public virtual void Setup()
@@ -127,6 +133,8 @@ namespace UnitTest.BlackBox
             {
                 File.Delete(dll);
             }
+            CleanProject(Path.Combine(TestFolder, "clientC#", "Client", "Client.csproj"));
+            CleanProject(Path.Combine(TestFolder, "clientVB", "Client", "Client.vbproj"));
 
             foreach (string dll in CompileSolution(Path.Combine(TestFolder, "newSDK", "SDK.sln")))
             {
@@ -162,8 +170,8 @@ namespace UnitTest.BlackBox
                     Assert.Fail("No file containing expected output.");
                 }
             }
-            verifyProject(Path.Combine(TestFolder, "clientC#", "Client", "Client.csproj"), expectedPath);
-            verifyProject(Path.Combine(TestFolder, "clientVB", "Client", "Client.vbproj"), expectedPath);
+            VerifyProject(Path.Combine(TestFolder, "clientC#", "Client", "Client.csproj"), expectedPath);
+            VerifyProject(Path.Combine(TestFolder, "clientVB", "Client", "Client.vbproj"), expectedPath);
 
         }
         
