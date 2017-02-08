@@ -63,7 +63,7 @@ namespace DBConnector
             return GetAllByWhereClause(whereClause);
         }
 
-        private List<Mapping> GetAllByWhereClause(Expression<Func<sdk_mapping, bool>> whereClause)
+        public List<Mapping> GetAllByWhereClause(Expression<Func<sdk_mapping, bool>> whereClause)
         {
             var rows = dbConnection.sdk_mappings.Where(whereClause);
             List<Mapping> mappings = new List<Mapping>();

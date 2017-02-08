@@ -11,10 +11,10 @@ namespace TransformClient2
 {
     class Program
     {
-        public static void Main(string[] args)
-        {
-            (new Program()).Run(args);
-        }
+        //public static void Main(string[] args)
+        //{
+        //    (new Program()).Run(args);
+        //}
 
         public void Run(string[] args)
         {

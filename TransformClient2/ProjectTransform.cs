@@ -1,4 +1,5 @@
-﻿using NamespaceRefactorer;
+﻿using DBConnector;
+using NamespaceRefactorer;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,8 +13,8 @@ namespace NamespaceRefactorer
     // interacts with the entire project to run the refactorer
     public class ProjectTransform
     {
-        // TODO launch the FileTransform from here
-        // TODO put the Main method in here instead of the FileTransform
+        FujitsuConnectorDataContext dbConnection = new FujitsuConnectorDataContext();
+
         public static void Main(string[] args)
         {
             ProjectTransform projectTransform = new ProjectTransform();
@@ -25,6 +26,7 @@ namespace NamespaceRefactorer
         {
             Helper.verifyFolderExists(args[0]);
             ProcessFolder(args[0]);
+            var query = dbConnection.sdk_mappings.Where(m => m.old_namespace == "456");
         }
 
         // Process all files in the directory passed in, recurse on any directories 
@@ -32,7 +34,7 @@ namespace NamespaceRefactorer
         public void ProcessFolder(string targetDirectory)
         {
             // Process the list of files found in the directory.
-            string[] fileEntries = Directory.GetFiles(targetDirectory);
+            string[] fileEntries = Directory.GetFiles(targetDirectory, "*.cs");
             foreach (string fileName in fileEntries)
                 ProcessFile(fileName);
 
@@ -45,6 +47,7 @@ namespace NamespaceRefactorer
         private void ProcessFile(string fileName)
         {
             FileTransform fileTranform = new FileTransform(fileName);
+            fileTranform.findOldUsingsAndReplacIfCertainClassesFound(dbConnection);
         }
     }
 }

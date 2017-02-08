@@ -12,7 +12,7 @@ using System.Diagnostics;
 using System;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 using NamespaceRefactorer;
-
+using DBConnector;
 
 namespace NamespaceRefactorer
 {
@@ -22,11 +22,10 @@ namespace NamespaceRefactorer
         private CompilationUnitSyntax root;
         private SemanticModel semanticModel;
         private string clientFilePath;
-        private string fileName;
 
         public FileTransform(string fileName)
         {
-            Helper.verifyFileExists(clientFilePath);
+            Helper.verifyFileExists(fileName);
             SyntaxTree tree;
             this.clientFilePath = fileName;
 
@@ -48,7 +47,7 @@ namespace NamespaceRefactorer
         // search for using statements with the old sdk. Then if they are found then look for classes that coresponded to the custom attributes
         // if classes are found then replace the old using statement with the new one
         // oldSDKUsings is a list of the old sdk using statements
-        public void findOldUsingsAndReplacIfCertainClassesFound(IEnumerable<string> oldSDKUsings)
+        public void findOldUsingsAndReplacIfCertainClassesFound(FujitsuConnectorDataContext dbConnection)
         {
             foreach (var usingDirective in root.Usings) // iterate over each using statement
             {
@@ -58,7 +57,8 @@ namespace NamespaceRefactorer
                     // get the text for the using
                     IdentifierNameSyntax ins = (IdentifierNameSyntax)usingDirective.Name;
                     var valueText = ins.Identifier.ValueText;
-                    foreach (var oldUse in oldSDKUsings) // iterate over the old usings, provided as the input
+                    var query = dbConnection.sdk_mappings.Where(m => m.old_namespace == valueText);
+                    foreach (var oldUse in query) // iterate over the old usings, provided as the input
                     {
                         // if an old using is located in the file then seek for object creations that use classes that are tagged
                         if (valueText.Equals(oldUse))
