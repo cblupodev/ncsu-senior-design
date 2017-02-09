@@ -65,7 +65,13 @@ namespace UnitTest.BlackBox
             return result;
         }
 
-        public void verifyProject(string projectPath, string expectedPath)
+        public void CleanProject(string projectPath)
+        {
+            var proj = MSBuildWorkspace.Create().OpenProjectAsync(projectPath).Result;
+            Directory.Delete(new FileInfo(proj.OutputFilePath).Directory.FullName, true);
+        }
+
+        public void VerifyProject(string projectPath, string expectedPath, string assertMessage)
         {
             var proj = MSBuildWorkspace.Create().OpenProjectAsync(projectPath).Result;
             var result = CompileProject(proj);
@@ -77,9 +83,9 @@ namespace UnitTest.BlackBox
             var expectedOut = new StreamReader(expectedPath);
             while ( ! proc.StandardOutput.EndOfStream && ! expectedOut.EndOfStream)
             {
-                Assert.AreEqual(expectedOut.ReadLine(), proc.StandardOutput.ReadLine());
+                Assert.AreEqual(expectedOut.ReadLine(), proc.StandardOutput.ReadLine(), assertMessage);
             }
-            Assert.AreEqual(expectedOut.EndOfStream, proc.StandardOutput.EndOfStream);
+            Assert.AreEqual(expectedOut.EndOfStream, proc.StandardOutput.EndOfStream, assertMessage);
         }
 
         IEnumerable<string> dllsToRemove;
@@ -117,8 +123,10 @@ namespace UnitTest.BlackBox
                     Assert.Fail("No file containing expected output.");
                 }
             }
-            verifyProject(Path.Combine(TestFolder, "clientC#", "Client", "Client.csproj"), expectedPath);
-            verifyProject(Path.Combine(TestFolder, "clientVB", "Client", "Client.vbproj"), expectedPath);
+            VerifyProject(Path.Combine(TestFolder, "clientC#", "Client", "Client.csproj"), expectedPath,
+                "Pre-translation failed");
+            VerifyProject(Path.Combine(TestFolder, "clientVB", "Client", "Client.vbproj"), expectedPath,
+                "Pre-translation failed");
         }
 
         public virtual void Setup()
@@ -127,6 +135,8 @@ namespace UnitTest.BlackBox
             {
                 File.Delete(dll);
             }
+            CleanProject(Path.Combine(TestFolder, "clientC#", "Client", "Client.csproj"));
+            CleanProject(Path.Combine(TestFolder, "clientVB", "Client", "Client.vbproj"));
 
             foreach (string dll in CompileSolution(Path.Combine(TestFolder, "newSDK", "SDK.sln")))
             {
@@ -142,13 +152,13 @@ namespace UnitTest.BlackBox
             createMapping.StartInfo.Arguments = ""; //TODO fill in
             createMapping.Start();
             createMapping.WaitForExit();
-            Assert.AreEqual(0, createMapping.ExitCode);
+            Assert.AreEqual(0, createMapping.ExitCode, "Error running the creating mapping program");
             var translateClient = new Process();
             translateClient.StartInfo.FileName = pathToTransformClient;
             translateClient.StartInfo.Arguments = ""; //TODO fill in
             translateClient.Start();
             translateClient.WaitForExit();
-            Assert.AreEqual(0, translateClient.ExitCode);
+            Assert.AreEqual(0, translateClient.ExitCode, "error running the translate client program");
         }
 
         public virtual void VerifyResult()
@@ -162,8 +172,10 @@ namespace UnitTest.BlackBox
                     Assert.Fail("No file containing expected output.");
                 }
             }
-            verifyProject(Path.Combine(TestFolder, "clientC#", "Client", "Client.csproj"), expectedPath);
-            verifyProject(Path.Combine(TestFolder, "clientVB", "Client", "Client.vbproj"), expectedPath);
+            VerifyProject(Path.Combine(TestFolder, "clientC#", "Client", "Client.csproj"), expectedPath,
+                "Post-translation failed");
+            VerifyProject(Path.Combine(TestFolder, "clientVB", "Client", "Client.vbproj"), expectedPath,
+                "Post-translation failed");
 
         }
         
