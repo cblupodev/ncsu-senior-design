@@ -49,6 +49,66 @@ namespace NamespaceRefactorer
         // oldSDKUsings is a list of the old sdk using statements
         public void findOldUsingsAndReplacIfCertainClassesFound(FujitsuConnectorDataContext dbConnection)
         {
+            List<UsingDirectiveSyntax> oldUsings = findMatchingUsings(dbConnection);
+            if (oldUsings.Count > 0) // continue if there are usings in the database
+            {
+                foreach (var usingDirective in oldUsings)
+                {
+                    replaceObjectCreations(usingDirective);
+                    replaceCastings(usingDirective);
+                    replaceUsingStatements(usingDirective);
+                    replaceFullyQualifiedNames(UsingDirective);
+                    replaceAliasing(UsingDirective);
+                    replaceClassExtensions(UsingDirective);
+                }
+            }
+        }
+
+        private void replaceClassExtensions(Func<NameEqualsSyntax, NameSyntax, UsingDirectiveSyntax> usingDirective)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void replaceAliasing(Func<NameEqualsSyntax, NameSyntax, UsingDirectiveSyntax> usingDirective)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void replaceFullyQualifiedNames(Func<NameEqualsSyntax, NameSyntax, UsingDirectiveSyntax> usingDirective)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void replaceUsingStatements(UsingDirectiveSyntax usingDirective)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void replaceCastings(UsingDirectiveSyntax usingDirective)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void replaceObjectCreations(UsingDirectiveSyntax usingDirective)
+        {
+            IEnumerable<ObjectCreationExpressionSyntax> objectCreations = root.DescendantNodes().OfType<ObjectCreationExpressionSyntax>();
+            foreach (ObjectCreationExpressionSyntax item in objectCreations) // iterate over all object creations in the file
+            {
+                var semanticObjCreation = semanticModel.GetSymbolInfo(item.Type);
+                //semanticObcCreation
+                // if find a class that was tagged then replace the old using with the new one
+                var descendentTokens = item.DescendantTokens().OfType<SyntaxToken>(); // TODO use the semantic model instead of this way
+                if (descendentTokens.ElementAt(1).Value.Equals("Sample")) // [1] gets the identifier syntax, magic
+                {
+                    replaceOldUsingWithNew(usingDirective);
+                }
+            }
+        }
+
+        // return a list of using directives that exist in the database
+        private List<UsingDirectiveSyntax> findMatchingUsings(FujitsuConnectorDataContext dbConnection)
+        {
+            List<UsingDirectiveSyntax> rtn = new List<UsingDirectiveSyntax>();
             foreach (var usingDirective in root.Usings) // iterate over each using statement
             {
                 var name = semanticModel.GetSymbolInfo(usingDirective.Name); // https://github.com/dotnet/roslyn/wiki/Getting-Started-C%23-Semantic-Analysis
@@ -63,19 +123,8 @@ namespace NamespaceRefactorer
                         // if an old using is located in the file then seek for object creations that use classes that are tagged
                         if (valueText.Equals(oldUse))
                         {
-                            IEnumerable<ObjectCreationExpressionSyntax> objectCreations = root.DescendantNodes().OfType<ObjectCreationExpressionSyntax>();
-                            foreach (ObjectCreationExpressionSyntax item in objectCreations) // iterate over all object creations in the file
-                            {
-                                var semanticObjCreation = semanticModel.GetSymbolInfo(item.Type);
-                                //semanticObcCreation
-                                // if find a class that was tagged then replace the old using with the new one
-                                var descendentTokens = item.DescendantTokens().OfType<SyntaxToken>(); // TODO use the semantic model instead of this way
-                                if (descendentTokens.ElementAt(1).Value.Equals("Sample")) // [1] gets the identifier syntax, magic
-                                {
-                                    replaceOldUsingWithNew(usingDirective);
-                                }
-                            }
-                        } 
+                            rtn.Add(usingDirective);
+                        }
                     }
                 }
                 try
@@ -86,6 +135,7 @@ namespace NamespaceRefactorer
                 {
                 }
             }
+            return rtn;
         }
 
         private void replaceOldUsingWithNew(UsingDirectiveSyntax usingDirective)
