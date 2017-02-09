@@ -21,7 +21,15 @@ namespace NamespaceRefactorer
 
         private CompilationUnitSyntax root;
         private SemanticModel semanticModel;
+        private SyntaxTree tree;
         private string clientFilePath;
+
+        public FileTransform(SyntaxTree tree, SemanticModel semanticModel)
+        {
+            this.tree = tree;
+            this.root = (CompilationUnitSyntax)tree.GetRoot();
+            this.semanticModel = semanticModel;
+        }
 
         public FileTransform(string fileName)
         {
@@ -47,7 +55,7 @@ namespace NamespaceRefactorer
         // search for using statements with the old sdk. Then if they are found then look for classes that coresponded to the custom attributes
         // if classes are found then replace the old using statement with the new one
         // oldSDKUsings is a list of the old sdk using statements
-        public void findOldUsingsAndReplacIfCertainClassesFound(FujitsuConnectorDataContext dbConnection)
+        public SyntaxTree findOldUsingsAndReplaceOldSyntax(FujitsuConnectorDataContext dbConnection)
         {
             List<UsingDirectiveSyntax> oldUsings = findMatchingUsings(dbConnection);
             if (oldUsings.Count > 0) // continue if there are usings in the database
@@ -60,8 +68,11 @@ namespace NamespaceRefactorer
                     replaceFullyQualifiedNames(UsingDirective);
                     replaceAliasing(UsingDirective);
                     replaceClassExtensions(UsingDirective);
+                    // etc.
                 }
             }
+
+            return this.tree;
         }
 
         private void replaceClassExtensions(Func<NameEqualsSyntax, NameSyntax, UsingDirectiveSyntax> usingDirective)
@@ -127,13 +138,6 @@ namespace NamespaceRefactorer
                         }
                     }
                 }
-                try
-                {
-                    var systemSymbol = (INamespaceSymbol)name.Symbol;
-                }
-                catch (NullReferenceException)
-                {
-                }
             }
             return rtn;
         }
@@ -145,8 +149,6 @@ namespace NamespaceRefactorer
             var oldUsing = usingDirective;
             var newUsing = oldUsing.WithName(mockName2);
             root = root.ReplaceNode(oldUsing, newUsing);
-
-            File.WriteAllText(clientFilePath, root.ToFullString()); // http://stackoverflow.com/questions/18295837/c-sharp-roslyn-api-reading-a-cs-file-updating-a-class-writing-back-to-cs-fi
         }
     }
 }
