@@ -27,7 +27,7 @@ namespace NamespaceRefactorer
                     if (attr.AttributeType.Name.Equals(ReadProject.CustomAttributeName))
                     {
                         string modelIdentifier = (string)attr.ConstructorArguments.First().Value;
-                        MappingAgnostic ma = new MappingAgnostic(type.Namespace, modelIdentifier, type.Name);
+                        MappingAgnostic ma = new MappingAgnostic(type.Namespace, modelIdentifier, type.Name, dllPath);
                         ReadProject.Mappings.Add(ma);
                     }
                 }

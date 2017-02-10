@@ -11,19 +11,14 @@ namespace CreateMappings
         public string Namespace { get; set; }
         public string ModelIdentifierGUID { get; set; }
         public string ClassName { get; set; }
+        public string dllPath { get; set; }
 
-        public MappingAgnostic(string Namespace, string ModelIdentifierGUID, string Classname)
+        public MappingAgnostic(string Namespace, string ModelIdentifierGUID, string Classname, string dllPath)
         {
             this.Namespace = Namespace;
             this.ModelIdentifierGUID = ModelIdentifierGUID;
             this.ClassName = Classname;
-        }
-
-        public MappingAgnostic(string OldNamespace, string NewNamespace, string ModelIdentifierGUID, string OldClassName, string NewClassName)
-        {
-            this.Namespace = OldNamespace;
-            this.ModelIdentifierGUID = ModelIdentifierGUID;
-            this.ClassName = OldClassName;
+            this.dllPath = dllPath;
         }
 
         // https://msdn.microsoft.com/en-us/library/ms173147(v=vs.90).aspx

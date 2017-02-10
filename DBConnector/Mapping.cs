@@ -13,6 +13,9 @@ namespace DBConnector
         public string ModelIdentifierGUID { get; set; }
         public string OldClassName { get; set; }
         public string NewClassName { get; set; }
+        public string OldDllPath { get; set; }
+        public string NewDllPath { get; set; }
+
 
         public Mapping(string OldNamespace, string ModelIdentifierGUID, string OldClassName)
         {
@@ -21,13 +24,15 @@ namespace DBConnector
             this.OldClassName = OldClassName;
         }
 
-        public Mapping(string OldNamespace, string NewNamespace, string ModelIdentifierGUID, string OldClassName, string NewClassName)
+        public Mapping(string OldNamespace, string NewNamespace, string ModelIdentifierGUID, string OldClassName, string NewClassName, string OldDllPath, string NewDllPath)
         {
             this.OldNamespace = OldNamespace;
             this.NewNamespace = NewNamespace;
             this.ModelIdentifierGUID = ModelIdentifierGUID;
             this.OldClassName = OldClassName;
             this.NewClassName = NewClassName;
+            this.OldDllPath = OldDllPath;
+            this.NewDllPath = NewDllPath;
         }
 
         // https://msdn.microsoft.com/en-us/library/ms173147(v=vs.90).aspx
@@ -45,7 +50,9 @@ namespace DBConnector
                 this.NewNamespace.Equals(m.NewNamespace) &&
                 this.ModelIdentifierGUID.Equals(m.ModelIdentifierGUID) &&
                 this.OldClassName.Equals(m.OldClassName) &&
-                this.NewClassName.Equals(m.NewClassName)
+                this.NewClassName.Equals(m.NewClassName) &&
+                this.OldDllPath.Equals(m.OldDllPath) &&
+                this.NewDllPath.Equals(m.NewDllPath)
                 )
             {
                 return true;
