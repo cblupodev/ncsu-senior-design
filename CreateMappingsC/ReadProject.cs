@@ -9,8 +9,7 @@ using DBConnector;
 
 namespace CreateMappings
 {
-    // param 0 = old client project with the old sdk dlls
-    // param 1 = new sdk dlls
+    // param 0 = folder containing dlls
     public class ReadProject
     {
 
@@ -19,22 +18,22 @@ namespace CreateMappings
         // key = model identifier
         // value = mapping
         // http://stackoverflow.com/questions/1273139/c-sharp-java-hashmap-equivalent
-        public static Dictionary<string, Mapping> Mappings = new Dictionary<string, Mapping>();
+        //public static Dictionary<string, MappingAgnostic> Mappings = new Dictionary<string, MappingAgnostic>();
+        public static List<MappingAgnostic> Mappings = new List<MappingAgnostic>();
 
         // param 0 = folder for client project
         // param 1 = folder for new sdk
         public static void Main(string[] args)
         {
             ReadProject rp = new ReadProject();
-            rp.run(args[0],args[1]);
+            rp.run(args[0]);
         }
 
-        private void run(string clientFolderPath, string newSDKFolderPath)
+        private void run(string folderPath)
         {
-            readFolderDllFiles(clientFolderPath);
-            readFolderDllFiles(newSDKFolderPath);
+            readFolderDllFiles(folderPath);
 
-            SDKMappingSQLConnector.GetInstance().SaveSDKMappings(Mappings.Values.ToList());
+            SDKMappingSQLConnector.GetInstance().SaveSDKMappings(Mappings);
         }
 
         // itereate over all the dll files in a folder

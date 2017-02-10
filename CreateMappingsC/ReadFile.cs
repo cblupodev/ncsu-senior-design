@@ -27,19 +27,8 @@ namespace NamespaceRefactorer
                     if (attr.AttributeType.Name.Equals(ReadProject.CustomAttributeName))
                     {
                         string modelIdentifier = (string)attr.ConstructorArguments.First().Value;
-                        if (ReadProject.Mappings.ContainsKey(modelIdentifier))
-                        {
-                            Mapping m = ReadProject.Mappings[modelIdentifier];
-                            // key was found add the new properties
-                            m.NewNamespace = type.Namespace;
-                            m.NewClassName = type.Name;
-                        }
-                        else
-                        {
-                            // key was not found create a new mapping and add to the dictionary
-                            Mapping mapping = new Mapping(type.Namespace, modelIdentifier, type.Name);
-                            ReadProject.Mappings[modelIdentifier] = mapping;
-                        }
+                        MappingAgnostic ma = new MappingAgnostic(type.Namespace, modelIdentifier, type.Name);
+                        ReadProject.Mappings.Add(ma);
                     }
                 }
             }
