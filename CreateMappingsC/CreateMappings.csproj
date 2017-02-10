@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MappingAgnostic.cs" />
     <Compile Include="ReadFile.cs" />
     <Compile Include="ModelIdentifier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

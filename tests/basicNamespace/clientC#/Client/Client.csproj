@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FujitsuSDKOld">
+      <HintPath>..\..\..\..\FujitsuSDKOld\bin\Debug\FujitsuSDKOld.dll</HintPath>
+    </Reference>
     <Reference Include="SDK, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\libs\SDK.dll</HintPath>

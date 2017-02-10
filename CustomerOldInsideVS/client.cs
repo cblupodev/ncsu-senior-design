@@ -12,5 +12,7 @@ namespace NCSU
         {
             var x = new Sample();
         }
+
+        public static void Main(string[] args) { }
     }
 }
