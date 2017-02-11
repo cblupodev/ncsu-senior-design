@@ -56,13 +56,12 @@ namespace DBConnector
                 return false;
             }
         }
-        public Boolean SaveSDKMappings2(List<Mapping> mappingsToSave)
+        public Boolean SaveSDKMappings2(List<GenericMapping> mappingsToSave)
         {
-            List<sdk_mapping> dbMappings = new List<sdk_mapping>();
+            List<sdk_map> dbMappings = new List<sdk_map>();
 
             List<String> ids = mappingsToSave.Select(m => m.ModelIdentifierGUID).ToList();
-            dbConnection.sdk_mappings.InsertAllOnSubmit(dbMappings);
-            var query = from sm in dbConnection.sdk_mappings
+            var query = from sm in dbConnection.sdk_maps
                         where ids.Contains(sm.model_identifier)
                         select sm;
 
@@ -70,26 +69,29 @@ namespace DBConnector
             {
                 foreach (var m in mappingsToSave)
                 {
-                    sdk_mapping dbMapping = new sdk_mapping
+                    sdk_map dbMapping = new sdk_map
                     {
                         model_identifier = m.ModelIdentifierGUID,
-                        old_namespace = m.OldNamespace,
-                        old_classname = m.OldClassName,
-                        //new_namespace = m.NewNamespace,
-                        //new_classname = m.NewClassName
+                        old_namespace = m.Namespace,
+                        old_classname = m.ClassName,
+                        old_assembly_path = m.dllPath,
+                        sdk_id = m.sdkId
                     };
                     dbMappings.Add(dbMapping);
                 }
+                dbConnection.sdk_maps.InsertAllOnSubmit(dbMappings);
             }
             else
             {
-                foreach (sdk_mapping dbMapping in query)
+                foreach (sdk_map dbMapping in query)
                 {
                     var mapping = mappingsToSave.Where(mts => mts.ModelIdentifierGUID == dbMapping.model_identifier).First();
-                    dbMapping.new_classname = mapping.NewClassName;
-                    dbMapping.new_namespace = mapping.NewNamespace;
+                    dbMapping.new_classname = mapping.ClassName;
+                    dbMapping.new_namespace = mapping.Namespace;
+                    dbMapping.new_assembly_path = mapping.dllPath;
                 }
             }
+            
             try
             {
                 dbConnection.SubmitChanges();
@@ -104,17 +106,17 @@ namespace DBConnector
 
         public List<Mapping> GetAll()
         {
-            Expression<Func<sdk_mapping, bool>> whereClause = m => true;
+            Expression<Func<sdk_map, bool>> whereClause = m => true;
             return GetAllByWhereClause(whereClause);
         }
 
-        public List<Mapping> GetAllByWhereClause(Expression<Func<sdk_mapping, bool>> whereClause)
+        public List<Mapping> GetAllByWhereClause(Expression<Func<sdk_map, bool>> whereClause)
         {
-            var rows = dbConnection.sdk_mappings.Where(whereClause);
+            var rows = dbConnection.sdk_maps.Where(whereClause);
             List<Mapping> mappings = new List<Mapping>();
             foreach (var row in rows)
             {
-                Mapping mapping = new Mapping(row.old_namespace, row.new_namespace, row.model_identifier, row.old_classname, row.new_classname);
+                Mapping mapping = new Mapping(row.old_namespace, row.new_namespace, row.model_identifier, row.old_classname, row.new_classname, row.old_assembly_path, row.new_assembly_path);
                 mappings.Add(mapping);
             }
             return mappings;
@@ -122,18 +124,21 @@ namespace DBConnector
 
         public Mapping GetByModelidentifier(String modelID)
         {
-            Expression<Func<sdk_mapping, bool>> whereClause = m => m.model_identifier == modelID;
+            Expression<Func<sdk_map, bool>> whereClause = m => m.model_identifier == modelID;
             return GetByWhereClause(whereClause);
         }
 
-        private Mapping GetByWhereClause(Expression<Func<sdk_mapping, bool>> whereClause)
+        private Mapping GetByWhereClause(Expression<Func<sdk_map, bool>> whereClause)
         {
-            var res = dbConnection.sdk_mappings.Where(whereClause);
-            if (res.Count() == 1)
+            var res = dbConnection.sdk_maps.Where(whereClause);
+            try
             {
-                sdk_mapping row = res.First();
-                Mapping mapping = new Mapping(row.old_namespace, row.new_namespace, row.model_identifier, row.old_classname, row.new_classname);
+                sdk_map row = res.Single();
+                Mapping mapping = new Mapping(row.old_namespace, row.new_namespace, row.model_identifier, row.old_classname, row.new_classname, row.old_assembly_path, row.new_assembly_path);
                 return mapping;
+            } catch(Exception e)
+            {
+                //Do nothing
             }
             return null;
         }

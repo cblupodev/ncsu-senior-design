@@ -4,25 +4,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CreateMappings
+namespace DBConnector
 {
-    public class MappingAgnostic
+    public class GenericMapping
     {
         public string Namespace { get; set; }
         public string ModelIdentifierGUID { get; set; }
         public string ClassName { get; set; }
         public string dllPath { get; set; }
 
-        public MappingAgnostic(string Namespace, string ModelIdentifierGUID, string Classname, string dllPath)
+        public int sdkId { get; set; }
+
+        public GenericMapping(string Namespace, string ModelIdentifierGUID, string Classname, string dllPath, int sdkId)
         {
             this.Namespace = Namespace;
             this.ModelIdentifierGUID = ModelIdentifierGUID;
             this.ClassName = Classname;
             this.dllPath = dllPath;
+            this.sdkId = sdkId;
         }
 
         // https://msdn.microsoft.com/en-us/library/ms173147(v=vs.90).aspx
-        public bool Equals(MappingAgnostic m)
+        public bool Equals(GenericMapping m)
         {
             // If parameter is null return false:
             if ((object)m == null)
