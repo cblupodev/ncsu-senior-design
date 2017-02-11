@@ -56,6 +56,51 @@ namespace DBConnector
                 return false;
             }
         }
+        public Boolean SaveSDKMappings2(List<Mapping> mappingsToSave)
+        {
+            List<sdk_mapping> dbMappings = new List<sdk_mapping>();
+
+            List<String> ids = mappingsToSave.Select(m => m.ModelIdentifierGUID).ToList();
+            dbConnection.sdk_mappings.InsertAllOnSubmit(dbMappings);
+            var query = from sm in dbConnection.sdk_mappings
+                        where ids.Contains(sm.model_identifier)
+                        select sm;
+
+            if (!query.Any())
+            {
+                foreach (var m in mappingsToSave)
+                {
+                    sdk_mapping dbMapping = new sdk_mapping
+                    {
+                        model_identifier = m.ModelIdentifierGUID,
+                        old_namespace = m.OldNamespace,
+                        old_classname = m.OldClassName,
+                        //new_namespace = m.NewNamespace,
+                        //new_classname = m.NewClassName
+                    };
+                    dbMappings.Add(dbMapping);
+                }
+            }
+            else
+            {
+                foreach (sdk_mapping dbMapping in query)
+                {
+                    var mapping = mappingsToSave.Where(mts => mts.ModelIdentifierGUID == dbMapping.model_identifier).First();
+                    dbMapping.new_classname = mapping.NewClassName;
+                    dbMapping.new_namespace = mapping.NewNamespace;
+                }
+            }
+            try
+            {
+                dbConnection.SubmitChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+        }
 
         public List<Mapping> GetAll()
         {
