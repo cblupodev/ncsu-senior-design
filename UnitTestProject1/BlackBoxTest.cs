@@ -27,7 +27,7 @@ namespace UnitTest.BlackBox
 
             set
             {
-                testFolder = value;
+                testFolder = new FileInfo(value).FullName;
             }
         }
 
@@ -158,15 +158,12 @@ namespace UnitTest.BlackBox
 
         public virtual void RunPreMapping()
         {
-            foreach (string dll in dllsToRemove)
-            {
-                var createMapping = new Process();
-                createMapping.StartInfo.FileName = pathToCreateMappings;
-                createMapping.StartInfo.Arguments = "\"" + dll + "\" \"" + sdkNameId + "\""; //TODO fill in
-                createMapping.Start();
-                createMapping.WaitForExit();
-                Assert.AreEqual(0, createMapping.ExitCode, "Error running the creating mapping program on old dll: " + dll);
-            }
+            var createMapping = new Process();
+            createMapping.StartInfo.FileName = pathToCreateMappings;
+            createMapping.StartInfo.Arguments = "\"" + Path.Combine(TestFolder, "bin") + "\" \"" + sdkNameId + "\""; //TODO fill in
+            createMapping.Start();
+            createMapping.WaitForExit();
+            Assert.AreEqual(0, createMapping.ExitCode, "Error running the creating mapping program on old dlls");
         }
 
         public virtual void MidMappingSetup()
@@ -187,15 +184,12 @@ namespace UnitTest.BlackBox
 
         public virtual void RunPostMapping()
         {
-            foreach (string dll in dllsToMap)
-            {
-                var createMapping = new Process();
-                createMapping.StartInfo.FileName = pathToCreateMappings;
-                createMapping.StartInfo.Arguments = "\"" + dll + "\" \"" + sdkNameId + "\""; //TODO fill in
-                createMapping.Start();
-                createMapping.WaitForExit();
-                Assert.AreEqual(0, createMapping.ExitCode, "Error running the creating mapping program on new dll: " + dll);
-            }
+            var createMapping = new Process();
+            createMapping.StartInfo.FileName = pathToCreateMappings;
+            createMapping.StartInfo.Arguments = "\"" + Path.Combine(TestFolder, "bin") + "\" \"" + sdkNameId + "\""; //TODO fill in
+            createMapping.Start();
+            createMapping.WaitForExit();
+            Assert.AreEqual(0, createMapping.ExitCode, "Error running the creating mapping program on new dlls");
         }
 
         public virtual void RunTransformation()
@@ -234,7 +228,7 @@ namespace UnitTest.BlackBox
         // call this method in the test method
         public virtual void RunTest()
         {
-            sdkNameId = testFolder;
+            sdkNameId = Path.GetFileName(TestFolder);
             ResetDatabase();
             PreSetup();
             PreVerify();
