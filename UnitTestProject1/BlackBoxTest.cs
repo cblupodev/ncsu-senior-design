@@ -156,7 +156,7 @@ namespace UnitTest.BlackBox
             PreSetup();
             PreVerify();
             Setup();
-            //RunProgram();
+            RunProgram();
             VerifyResult();
         }
 

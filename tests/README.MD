@@ -19,6 +19,9 @@ Root namespace changes between versions.
 ###casting
 The client code casts to a class in the SDK.
 
+###classInClass
+The SDK has a class defined inside of a class.
+
 ###extendsSDKClass
 The client code extends an SDK class.
 
