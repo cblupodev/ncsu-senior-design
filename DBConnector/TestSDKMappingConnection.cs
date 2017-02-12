@@ -23,8 +23,8 @@ namespace DBConnector
             newMappingList.Add(new GenericMapping("newNamespace", "7890", "newClassname3", "pathC2", sdkId));
             oldMappingList.Add(new GenericMapping("oldNamespace1", "4321", "oldClassname4", "pathD1", sdkId));
             newMappingList.Add(new GenericMapping("newNamespace1", "4321", "newClassname5", "pathD2", sdkId));
-            SDKMappingSQLConnector.GetInstance().SaveSDKMappings2(oldMappingList);
-            SDKMappingSQLConnector.GetInstance().SaveSDKMappings2(newMappingList);
+            SDKMappingSQLConnector.GetInstance().SaveSDKMappings2(oldMappingList, sdkId);
+            SDKMappingSQLConnector.GetInstance().SaveSDKMappings2(newMappingList, sdkId);
             HashSet<String> oldNamespacesSet = SDKMappingSQLConnector.GetInstance().GetAllNamespaces(sdkId);
             if (oldNamespacesSet.Contains("oldNamespace"))
             {
