@@ -20,7 +20,6 @@ namespace NamespaceRefactorer
         public static void verifyFolderExists(string filePath)
         {
             Console.WriteLine(filePath);
-            Console.ReadLine();
             if (!Directory.Exists(filePath))
             {
                 throw new DirectoryNotFoundException("directory doesn't exist");
