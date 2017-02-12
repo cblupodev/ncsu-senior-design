@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace newasdf
 {
     [ModelIdentifier("87875")]
-    class fudgeold2
+    public class fudgeold2
     {
     }
 }

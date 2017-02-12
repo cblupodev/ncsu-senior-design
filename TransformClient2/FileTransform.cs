@@ -13,6 +13,7 @@ using System;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 using NamespaceRefactorer;
 using DBConnector;
+using Microsoft.CodeAnalysis.Editing;
 
 namespace NamespaceRefactorer
 {
@@ -22,13 +23,15 @@ namespace NamespaceRefactorer
         private CompilationUnitSyntax root;
         private SemanticModel semanticModel;
         private SyntaxTree tree;
+        private DocumentEditor documentEditor;
         private string clientFilePath;
 
-        public FileTransform(SyntaxTree tree, SemanticModel semanticModel)
+        public FileTransform(DocumentEditor documentEditor)
         {
-            this.tree = tree;
-            this.root = (CompilationUnitSyntax)tree.GetRoot();
-            this.semanticModel = semanticModel;
+            this.documentEditor = documentEditor;
+            this.root = (CompilationUnitSyntax)documentEditor.OriginalRoot;
+            this.tree = root.SyntaxTree;
+            this.semanticModel = documentEditor.SemanticModel;
         }
 
         public FileTransform(string fileName)
@@ -45,7 +48,7 @@ namespace NamespaceRefactorer
             root = (CompilationUnitSyntax)tree.GetRoot();
 
             // https://github.com/dotnet/roslyn/wiki/Getting-Started-C%23-Semantic-Analysis
-            var compilation = CSharpCompilation.Create("client_old").AddReferences(
+            var compilation = CSharpCompilation.Create("client_old").AddReferences( //magic
                                                     MetadataReference.CreateFromFile(
                                                         typeof(object).Assembly.Location))
                                                     .AddSyntaxTrees(tree);
@@ -55,7 +58,7 @@ namespace NamespaceRefactorer
         // search for using statements with the old sdk. Then if they are found then look for classes that coresponded to the custom attributes
         // if classes are found then replace the old using statement with the new one
         // oldSDKUsings is a list of the old sdk using statements
-        public SyntaxTree findOldUsingsAndReplaceOldSyntax(HashSet<string> namespaceSet)
+        public SyntaxTree findOldUsingsAndReplaceOldSyntax(HashSet<string> namespaceSet, DocumentEditor documentEditor)
         {
             List<UsingDirectiveSyntax> oldUsings = findMatchingUsings(namespaceSet);
             if (oldUsings.Any()) // continue if there are usings in the database
@@ -63,34 +66,16 @@ namespace NamespaceRefactorer
                 foreach (var usingDirective in oldUsings)
                 {
                     replaceObjectCreations(usingDirective);
-                    replaceCastings(usingDirective);
-                    replaceUsingStatements(usingDirective);
-                    replaceFullyQualifiedNames(UsingDirective);
-                    replaceAliasing(UsingDirective);
-                    replaceClassExtensions(UsingDirective);
+                    //replaceCastings(usingDirective);
+                    //replaceUsingStatements(usingDirective);
+                    //replaceFullyQualifiedNames(UsingDirective);
+                    //replaceAliasing(UsingDirective);
+                    //replaceClassExtensions(UsingDirective);
                     // etc.
                 }
             }
 
-            return tree;
-        }
-
-        internal bool hasNameSpaceInDatabase(HashSet<string> namespaceSet)
-        {
-            foreach (var usingDirective in root.Usings) // iterate over each using statement
-            {
-                var name = semanticModel.GetSymbolInfo(usingDirective.Name); // https://github.com/dotnet/roslyn/wiki/Getting-Started-C%23-Semantic-Analysis
-                //if (name.Symbol == null) // I don't know why I have to do this. I don't know why our namespace is diffrent than the System ones, magic
-                //{
-                    // get the text for the using
-                    IdentifierNameSyntax ins = (IdentifierNameSyntax)usingDirective.Name;
-                    var valueText = ins.Identifier.ValueText;
-
-                    return namespaceSet.Contains(valueText);
-                //}
-            }
-
-            return false;
+            return documentEditor.GetChangedRoot().SyntaxTree;
         }
 
         private void replaceClassExtensions(Func<NameEqualsSyntax, NameSyntax, UsingDirectiveSyntax> usingDirective)
@@ -122,7 +107,7 @@ namespace NamespaceRefactorer
         {
 
             // https://duckduckgo.com/?q=nested+selection+linq&ia=qa
-            IEnumerable<ObjectCreationExpressionSyntax> objectCreations = root.DescendantNodes().OfType<ObjectCreationExpressionSyntax>();
+            IEnumerable<ObjectCreationExpressionSyntax> objectCreations = tree.GetRoot().DescendantNodes().OfType<ObjectCreationExpressionSyntax>();
             foreach (ObjectCreationExpressionSyntax item in objectCreations) // iterate over all object creations in the file
             {
                 var semanticObjCreation = semanticModel.GetSymbolInfo(item.Type);
@@ -142,17 +127,10 @@ namespace NamespaceRefactorer
            List<UsingDirectiveSyntax> rtn = new List<UsingDirectiveSyntax>();
             foreach (var usingDirective in root.Usings) // iterate over each using statement
             {
-                var name = semanticModel.GetSymbolInfo(usingDirective.Name); // https://github.com/dotnet/roslyn/wiki/Getting-Started-C%23-Semantic-Analysis
-                if (name.Symbol == null) // I don't know why I have to do this. I don't know why our namespace is diffrent than the System ones, magic
+                var valueText = usingDirective.Name.GetText().ToString();
+                if (namespaceSet.Contains(valueText))
                 {
-                    // get the text for the using
-                    IdentifierNameSyntax ins = (IdentifierNameSyntax)usingDirective.Name;
-                    var valueText = ins.Identifier.ValueText;
-
-                    if (namespaceSet.Contains(valueText))
-                    {
-                        rtn.Add(usingDirective);
-                    }
+                    rtn.Add(usingDirective);
                 }
             }
             return rtn;
@@ -160,11 +138,14 @@ namespace NamespaceRefactorer
 
     private void replaceOldUsingWithNew(UsingDirectiveSyntax usingDirective)
         {
-            NameSyntax mockName2 = IdentifierName("FujitsuSDKNew"); // Magic
+            Dictionary<String, String> oldToNewMap = SDKMappingSQLConnector.GetInstance().GetOldToNewNamespaceMap(ProjectTransform.sdkId);
+            var oldUsingName = usingDirective.Name.GetText().ToString();
+            var newUsingName = oldToNewMap[oldUsingName];
+            NameSyntax mockName2 = IdentifierName(newUsingName);
 
             var oldUsing = usingDirective;
             var newUsing = oldUsing.WithName(mockName2);
-            root = root.ReplaceNode(oldUsing, newUsing);
+            documentEditor.ReplaceNode(oldUsing, newUsing);
         }
     }
 }
