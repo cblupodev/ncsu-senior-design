@@ -145,5 +145,22 @@ namespace DBConnector
             }
             return null;
         }
+
+        public Boolean DeleteMappingBySDKId(int sdkId)
+        {
+            var mappings = dbConnection.sdk_maps.Where(m => m.sdk_id == sdkId);
+            dbConnection.sdk_maps.DeleteAllOnSubmit(mappings);
+
+            try
+            {
+                dbConnection.SubmitChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+        }
     }
 }
