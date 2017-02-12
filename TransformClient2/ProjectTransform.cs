@@ -49,11 +49,13 @@ namespace NamespaceRefactorer
 
         void ProcessProject(Project proj)
         {
+            HashSet<String> namespaceSet =  mappingConnector.GetAllNamespaces(sdkId);
+            Dictionary<String, HashSet<String>> namespaceToClassnameSetMap = mappingConnector.GetNamespaceToClassnameSetMap(sdkId);
             foreach (Document doc in proj.Documents)
             {
                 if (isDocCSharp(doc))
                 {
-                    ProcessDocumentCSharp(doc); 
+                    ProcessDocumentCSharp(doc, namespaceSet, namespaceToClassnameSetMap); 
                 }
 
                 if (isDocVB(doc))
@@ -78,7 +80,7 @@ namespace NamespaceRefactorer
             return Path.GetExtension(doc.FilePath).Equals(".cs");
         }
 
-        void ProcessDocumentCSharp(Document doc)
+        void ProcessDocumentCSharp(Document doc, HashSet<String> namespaceSet, Dictionary<String, HashSet<String>> namespaceToClassnameSetMap)
         {
             var semanticModel = doc.GetSemanticModelAsync().Result;
             var syntaxTree = doc.GetSyntaxTreeAsync().Result;
@@ -88,7 +90,7 @@ namespace NamespaceRefactorer
 
             FileTransform ft = new FileTransform(documentEditor);
 
-            syntaxTree = ft.findOldUsingsAndReplaceOldSyntax(mappingConnector.GetAllNamespaces(sdkId), documentEditor);
+            syntaxTree = ft.findOldUsingsAndReplaceOldSyntax(documentEditor, namespaceSet, namespaceToClassnameSetMap);
             File.WriteAllText(doc.FilePath, syntaxTree.GetText().ToString()); // http://stackoverflow.com/questions/18295837/c-sharp-roslyn-api-reading-a-cs-file-updating-a-class-writing-back-to-cs-fi
         }
     }

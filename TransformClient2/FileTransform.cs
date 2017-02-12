@@ -58,22 +58,20 @@ namespace NamespaceRefactorer
         // search for using statements with the old sdk. Then if they are found then look for classes that coresponded to the custom attributes
         // if classes are found then replace the old using statement with the new one
         // oldSDKUsings is a list of the old sdk using statements
-        public SyntaxTree findOldUsingsAndReplaceOldSyntax(HashSet<string> namespaceSet, DocumentEditor documentEditor)
+        public SyntaxTree findOldUsingsAndReplaceOldSyntax(DocumentEditor documentEditor, HashSet<string> namespaceSet, Dictionary<String, HashSet<String>> namespaceToClassnameSetMap)
         {
             List<UsingDirectiveSyntax> oldUsings = findMatchingUsings(namespaceSet);
-            if (oldUsings.Any()) // continue if there are usings in the database
-            {
-                foreach (var usingDirective in oldUsings)
-                {
-                    replaceObjectCreations(usingDirective);
-                    //replaceCastings(usingDirective);
-                    //replaceUsingStatements(usingDirective);
-                    //replaceFullyQualifiedNames(UsingDirective);
-                    //replaceAliasing(UsingDirective);
-                    //replaceClassExtensions(UsingDirective);
-                    // etc.
-                }
-            }
+            List<ObjectCreationExpressionSyntax> oldObjectCreations = findMatchingClassnames(namespaceToClassnameSetMap);
+            //if (oldUsings.Any()) // continue if there are usings in the database
+            //{
+            //    replaceUsingStatements(oldUsings);
+            //}
+            replaceObjectCreations();
+            //replaceCastings(usingDirective);
+            //replaceFullyQualifiedNames(UsingDirective);
+            //replaceAliasing(UsingDirective);
+            //replaceClassExtensions(UsingDirective);
+            // etc.
 
             return documentEditor.GetChangedRoot().SyntaxTree;
         }
@@ -93,9 +91,19 @@ namespace NamespaceRefactorer
             throw new NotImplementedException();
         }
 
-        private void replaceUsingStatements(UsingDirectiveSyntax usingDirective)
+        private void replaceUsingStatements(List<UsingDirectiveSyntax> oldUsings)
         {
-            throw new NotImplementedException();
+            foreach (var usingDirective in oldUsings)
+            {
+                Dictionary<String, String> oldToNewMap = SDKMappingSQLConnector.GetInstance().GetOldToNewNamespaceMap(ProjectTransform.sdkId);
+                var oldUsingName = usingDirective.Name.GetText().ToString();
+                var newUsingName = oldToNewMap[oldUsingName];
+                NameSyntax mockName2 = IdentifierName(newUsingName);
+
+                var oldUsing = usingDirective;
+                var newUsing = oldUsing.WithName(mockName2);
+                documentEditor.ReplaceNode(oldUsing, newUsing);
+            }
         }
 
         private void replaceCastings(UsingDirectiveSyntax usingDirective)
@@ -103,7 +111,7 @@ namespace NamespaceRefactorer
             throw new NotImplementedException();
         }
 
-        private void replaceObjectCreations(UsingDirectiveSyntax usingDirective)
+        private void replaceObjectCreations()
         {
 
             // https://duckduckgo.com/?q=nested+selection+linq&ia=qa
@@ -111,20 +119,21 @@ namespace NamespaceRefactorer
             foreach (ObjectCreationExpressionSyntax item in objectCreations) // iterate over all object creations in the file
             {
                 var semanticObjCreation = semanticModel.GetSymbolInfo(item.Type);
+
                 // semanticObcCreation
                 // if find a class that was tagged then replace the old using with the new one
-                var descendentTokens = item.DescendantTokens().OfType<SyntaxToken>(); // TODO use the semantic model instead of this way
-                if (descendentTokens.ElementAt(1).Value.Equals("Sample")) // [1] gets the identifier syntax, magic
-                {
-                    replaceOldUsingWithNew(usingDirective);
-                }
+                //var descendentTokens = item.DescendantTokens().OfType<SyntaxToken>(); // TODO use the semantic model instead of this way
+                //if (descendentTokens.ElementAt(1).Value.Equals("Sample")) // [1] gets the identifier syntax, magic
+                //{
+                //    replaceOldUsingWithNew(usingDirective);
+                //}
             }
         }
 
-         //return a list of using directives that exist in the database
+        //return a list of using directives that exist in the database
         private List<UsingDirectiveSyntax> findMatchingUsings(HashSet<string> namespaceSet)
         {
-           List<UsingDirectiveSyntax> rtn = new List<UsingDirectiveSyntax>();
+            List<UsingDirectiveSyntax> rtn = new List<UsingDirectiveSyntax>();
             foreach (var usingDirective in root.Usings) // iterate over each using statement
             {
                 var valueText = usingDirective.Name.GetText().ToString();
@@ -136,16 +145,25 @@ namespace NamespaceRefactorer
             return rtn;
         }
 
-    private void replaceOldUsingWithNew(UsingDirectiveSyntax usingDirective)
+        //return a list of using classnames that exist in the database
+        private List<ObjectCreationExpressionSyntax> findMatchingClassnames(Dictionary<String, HashSet<String>> namespaceToClassnameSetMap)
         {
-            Dictionary<String, String> oldToNewMap = SDKMappingSQLConnector.GetInstance().GetOldToNewNamespaceMap(ProjectTransform.sdkId);
-            var oldUsingName = usingDirective.Name.GetText().ToString();
-            var newUsingName = oldToNewMap[oldUsingName];
-            NameSyntax mockName2 = IdentifierName(newUsingName);
-
-            var oldUsing = usingDirective;
-            var newUsing = oldUsing.WithName(mockName2);
-            documentEditor.ReplaceNode(oldUsing, newUsing);
+            List<ObjectCreationExpressionSyntax> rtn = new List<ObjectCreationExpressionSyntax>();
+            // https://duckduckgo.com/?q=nested+selection+linq&ia=qa
+            IEnumerable<ObjectCreationExpressionSyntax> objectCreations = tree.GetRoot().DescendantNodes().OfType<ObjectCreationExpressionSyntax>();
+            foreach (ObjectCreationExpressionSyntax item in objectCreations) // iterate over all object creations in the file
+            {
+                var semanticObjCreation = semanticModel.GetSymbolInfo(item.Type);
+                var oldNamespace = semanticObjCreation.Symbol.ContainingNamespace.ToString();
+                if (namespaceToClassnameSetMap.ContainsKey(oldNamespace))
+                {
+                    if (namespaceToClassnameSetMap[oldNamespace].Contains(semanticObjCreation.Symbol.Name))
+                    {
+                        rtn.Add(item);
+                    }
+                }
+            }
+            return rtn;
         }
     }
 }
