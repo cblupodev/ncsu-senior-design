@@ -40,6 +40,9 @@ The client creates a new instance of an SDK class.
 ###multiAssembly
 The SDK uses multiple assemblies (dll files).
 
+###multiBasic
+Multiple namespaces, files, and classes per file in SDK.  Multiple files and classes per file in client.
+
 ###namespaceInNamespace
 The SDK has a namespace directive inside of a namespace directive, creating an implicit nesting.
 
