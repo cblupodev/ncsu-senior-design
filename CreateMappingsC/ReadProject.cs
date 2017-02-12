@@ -38,7 +38,7 @@ namespace CreateMappings
             readFolderDllFiles(folderPath);
 
 
-            SDKMappingSQLConnector.GetInstance().SaveSDKMappings2(Mappings);
+            SDKMappingSQLConnector.GetInstance().SaveSDKMappings2(Mappings, sdkId);
         }
 
         // itereate over all the dll files in a folder
