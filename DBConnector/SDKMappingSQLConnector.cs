@@ -21,41 +21,11 @@ namespace DBConnector
             return instance;
         }
 
-        public Boolean SaveSDKMapping(Mapping mappingToSave)
+        public Boolean SaveSDKMapping(GenericMapping mappingToSave)
         {
-            return SaveSDKMappings(new List<Mapping>() { mappingToSave });
+            return SaveSDKMappings2(new List<GenericMapping>() { mappingToSave });
         }
-
-        public Boolean SaveSDKMappings(List<Mapping> mappingsToSave)
-        {
-            List<sdk_mapping> dbMappings = new List<sdk_mapping>();
-
-            foreach(var m in mappingsToSave)
-            {
-                sdk_mapping dbMapping = new sdk_mapping
-                {
-                    model_identifier = m.ModelIdentifierGUID,
-                    old_namespace = m.OldNamespace,
-                    old_classname = m.OldClassName,
-                    new_namespace = m.NewNamespace,
-                    new_classname = m.NewClassName
-                };
-                dbMappings.Add(dbMapping);
-            }
-
-            dbConnection.sdk_mappings.InsertAllOnSubmit(dbMappings);
-
-            try
-            {
-                dbConnection.SubmitChanges();
-                return true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                return false;
-            }
-        }
+        
         public Boolean SaveSDKMappings2(List<GenericMapping> mappingsToSave)
         {
             List<sdk_map> dbMappings = new List<sdk_map>();
