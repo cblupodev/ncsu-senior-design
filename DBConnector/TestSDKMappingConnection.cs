@@ -11,45 +11,36 @@ namespace DBConnector
     {
         static void Main(String[] args)
         {
-            FujitsuConnectorDataContext dbConnection = new FujitsuConnectorDataContext();
-
-            //sdk_mapping newMapping = new sdk_mapping
-            //{
-            //    model_identifier = "456",
-            //    new_sdk = "test.old",
-            //    old_sdk = "test.new"
-            //};
-
-
-
-            sdk newSDK = new sdk
+            SDKSQLConnector.GetInstance().SaveSDK("alabama");
+            int sdkId = SDKSQLConnector.GetInstance().getByName("alabama").id;
+            List<GenericMapping> oldMappingList = new List<GenericMapping>();
+            List<GenericMapping> newMappingList = new List<GenericMapping>();
+            oldMappingList.Add(new GenericMapping("oldNamespace", "1234", "oldClassname1", "pathA1", sdkId));
+            newMappingList.Add(new GenericMapping("newNamespace", "1234", "newClassname1", "pathA2", sdkId));
+            oldMappingList.Add(new GenericMapping("oldNamespace", "4567", "oldClassname2", "pathB1", sdkId));
+            newMappingList.Add(new GenericMapping("newNamespace", "4567", "newClassname2", "pathB2", sdkId));
+            oldMappingList.Add(new GenericMapping("oldNamespace", "7890", "oldClassname3", "pathC1", sdkId));
+            newMappingList.Add(new GenericMapping("newNamespace", "7890", "newClassname3", "pathC2", sdkId));
+            oldMappingList.Add(new GenericMapping("oldNamespace1", "4321", "oldClassname4", "pathD1", sdkId));
+            newMappingList.Add(new GenericMapping("newNamespace1", "4321", "newClassname5", "pathD2", sdkId));
+            SDKMappingSQLConnector.GetInstance().SaveSDKMappings2(oldMappingList);
+            SDKMappingSQLConnector.GetInstance().SaveSDKMappings2(newMappingList);
+            HashSet<String> oldNamespacesSet = SDKMappingSQLConnector.GetInstance().GetAllNamespaces(sdkId);
+            if (oldNamespacesSet.Contains("oldNamespace"))
             {
-                name = "test2"
-            };
-
-            //dbConnection.sdk_mappings.InsertOnSubmit(newMapping);
-
-            dbConnection.sdks.InsertOnSubmit(newSDK);
-
-            try
-            {
-                dbConnection.SubmitChanges();
+                Console.WriteLine("It worked");
             }
-            catch (Exception e)
+            else
             {
-                Console.WriteLine(e);
+                Console.WriteLine("It did not work");
             }
 
-
-            //var query = dbConnection.sdk_mappings.Where(m => m.model_identifier == "456");
-
-            //foreach (var q in query)
-            //{
-            //    Console.WriteLine(q.model_identifier);
-            //    Console.WriteLine(q.old_namespace);
-            //    Console.WriteLine(q.new_namespace);
-            //    Console.ReadLine();
-            //}
+            Dictionary<String, String> namespaceMap = SDKMappingSQLConnector.GetInstance().GetOldToNewNamespaceMap(sdkId);
+            foreach(KeyValuePair<String, String> n in namespaceMap)
+            {
+                Console.WriteLine(n.ToString());
+            }
+            Console.ReadLine();
         }
     }
 }
