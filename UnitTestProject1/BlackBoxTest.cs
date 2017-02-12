@@ -28,8 +28,44 @@ namespace UnitTest.BlackBox
 
 
         static string testFolder;
-        static string pathToCreateMappings = @""; //TODO fill in
-        static string pathToTransformClient = @""; //TODO fill in
+        static string pathToCreateMappings = null; //TODO fill in
+        static string pathToTransformClient = null; //TODO fill in
+
+        static BlackBoxTest()
+        {
+            var dir = new DirectoryInfo(".");
+            while ( dir != null && dir.GetFiles("*.sln").Length == 0 )
+            {
+                dir = dir.Parent;
+            }
+            if ( dir == null )
+            {
+                Assert.Fail("could not find parent solution");
+                return;
+            }
+            var soln = MSBuildWorkspace.Create().OpenSolutionAsync(dir.GetFiles("*.sln")[0].FullName).Result;
+            foreach ( var proj in soln.Projects )
+            {
+                if ( proj.Name.Equals("CreateMappings") )
+                {
+                    pathToCreateMappings = proj.OutputFilePath;
+                }
+                else if ( proj.Name.Equals("NamespaceRefactorer") )
+                {
+                    pathToTransformClient = proj.OutputFilePath;
+                }
+            }
+            if ( pathToCreateMappings == null )
+            {
+                Assert.Fail("Couldn't find create mapping program");
+                return;
+            }
+            if ( pathToTransformClient == null )
+            {
+                Assert.Fail("Couldn't find transofrm client program");
+                return;
+            }
+        }
 
         public string CompileProject(Project proj)
         {
