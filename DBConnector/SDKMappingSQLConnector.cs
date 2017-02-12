@@ -128,6 +128,20 @@ namespace DBConnector
             return GetByWhereClause(whereClause);
         }
 
+        public Mapping GetByOldNamespace(String oldNamespace, int sdkId)
+        {
+            Expression<Func<sdk_map, bool>> whereClause = m => (m.old_namespace == oldNamespace) && (m.sdk_id == sdkId);
+            List<Mapping> maps =  GetAllByWhereClause(whereClause);
+            return maps.First();
+
+        }
+
+        public Mapping GetByFullyQualifiedName(string oldNamespace, string oldClassname, int sdkId)
+        {
+            Expression<Func<sdk_map, bool>> whereClause = m => (m.old_namespace == oldNamespace) && (m.old_classname == oldClassname) && (m.sdk_id == sdkId);
+            return GetByWhereClause(whereClause);
+        }
+
         private Mapping GetByWhereClause(Expression<Func<sdk_map, bool>> whereClause)
         {
             var res = dbConnection.sdk_maps.Where(whereClause);
