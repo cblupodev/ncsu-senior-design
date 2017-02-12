@@ -30,9 +30,6 @@ namespace DBConnector
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void Insertsdk_mapping(sdk_mapping instance);
-    partial void Updatesdk_mapping(sdk_mapping instance);
-    partial void Deletesdk_mapping(sdk_mapping instance);
     partial void Insertsdk_map(sdk_map instance);
     partial void Updatesdk_map(sdk_map instance);
     partial void Deletesdk_map(sdk_map instance);
@@ -71,14 +68,6 @@ namespace DBConnector
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<sdk_mapping> sdk_mappings
-		{
-			get
-			{
-				return this.GetTable<sdk_mapping>();
-			}
-		}
-		
 		public System.Data.Linq.Table<sdk_map> sdk_maps
 		{
 			get
@@ -92,164 +81,6 @@ namespace DBConnector
 			get
 			{
 				return this.GetTable<sdk>();
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.sdk_mappings")]
-	public partial class sdk_mapping : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private string _model_identifier;
-		
-		private string _old_namespace;
-		
-		private string _new_namespace;
-		
-		private string _old_classname;
-		
-		private string _new_classname;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void Onmodel_identifierChanging(string value);
-    partial void Onmodel_identifierChanged();
-    partial void Onold_namespaceChanging(string value);
-    partial void Onold_namespaceChanged();
-    partial void Onnew_namespaceChanging(string value);
-    partial void Onnew_namespaceChanged();
-    partial void Onold_classnameChanging(string value);
-    partial void Onold_classnameChanged();
-    partial void Onnew_classnameChanging(string value);
-    partial void Onnew_classnameChanged();
-    #endregion
-		
-		public sdk_mapping()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_model_identifier", DbType="VarChar(255) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string model_identifier
-		{
-			get
-			{
-				return this._model_identifier;
-			}
-			set
-			{
-				if ((this._model_identifier != value))
-				{
-					this.Onmodel_identifierChanging(value);
-					this.SendPropertyChanging();
-					this._model_identifier = value;
-					this.SendPropertyChanged("model_identifier");
-					this.Onmodel_identifierChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_old_namespace", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
-		public string old_namespace
-		{
-			get
-			{
-				return this._old_namespace;
-			}
-			set
-			{
-				if ((this._old_namespace != value))
-				{
-					this.Onold_namespaceChanging(value);
-					this.SendPropertyChanging();
-					this._old_namespace = value;
-					this.SendPropertyChanged("old_namespace");
-					this.Onold_namespaceChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_new_namespace", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
-		public string new_namespace
-		{
-			get
-			{
-				return this._new_namespace;
-			}
-			set
-			{
-				if ((this._new_namespace != value))
-				{
-					this.Onnew_namespaceChanging(value);
-					this.SendPropertyChanging();
-					this._new_namespace = value;
-					this.SendPropertyChanged("new_namespace");
-					this.Onnew_namespaceChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_old_classname", DbType="VarChar(MAX)")]
-		public string old_classname
-		{
-			get
-			{
-				return this._old_classname;
-			}
-			set
-			{
-				if ((this._old_classname != value))
-				{
-					this.Onold_classnameChanging(value);
-					this.SendPropertyChanging();
-					this._old_classname = value;
-					this.SendPropertyChanged("old_classname");
-					this.Onold_classnameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_new_classname", DbType="VarChar(MAX)")]
-		public string new_classname
-		{
-			get
-			{
-				return this._new_classname;
-			}
-			set
-			{
-				if ((this._new_classname != value))
-				{
-					this.Onnew_classnameChanging(value);
-					this.SendPropertyChanging();
-					this._new_classname = value;
-					this.SendPropertyChanged("new_classname");
-					this.Onnew_classnameChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}

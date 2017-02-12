@@ -136,6 +136,25 @@ namespace DBConnector
 
         }
 
+        public HashSet<String> GetAllNamespaces(int sdkId)
+        {
+            var query = (from sm in dbConnection.sdk_maps where sm.sdk_id == sdkId select sm.old_namespace).Distinct();
+            HashSet<String> namespaceSet = new HashSet<String>(query);
+            return namespaceSet;
+
+        }
+
+        public Dictionary<String, String> GetOldToNewNamespaceMap(int sdkId)
+        {
+            var query = (from sm in dbConnection.sdk_maps
+                         where sm.sdk_id == sdkId
+                         select new
+                         {
+                             col1 = sm.old_namespace,
+                             col2 = sm.new_namespace
+                         }).Distinct().ToDictionary(sm => sm.col1, sm => sm.col2, StringComparer.OrdinalIgnoreCase);
+            return query;
+        }
         public Mapping GetByFullyQualifiedName(string oldNamespace, string oldClassname, int sdkId)
         {
             Expression<Func<sdk_map, bool>> whereClause = m => (m.old_namespace == oldNamespace) && (m.old_classname == oldClassname) && (m.sdk_id == sdkId);
