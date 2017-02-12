@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using Microsoft.CodeAnalysis.MSBuild;
 using Microsoft.CodeAnalysis;
+using DBConnector;
 
 namespace UnitTest.BlackBox
 {
@@ -105,6 +106,11 @@ namespace UnitTest.BlackBox
                 Assert.AreEqual(expectedOut.ReadLine(), proc.StandardOutput.ReadLine(), assertMessage);
             }
             Assert.AreEqual(expectedOut.EndOfStream, proc.StandardOutput.EndOfStream, assertMessage);
+        }
+
+        public virtual void ResetDatabase()
+        {
+            SDKSQLConnector.GetInstance().DeleteSDKByName(sdkNameId);
         }
 
         IEnumerable<string> dllsToRemove;
@@ -225,6 +231,7 @@ namespace UnitTest.BlackBox
         public virtual void RunTest()
         {
             sdkNameId = testFolder;
+            ResetDatabase();
             PreSetup();
             PreVerify();
             Setup();
