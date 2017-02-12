@@ -28,8 +28,9 @@ namespace UnitTest.BlackBox
 
 
         static string testFolder;
-        static string pathToCreateMappings = null; //TODO fill in
-        static string pathToTransformClient = null; //TODO fill in
+        static string pathToCreateMappings = null;
+        static string pathToTransformClient = null;
+        static string sdkNameId = null;
 
         static BlackBoxTest()
         {
@@ -139,33 +140,67 @@ namespace UnitTest.BlackBox
                 "Pre-translation failed");
         }
 
+        IEnumerable<string> dllsToMap;
         public virtual void Setup()
+        {
+            
+        }
+
+        public virtual void RunPreMapping()
+        {
+            foreach (string dll in dllsToRemove)
+            {
+                var createMapping = new Process();
+                createMapping.StartInfo.FileName = pathToCreateMappings;
+                createMapping.StartInfo.Arguments = "\"" + dll + "\" \"" + sdkNameId + "\""; //TODO fill in
+                createMapping.Start();
+                createMapping.WaitForExit();
+                Assert.AreEqual(0, createMapping.ExitCode, "Error running the creating mapping program on old dll: " + dll);
+            }
+        }
+
+        public virtual void MidMappingSetup()
         {
             foreach (string dll in dllsToRemove)
             {
                 File.Delete(dll);
             }
 
+            var toMap = new LinkedList<string>();
             foreach (string dll in CompileSolution(Path.Combine(TestFolder, "newSDK", "SDK.sln")))
             {
                 File.Copy(dll, Path.Combine(TestFolder, "bin", Path.GetFileName(dll)));
+                toMap.AddLast(dll);
+            }
+            dllsToMap = toMap;
+        }
+
+        public virtual void RunPostMapping()
+        {
+            foreach (string dll in dllsToMap)
+            {
+                var createMapping = new Process();
+                createMapping.StartInfo.FileName = pathToCreateMappings;
+                createMapping.StartInfo.Arguments = "\"" + dll + "\" \"" + sdkNameId + "\""; //TODO fill in
+                createMapping.Start();
+                createMapping.WaitForExit();
+                Assert.AreEqual(0, createMapping.ExitCode, "Error running the creating mapping program on new dll: " + dll);
             }
         }
 
-        public virtual void RunProgram()
+        public virtual void RunTransformation()
         {
-            var createMapping = new Process();
-            createMapping.StartInfo.FileName = pathToCreateMappings;
-            createMapping.StartInfo.Arguments = ""; //TODO fill in
-            createMapping.Start();
-            createMapping.WaitForExit();
-            Assert.AreEqual(0, createMapping.ExitCode, "Error running the creating mapping program");
-            var translateClient = new Process();
-            translateClient.StartInfo.FileName = pathToTransformClient;
-            translateClient.StartInfo.Arguments = ""; //TODO fill in
-            translateClient.Start();
-            translateClient.WaitForExit();
-            Assert.AreEqual(0, translateClient.ExitCode, "error running the translate client program");
+            var projects = new String[] { Path.Combine(TestFolder, "clientC#", "Client", "Client.csproj"),
+                Path.Combine(TestFolder, "clientVB", "Client", "Client.vbproj") };
+            foreach (var project in projects)
+            {
+                var translateClient = new Process();
+                translateClient.StartInfo.FileName = pathToTransformClient;
+                translateClient.StartInfo.Arguments = "\"" + project + "\"";
+                translateClient.Start();
+                translateClient.WaitForExit();
+                Assert.AreEqual(0, translateClient.ExitCode, "error running the translate client program on: " + project);
+            }
         }
 
         public virtual void VerifyResult()
@@ -189,10 +224,14 @@ namespace UnitTest.BlackBox
         // call this method in the test method
         public virtual void RunTest()
         {
+            sdkNameId = testFolder;
             PreSetup();
             PreVerify();
             Setup();
-            RunProgram();
+            RunPreMapping();
+            MidMappingSetup();
+            RunPostMapping();
+            RunTransformation();
             VerifyResult();
         }
 
