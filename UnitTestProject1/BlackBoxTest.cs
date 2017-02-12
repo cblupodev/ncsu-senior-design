@@ -39,21 +39,9 @@ namespace UnitTest.BlackBox
             comp.Emit(proj.OutputFilePath);
             var solnDir = new FileInfo(proj.FilePath).Directory.Parent;
             var outDir = new FileInfo(proj.OutputFilePath).Directory;
-            foreach (MetadataReference reference in comp.ExternalReferences)
-            {
-                if (reference is PortableExecutableReference)
-                {
-                    var refPath = new FileInfo(((PortableExecutableReference)reference).FilePath);
-                    if ( refPath.Directory.FullName.StartsWith(solnDir.FullName))
-                    {
-                        // this reference is inside of the solution directory
-                        // so we probably need to include it in the output directory
-                        File.Copy(refPath.FullName, Path.Combine(outDir.FullName, refPath.Name), true);
-                    }
-                }
-            }
             return proj.OutputFilePath;
         }
+
         public IEnumerable<string> CompileSolution(string solnPath)
         {
             var result = new LinkedList<string>();
@@ -63,12 +51,6 @@ namespace UnitTest.BlackBox
                 result.AddLast(CompileProject(proj));
             }
             return result;
-        }
-
-        public void CleanProject(string projectPath)
-        {
-            var proj = MSBuildWorkspace.Create().OpenProjectAsync(projectPath).Result;
-            Directory.Delete(new FileInfo(proj.OutputFilePath).Directory.FullName, true);
         }
 
         public void VerifyProject(string projectPath, string expectedPath, string assertMessage)
@@ -91,23 +73,15 @@ namespace UnitTest.BlackBox
         IEnumerable<string> dllsToRemove;
         public virtual void PreSetup()
         {
-            foreach ( string path in Directory.GetFiles(Path.Combine(TestFolder, "clientC#", "libs")) )
-            {
-                File.Delete(path);
-            }
-            foreach (string path in Directory.GetFiles(Path.Combine(TestFolder, "clientVB", "libs")))
+            foreach ( string path in Directory.GetFiles(Path.Combine(TestFolder, "bin")) )
             {
                 File.Delete(path);
             }
             var toRemove = new LinkedList<string>();
             foreach (string dll in CompileSolution(Path.Combine(TestFolder, "oldSDK", "SDK.sln")))
             {
-                var csFile = Path.Combine(TestFolder, "clientC#", "libs", Path.GetFileName(dll));
-                var vbFile = Path.Combine(TestFolder, "clientVB", "libs", Path.GetFileName(dll));
-                File.Copy(dll, csFile);
-                File.Copy(dll, vbFile);
-                toRemove.AddLast(csFile);
-                toRemove.AddLast(vbFile);
+                File.Copy(dll, Path.Combine(TestFolder, "bin", Path.GetFileName(dll)));
+                toRemove.AddLast(Path.Combine(TestFolder, "bin", Path.GetFileName(dll)));
             }
             dllsToRemove = toRemove;
         }
@@ -135,13 +109,10 @@ namespace UnitTest.BlackBox
             {
                 File.Delete(dll);
             }
-            CleanProject(Path.Combine(TestFolder, "clientC#", "Client", "Client.csproj"));
-            CleanProject(Path.Combine(TestFolder, "clientVB", "Client", "Client.vbproj"));
 
             foreach (string dll in CompileSolution(Path.Combine(TestFolder, "newSDK", "SDK.sln")))
             {
-                File.Copy(dll, Path.Combine(TestFolder, "clientC#", "libs", Path.GetFileName(dll)));
-                File.Copy(dll, Path.Combine(TestFolder, "clientVB", "libs", Path.GetFileName(dll)));
+                File.Copy(dll, Path.Combine(TestFolder, "bin", Path.GetFileName(dll)));
             }
         }
 
@@ -185,7 +156,7 @@ namespace UnitTest.BlackBox
             PreSetup();
             PreVerify();
             Setup();
-            RunProgram();
+            //RunProgram();
             VerifyResult();
         }
 
