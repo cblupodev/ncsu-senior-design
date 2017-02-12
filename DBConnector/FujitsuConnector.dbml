@@ -1,11 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="fujitsu" Class="FujitsuConnectorDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=152.14.106.21;Initial Catalog=fujitsu;User ID=testuser;Encrypt=False;TrustServerCertificate=True" SettingsObjectName="DBConnector.Properties.Settings" SettingsPropertyName="fujitsuConnectionString" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.sdk" Member="sdks">
-    <Type Name="sdk">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="name" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
   <Table Name="dbo.sdk_mappings" Member="sdk_mappings">
     <Type Name="sdk_mapping">
       <Column Name="model_identifier" Type="System.String" DbType="VarChar(255) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -13,6 +7,27 @@
       <Column Name="new_namespace" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
       <Column Name="old_classname" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Column Name="new_classname" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.sdk_map" Member="sdk_maps">
+    <Type Name="sdk_map">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="model_identifier" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="sdk_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="old_classname" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="new_classname" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="old_assembly_path" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="new_assembly_path" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="old_namespace" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="new_namespace" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Association Name="sdk_sdk_map" Member="sdk" ThisKey="sdk_id" OtherKey="id" Type="sdk" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.sdk" Member="sdks">
+    <Type Name="sdk">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(896)" CanBeNull="true" />
+      <Association Name="sdk_sdk_map" Member="sdk_maps" ThisKey="id" OtherKey="sdk_id" Type="sdk_map" />
     </Type>
   </Table>
 </Database>
