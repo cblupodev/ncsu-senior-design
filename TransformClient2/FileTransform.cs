@@ -55,10 +55,10 @@ namespace NamespaceRefactorer
         // search for using statements with the old sdk. Then if they are found then look for classes that coresponded to the custom attributes
         // if classes are found then replace the old using statement with the new one
         // oldSDKUsings is a list of the old sdk using statements
-        public SyntaxTree findOldUsingsAndReplaceOldSyntax(FujitsuConnectorDataContext dbConnection)
+        public SyntaxTree findOldUsingsAndReplaceOldSyntax(HashSet<string> namespaceSet)
         {
-            List<UsingDirectiveSyntax> oldUsings = findMatchingUsings(dbConnection);
-            if (oldUsings.Count > 0) // continue if there are usings in the database
+            List<UsingDirectiveSyntax> oldUsings = findMatchingUsings(namespaceSet);
+            if (oldUsings.Any()) // continue if there are usings in the database
             {
                 foreach (var usingDirective in oldUsings)
                 {
@@ -72,7 +72,25 @@ namespace NamespaceRefactorer
                 }
             }
 
-            return this.tree;
+            return tree;
+        }
+
+        internal bool hasNameSpaceInDatabase(HashSet<string> namespaceSet)
+        {
+            foreach (var usingDirective in root.Usings) // iterate over each using statement
+            {
+                var name = semanticModel.GetSymbolInfo(usingDirective.Name); // https://github.com/dotnet/roslyn/wiki/Getting-Started-C%23-Semantic-Analysis
+                //if (name.Symbol == null) // I don't know why I have to do this. I don't know why our namespace is diffrent than the System ones, magic
+                //{
+                    // get the text for the using
+                    IdentifierNameSyntax ins = (IdentifierNameSyntax)usingDirective.Name;
+                    var valueText = ins.Identifier.ValueText;
+
+                    return namespaceSet.Contains(valueText);
+                //}
+            }
+
+            return false;
         }
 
         private void replaceClassExtensions(Func<NameEqualsSyntax, NameSyntax, UsingDirectiveSyntax> usingDirective)
@@ -102,11 +120,13 @@ namespace NamespaceRefactorer
 
         private void replaceObjectCreations(UsingDirectiveSyntax usingDirective)
         {
+
+            // https://duckduckgo.com/?q=nested+selection+linq&ia=qa
             IEnumerable<ObjectCreationExpressionSyntax> objectCreations = root.DescendantNodes().OfType<ObjectCreationExpressionSyntax>();
             foreach (ObjectCreationExpressionSyntax item in objectCreations) // iterate over all object creations in the file
             {
                 var semanticObjCreation = semanticModel.GetSymbolInfo(item.Type);
-                //semanticObcCreation
+                // semanticObcCreation
                 // if find a class that was tagged then replace the old using with the new one
                 var descendentTokens = item.DescendantTokens().OfType<SyntaxToken>(); // TODO use the semantic model instead of this way
                 if (descendentTokens.ElementAt(1).Value.Equals("Sample")) // [1] gets the identifier syntax, magic
@@ -116,10 +136,10 @@ namespace NamespaceRefactorer
             }
         }
 
-        // return a list of using directives that exist in the database
-        private List<UsingDirectiveSyntax> findMatchingUsings(FujitsuConnectorDataContext dbConnection)
+         //return a list of using directives that exist in the database
+        private List<UsingDirectiveSyntax> findMatchingUsings(HashSet<string> namespaceSet)
         {
-            List<UsingDirectiveSyntax> rtn = new List<UsingDirectiveSyntax>();
+           List<UsingDirectiveSyntax> rtn = new List<UsingDirectiveSyntax>();
             foreach (var usingDirective in root.Usings) // iterate over each using statement
             {
                 var name = semanticModel.GetSymbolInfo(usingDirective.Name); // https://github.com/dotnet/roslyn/wiki/Getting-Started-C%23-Semantic-Analysis
@@ -128,21 +148,17 @@ namespace NamespaceRefactorer
                     // get the text for the using
                     IdentifierNameSyntax ins = (IdentifierNameSyntax)usingDirective.Name;
                     var valueText = ins.Identifier.ValueText;
-                    var query = dbConnection.sdk_mappings.Where(m => m.old_namespace == valueText);
-                    foreach (var oldUse in query) // iterate over the old usings, provided as the input
+
+                    if (namespaceSet.Contains(valueText))
                     {
-                        // if an old using is located in the file then seek for object creations that use classes that are tagged
-                        if (valueText.Equals(oldUse))
-                        {
-                            rtn.Add(usingDirective);
-                        }
+                        rtn.Add(usingDirective);
                     }
                 }
             }
             return rtn;
         }
 
-        private void replaceOldUsingWithNew(UsingDirectiveSyntax usingDirective)
+    private void replaceOldUsingWithNew(UsingDirectiveSyntax usingDirective)
         {
             NameSyntax mockName2 = IdentifierName("FujitsuSDKNew"); // Magic
 

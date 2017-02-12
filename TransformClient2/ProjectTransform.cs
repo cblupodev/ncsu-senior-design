@@ -13,12 +13,14 @@ namespace TransformClient2
 {
     class ProjectTransform
     {
-        
-        FujitsuConnectorDataContext dbConnection = new FujitsuConnectorDataContext();
+
+        SDKMappingSQLConnector mappingConnector = SDKMappingSQLConnector.GetInstance();
+        public static int sdkId;
 
         public static void Main(string[] args)
         {
-            (new Program()).Run(args);
+            sdkId = SDKSQLConnector.GetInstance().getByName(args[1]).id;
+            (new ProjectTransform()).Run(args);
         }
 
         public void Run(string[] args)
@@ -83,9 +85,13 @@ namespace TransformClient2
             //do processing here
 
             FileTransform ft = new FileTransform(syntaxTree, semanticModel);
-            syntaxTree = ft.findOldUsingsAndReplaceOldSyntax(dbConnection);
 
-            File.WriteAllText(doc.FilePath, syntaxTree.GetText().ToString()); // http://stackoverflow.com/questions/18295837/c-sharp-roslyn-api-reading-a-cs-file-updating-a-class-writing-back-to-cs-fi
+            // pass in the set not the connector, only query the database once
+            if (ft.hasNameSpaceInDatabase(mappingConnector.GetAllNamespaces(sdkId)))
+            {
+                syntaxTree = ft.findOldUsingsAndReplaceOldSyntax(mappingConnector.GetAllNamespaces(sdkId));
+                File.WriteAllText(doc.FilePath, syntaxTree.GetText().ToString()); // http://stackoverflow.com/questions/18295837/c-sharp-roslyn-api-reading-a-cs-file-updating-a-class-writing-back-to-cs-fi
+            }        
         }
     }
 }

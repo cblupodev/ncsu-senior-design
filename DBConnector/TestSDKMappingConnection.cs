@@ -34,6 +34,7 @@ namespace DBConnector
             {
                 Console.WriteLine("It did not work");
             }
+
             Dictionary<String, String> namespaceMap = SDKMappingSQLConnector.GetInstance().GetOldToNewNamespaceMap(sdkId);
             foreach(KeyValuePair<String, String> n in namespaceMap)
             {
