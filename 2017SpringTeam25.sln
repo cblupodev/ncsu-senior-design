@@ -19,8 +19,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject1", "UnitTes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransformClient2", "TransformClient2\TransformClient2.csproj", "{7375D960-5EE1-4D1B-B668-7B2093E02B7A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication1", "ConsoleApplication1\ConsoleApplication1.csproj", "{1BADBE67-4FF3-45D8-986E-C1085DFF30FF}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBConnector", "DBConnector\DBConnector.csproj", "{FDF3CC16-26A0-47CE-A129-4A06F829DB12}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerInsideVS", "CustomerOldInsideVS\CustomerInsideVS.csproj", "{00A86E3A-617B-4CCF-8A8C-B82969ED05E7}"
@@ -29,12 +27,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMLMod", "XMLMod\XMLMod.csp
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		CreateMappingsRun2|Any CPU = CreateMappingsRun2|Any CPU
+		CreateMappingsRun2|x86 = CreateMappingsRun2|x86
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2B93607F-5DC6-493C-A62A-8D5B3F813EF4}.CreateMappingsRun2|Any CPU.ActiveCfg = CreateMappingsRun2|Any CPU
+		{2B93607F-5DC6-493C-A62A-8D5B3F813EF4}.CreateMappingsRun2|Any CPU.Build.0 = CreateMappingsRun2|Any CPU
+		{2B93607F-5DC6-493C-A62A-8D5B3F813EF4}.CreateMappingsRun2|x86.ActiveCfg = CreateMappingsRun2|Any CPU
+		{2B93607F-5DC6-493C-A62A-8D5B3F813EF4}.CreateMappingsRun2|x86.Build.0 = CreateMappingsRun2|Any CPU
 		{2B93607F-5DC6-493C-A62A-8D5B3F813EF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2B93607F-5DC6-493C-A62A-8D5B3F813EF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B93607F-5DC6-493C-A62A-8D5B3F813EF4}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -43,6 +47,10 @@ Global
 		{2B93607F-5DC6-493C-A62A-8D5B3F813EF4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2B93607F-5DC6-493C-A62A-8D5B3F813EF4}.Release|x86.ActiveCfg = Release|Any CPU
 		{2B93607F-5DC6-493C-A62A-8D5B3F813EF4}.Release|x86.Build.0 = Release|Any CPU
+		{1D33CD7B-13EA-4534-83E9-40D07478EAAD}.CreateMappingsRun2|Any CPU.ActiveCfg = CreateMappingsRun2|Any CPU
+		{1D33CD7B-13EA-4534-83E9-40D07478EAAD}.CreateMappingsRun2|Any CPU.Build.0 = CreateMappingsRun2|Any CPU
+		{1D33CD7B-13EA-4534-83E9-40D07478EAAD}.CreateMappingsRun2|x86.ActiveCfg = CreateMappingsRun2|Any CPU
+		{1D33CD7B-13EA-4534-83E9-40D07478EAAD}.CreateMappingsRun2|x86.Build.0 = CreateMappingsRun2|Any CPU
 		{1D33CD7B-13EA-4534-83E9-40D07478EAAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1D33CD7B-13EA-4534-83E9-40D07478EAAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D33CD7B-13EA-4534-83E9-40D07478EAAD}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -51,6 +59,10 @@ Global
 		{1D33CD7B-13EA-4534-83E9-40D07478EAAD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1D33CD7B-13EA-4534-83E9-40D07478EAAD}.Release|x86.ActiveCfg = Release|Any CPU
 		{1D33CD7B-13EA-4534-83E9-40D07478EAAD}.Release|x86.Build.0 = Release|Any CPU
+		{1C52DF0C-67FD-4A54-9160-732FF0A5143F}.CreateMappingsRun2|Any CPU.ActiveCfg = CreateMappingsRun2|Any CPU
+		{1C52DF0C-67FD-4A54-9160-732FF0A5143F}.CreateMappingsRun2|Any CPU.Build.0 = CreateMappingsRun2|Any CPU
+		{1C52DF0C-67FD-4A54-9160-732FF0A5143F}.CreateMappingsRun2|x86.ActiveCfg = CreateMappingsRun2|Any CPU
+		{1C52DF0C-67FD-4A54-9160-732FF0A5143F}.CreateMappingsRun2|x86.Build.0 = CreateMappingsRun2|Any CPU
 		{1C52DF0C-67FD-4A54-9160-732FF0A5143F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1C52DF0C-67FD-4A54-9160-732FF0A5143F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C52DF0C-67FD-4A54-9160-732FF0A5143F}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -59,6 +71,10 @@ Global
 		{1C52DF0C-67FD-4A54-9160-732FF0A5143F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1C52DF0C-67FD-4A54-9160-732FF0A5143F}.Release|x86.ActiveCfg = Release|Any CPU
 		{1C52DF0C-67FD-4A54-9160-732FF0A5143F}.Release|x86.Build.0 = Release|Any CPU
+		{5C2E2338-E81A-4223-B26B-BEDD64B2DF88}.CreateMappingsRun2|Any CPU.ActiveCfg = CreateMappingsRun2|Any CPU
+		{5C2E2338-E81A-4223-B26B-BEDD64B2DF88}.CreateMappingsRun2|Any CPU.Build.0 = CreateMappingsRun2|Any CPU
+		{5C2E2338-E81A-4223-B26B-BEDD64B2DF88}.CreateMappingsRun2|x86.ActiveCfg = CreateMappingsRun2|Any CPU
+		{5C2E2338-E81A-4223-B26B-BEDD64B2DF88}.CreateMappingsRun2|x86.Build.0 = CreateMappingsRun2|Any CPU
 		{5C2E2338-E81A-4223-B26B-BEDD64B2DF88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5C2E2338-E81A-4223-B26B-BEDD64B2DF88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C2E2338-E81A-4223-B26B-BEDD64B2DF88}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -67,6 +83,10 @@ Global
 		{5C2E2338-E81A-4223-B26B-BEDD64B2DF88}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5C2E2338-E81A-4223-B26B-BEDD64B2DF88}.Release|x86.ActiveCfg = Release|Any CPU
 		{5C2E2338-E81A-4223-B26B-BEDD64B2DF88}.Release|x86.Build.0 = Release|Any CPU
+		{92C6F12A-DE3E-4D59-A952-4D22753139E2}.CreateMappingsRun2|Any CPU.ActiveCfg = CreateMappingsRun2|Any CPU
+		{92C6F12A-DE3E-4D59-A952-4D22753139E2}.CreateMappingsRun2|Any CPU.Build.0 = CreateMappingsRun2|Any CPU
+		{92C6F12A-DE3E-4D59-A952-4D22753139E2}.CreateMappingsRun2|x86.ActiveCfg = CreateMappingsRun2|Any CPU
+		{92C6F12A-DE3E-4D59-A952-4D22753139E2}.CreateMappingsRun2|x86.Build.0 = CreateMappingsRun2|Any CPU
 		{92C6F12A-DE3E-4D59-A952-4D22753139E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{92C6F12A-DE3E-4D59-A952-4D22753139E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92C6F12A-DE3E-4D59-A952-4D22753139E2}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -75,20 +95,18 @@ Global
 		{92C6F12A-DE3E-4D59-A952-4D22753139E2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{92C6F12A-DE3E-4D59-A952-4D22753139E2}.Release|x86.ActiveCfg = Release|Any CPU
 		{92C6F12A-DE3E-4D59-A952-4D22753139E2}.Release|x86.Build.0 = Release|Any CPU
+		{7375D960-5EE1-4D1B-B668-7B2093E02B7A}.CreateMappingsRun2|Any CPU.ActiveCfg = CreateMappingsRun2|x86
+		{7375D960-5EE1-4D1B-B668-7B2093E02B7A}.CreateMappingsRun2|x86.ActiveCfg = CreateMappingsRun2|x86
 		{7375D960-5EE1-4D1B-B668-7B2093E02B7A}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{7375D960-5EE1-4D1B-B668-7B2093E02B7A}.Debug|x86.ActiveCfg = Debug|x86
 		{7375D960-5EE1-4D1B-B668-7B2093E02B7A}.Debug|x86.Build.0 = Debug|x86
 		{7375D960-5EE1-4D1B-B668-7B2093E02B7A}.Release|Any CPU.ActiveCfg = Release|x86
 		{7375D960-5EE1-4D1B-B668-7B2093E02B7A}.Release|x86.ActiveCfg = Release|x86
 		{7375D960-5EE1-4D1B-B668-7B2093E02B7A}.Release|x86.Build.0 = Release|x86
-		{1BADBE67-4FF3-45D8-986E-C1085DFF30FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1BADBE67-4FF3-45D8-986E-C1085DFF30FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1BADBE67-4FF3-45D8-986E-C1085DFF30FF}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{1BADBE67-4FF3-45D8-986E-C1085DFF30FF}.Debug|x86.Build.0 = Debug|Any CPU
-		{1BADBE67-4FF3-45D8-986E-C1085DFF30FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1BADBE67-4FF3-45D8-986E-C1085DFF30FF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1BADBE67-4FF3-45D8-986E-C1085DFF30FF}.Release|x86.ActiveCfg = Release|Any CPU
-		{1BADBE67-4FF3-45D8-986E-C1085DFF30FF}.Release|x86.Build.0 = Release|Any CPU
+		{FDF3CC16-26A0-47CE-A129-4A06F829DB12}.CreateMappingsRun2|Any CPU.ActiveCfg = CreateMappingsRun2|Any CPU
+		{FDF3CC16-26A0-47CE-A129-4A06F829DB12}.CreateMappingsRun2|Any CPU.Build.0 = CreateMappingsRun2|Any CPU
+		{FDF3CC16-26A0-47CE-A129-4A06F829DB12}.CreateMappingsRun2|x86.ActiveCfg = CreateMappingsRun2|Any CPU
+		{FDF3CC16-26A0-47CE-A129-4A06F829DB12}.CreateMappingsRun2|x86.Build.0 = CreateMappingsRun2|Any CPU
 		{FDF3CC16-26A0-47CE-A129-4A06F829DB12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FDF3CC16-26A0-47CE-A129-4A06F829DB12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDF3CC16-26A0-47CE-A129-4A06F829DB12}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -97,6 +115,10 @@ Global
 		{FDF3CC16-26A0-47CE-A129-4A06F829DB12}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FDF3CC16-26A0-47CE-A129-4A06F829DB12}.Release|x86.ActiveCfg = Release|Any CPU
 		{FDF3CC16-26A0-47CE-A129-4A06F829DB12}.Release|x86.Build.0 = Release|Any CPU
+		{00A86E3A-617B-4CCF-8A8C-B82969ED05E7}.CreateMappingsRun2|Any CPU.ActiveCfg = CreateMappingsRun2|Any CPU
+		{00A86E3A-617B-4CCF-8A8C-B82969ED05E7}.CreateMappingsRun2|Any CPU.Build.0 = CreateMappingsRun2|Any CPU
+		{00A86E3A-617B-4CCF-8A8C-B82969ED05E7}.CreateMappingsRun2|x86.ActiveCfg = CreateMappingsRun2|Any CPU
+		{00A86E3A-617B-4CCF-8A8C-B82969ED05E7}.CreateMappingsRun2|x86.Build.0 = CreateMappingsRun2|Any CPU
 		{00A86E3A-617B-4CCF-8A8C-B82969ED05E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{00A86E3A-617B-4CCF-8A8C-B82969ED05E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00A86E3A-617B-4CCF-8A8C-B82969ED05E7}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -105,6 +127,10 @@ Global
 		{00A86E3A-617B-4CCF-8A8C-B82969ED05E7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{00A86E3A-617B-4CCF-8A8C-B82969ED05E7}.Release|x86.ActiveCfg = Release|Any CPU
 		{00A86E3A-617B-4CCF-8A8C-B82969ED05E7}.Release|x86.Build.0 = Release|Any CPU
+		{33F4D413-3DAC-4349-83BF-C8FFA303B4F8}.CreateMappingsRun2|Any CPU.ActiveCfg = CreateMappingsRun2|Any CPU
+		{33F4D413-3DAC-4349-83BF-C8FFA303B4F8}.CreateMappingsRun2|Any CPU.Build.0 = CreateMappingsRun2|Any CPU
+		{33F4D413-3DAC-4349-83BF-C8FFA303B4F8}.CreateMappingsRun2|x86.ActiveCfg = CreateMappingsRun2|Any CPU
+		{33F4D413-3DAC-4349-83BF-C8FFA303B4F8}.CreateMappingsRun2|x86.Build.0 = CreateMappingsRun2|Any CPU
 		{33F4D413-3DAC-4349-83BF-C8FFA303B4F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{33F4D413-3DAC-4349-83BF-C8FFA303B4F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33F4D413-3DAC-4349-83BF-C8FFA303B4F8}.Debug|x86.ActiveCfg = Debug|Any CPU

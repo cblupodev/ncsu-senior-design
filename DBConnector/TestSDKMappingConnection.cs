@@ -41,15 +41,15 @@ namespace DBConnector
             }
 
 
-            var query = dbConnection.sdk_mappings.Where(m => m.model_identifier == "456");
+            //var query = dbConnection.sdk_mappings.Where(m => m.model_identifier == "456");
 
-            foreach (var q in query)
-            {
-                Console.WriteLine(q.model_identifier);
-                Console.WriteLine(q.old_namespace);
-                Console.WriteLine(q.new_namespace);
-                Console.ReadLine();
-            }
+            //foreach (var q in query)
+            //{
+            //    Console.WriteLine(q.model_identifier);
+            //    Console.WriteLine(q.old_namespace);
+            //    Console.WriteLine(q.new_namespace);
+            //    Console.ReadLine();
+            //}
         }
     }
 }
