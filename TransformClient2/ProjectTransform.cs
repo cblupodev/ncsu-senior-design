@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using System.IO;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.MSBuild;
+using Microsoft.CodeAnalysis.Editing;
 using NamespaceRefactorer;
 using DBConnector;
 
-namespace TransformClient2
+namespace NamespaceRefactorer
 {
-    class ProjectTransform
+    public class ProjectTransform
     {
 
         SDKMappingSQLConnector mappingConnector = SDKMappingSQLConnector.GetInstance();
@@ -83,15 +84,12 @@ namespace TransformClient2
             var syntaxTree = doc.GetSyntaxTreeAsync().Result;
 
             //do processing here
+            var documentEditor = DocumentEditor.CreateAsync(doc).Result; //https://joshvarty.wordpress.com/2015/08/18/learn-roslyn-now-part-12-the-documenteditor/
 
-            FileTransform ft = new FileTransform(syntaxTree, semanticModel);
+            FileTransform ft = new FileTransform(documentEditor);
 
-            // pass in the set not the connector, only query the database once
-            if (ft.hasNameSpaceInDatabase(mappingConnector.GetAllNamespaces(sdkId)))
-            {
-                syntaxTree = ft.findOldUsingsAndReplaceOldSyntax(mappingConnector.GetAllNamespaces(sdkId));
-                File.WriteAllText(doc.FilePath, syntaxTree.GetText().ToString()); // http://stackoverflow.com/questions/18295837/c-sharp-roslyn-api-reading-a-cs-file-updating-a-class-writing-back-to-cs-fi
-            }        
+            syntaxTree = ft.findOldUsingsAndReplaceOldSyntax(mappingConnector.GetAllNamespaces(sdkId), documentEditor);
+            File.WriteAllText(doc.FilePath, syntaxTree.GetText().ToString()); // http://stackoverflow.com/questions/18295837/c-sharp-roslyn-api-reading-a-cs-file-updating-a-class-writing-back-to-cs-fi
         }
     }
 }

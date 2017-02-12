@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using FujitsuSDKOld;
+using asdf;
 
 namespace NCSU
 {
@@ -11,6 +12,7 @@ namespace NCSU
         public void asdf()
         {
             var x = new Sample();
+            var y = new fudgeold2();
         }
 
         public static void Main(string[] args) { }
