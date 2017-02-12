@@ -68,21 +68,25 @@ namespace DBConnector
 
         public Boolean DeleteSDKByName(string name)
         {
-            var sdk = dbConnection.sdks.Where(s => s.name == name).Single();
-            //Delete foreign key constraints on sdk before deleting the sdk
-            SDKMappingSQLConnector.GetInstance().DeleteMappingBySDKId(sdk.id);
-            dbConnection.sdks.DeleteOnSubmit(sdk);
+            var sdk = dbConnection.sdks.Where(s => s.name == name);
+            if (sdk.Any())
+            {
+                //Delete foreign key constraints on sdk before deleting the sdk
+                SDKMappingSQLConnector.GetInstance().DeleteMappingBySDKId(sdk.Single().id);
+                dbConnection.sdks.DeleteOnSubmit(sdk.Single());
 
-            try
-            {
-                dbConnection.SubmitChanges();
-                return true;
+                try
+                {
+                    dbConnection.SubmitChanges();
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    return false;
+                }
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                return false;
-            }
+            return true;
         }
     }
 }
