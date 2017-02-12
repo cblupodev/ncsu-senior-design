@@ -9,7 +9,6 @@ using DBConnector;
 
 namespace UnitTest.BlackBox
 {
-    [TestClass]
     [DeploymentItem("Microsoft.CodeAnalysis.CSharp.dll")]
     [DeploymentItem("Microsoft.CodeAnalysis.CSharp.Workspaces.dll")]
     [DeploymentItem("Microsoft.CodeAnalysis.VisualBasic.dll")]
@@ -24,6 +23,11 @@ namespace UnitTest.BlackBox
             get
             {
                 return testFolder;
+            }
+
+            set
+            {
+                testFolder = value;
             }
         }
 
@@ -241,187 +245,12 @@ namespace UnitTest.BlackBox
             RunTransformation();
             VerifyResult();
         }
-
-
-        [TestMethod]
-        [DeploymentItem("tests/alias", "alias")]
-        public void TestAlias()
-        {
-            testFolder = "alias";
-            RunTest();
-        }
-
-        [TestMethod]
-        [DeploymentItem("tests/assemblyChange", "assemblyChange")]
-        public void TestAssemblyChange()
-        {
-            testFolder = "assemblyChange";
-            RunTest();
-        }
-
-        [TestMethod]
-        [DeploymentItem("tests/assemblyMerge", "assemblyMerge")]
-        public void TestAssemblyMerge()
-        {
-            testFolder = "assemblyMerge";
-            RunTest();
-        }
-
-        [TestMethod]
-        [DeploymentItem("tests/assemblySplit", "assemblySplit")]
-        public void TestAssemblySplit()
-        {
-            testFolder = "assemblySplit";
-            RunTest();
-        }
-
-        [TestMethod]
-        [DeploymentItem("tests/basic", "basic")]
-        public void TestBasic()
-        {
-            testFolder = "basic";
-            RunTest();
-        }
-
-        [TestMethod]
-        [DeploymentItem("tests/basicNamespace", "basicNamespace")]
-        public void TestBasicNamespace()
-        {
-            testFolder = "basicNamespace";
-            RunTest();
-        }
-
-        [TestMethod]
-        [DeploymentItem("tests/casting", "casting")]
-        public void TestCasting()
-        {
-            testFolder = "casting";
-            RunTest();
-        }
-
-        [TestMethod]
-        [DeploymentItem("tests/classInClass", "classInClass")]
-        public void TestClassInClass()
-        {
-            testFolder = "classInClass";
-            RunTest();
-        }
-
-        [TestMethod]
-        [DeploymentItem("tests/extendsSDKClass", "extendsSDKClass")]
-        public void TestExtendsSDKClass()
-        {
-            testFolder = "extendsSDKClass";
-            RunTest();
-        }
-
-        [TestMethod]
-        [DeploymentItem("tests/extraLibrary", "extraLibrary")]
-        public void TestExtraLibrary()
-        {
-            testFolder = "extraLibrary";
-            RunTest();
-        }
-
-        [TestMethod]
-        [DeploymentItem("tests/fullyQualified", "fullyQualified")]
-        public void TestFullyQualified()
-        {
-            testFolder = "fullyQualified";
-            RunTest();
-        }
-
-        [TestMethod]
-        [DeploymentItem("tests/fullyQualifiedModelIdentifier", "fullyQualifiedModelIdentifier")]
-        public void TestFullyQualifiedModelIdentifier()
-        {
-            testFolder = "fullyQualifiedModelIdentifier";
-            RunTest();
-        }
-
-        [TestMethod]
-        [DeploymentItem("tests/instantiatesSDKClass", "instantiatesSDKClass")]
-        public void TestInstantiatesSDKClass()
-        {
-            testFolder = "instantiatesSDKClass";
-            RunTest();
-        }
-
-        [TestMethod]
-        [DeploymentItem("tests/multiAssembly", "multiAssembly")]
-        public void TestMultiAssembly()
-        {
-            testFolder = "multiAssembly";
-            RunTest();
-        }
-
-        [TestMethod]
-        [DeploymentItem("tests/multiBasic", "multiBasic")]
-        public void TestMultiBasic()
-        {
-            testFolder = "multiBasic";
-            RunTest();
-        }
-
-        [TestMethod]
-        [DeploymentItem("tests/namespaceInNamespace", "namespaceInNamespace")]
-        public void TestNamespaceInNamespace()
-        {
-            testFolder = "namespaceInNamespace";
-            RunTest();
-        }
-
-        [TestMethod]
-        [DeploymentItem("tests/newConflicts", "newConflicts")]
-        public void TestNewConflicts()
-        {
-            testFolder = "newConflicts";
-            RunTest();
-        }
-
-        [TestMethod]
-        [DeploymentItem("tests/nonRootUsing", "nonRootUsing")]
-        public void TestNonRootUsing()
-        {
-            testFolder = "nonRootUsing";
-            RunTest();
-        }
-
-        [TestMethod]
-        [DeploymentItem("tests/nothing", "nothing")]
-        public void TestNothing()
-        {
-            testFolder = "nothing";
-            RunTest();
-        }
-
-        [TestMethod]
-        [DeploymentItem("tests/oldConflicts", "oldConflicts")]
-        public void TestOldConflicts()
-        {
-            testFolder = "oldConflicts";
-            RunTest();
-        }
-
-        [TestMethod]
-        [DeploymentItem("tests/typeof", "typeof")]
-        public void TestTypeof()
-        {
-            testFolder = "typeof";
-            RunTest();
-        }
-
-        [TestMethod]
-        [DeploymentItem("tests/unused", "unused")]
-        public void TestUnused()
-        {
-            testFolder = "unused";
-            RunTest();
-        }
         
     }
 }
 
+// Current tests that require special handling:
+//      extraLibrary
 // To generate test methods, run this code in bash:
 //
 //for f in ./*/
