@@ -49,8 +49,6 @@ namespace CreateMappings
             Helper.verifyFolderExists(folderPath);
             string[] dllFiles = Directory.GetFiles(folderPath, "*.dll", SearchOption.AllDirectories); // get all the dll file paths
 
-            
-
             foreach (string dll in dllFiles)
             {
                 rf.findCustomAttributes(dll);

@@ -21,10 +21,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransformClient2", "Transfo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBConnector", "DBConnector\DBConnector.csproj", "{FDF3CC16-26A0-47CE-A129-4A06F829DB12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerInsideVS", "CustomerOldInsideVS\CustomerInsideVS.csproj", "{00A86E3A-617B-4CCF-8A8C-B82969ED05E7}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMLMod", "XMLMod\XMLMod.csproj", "{33F4D413-3DAC-4349-83BF-C8FFA303B4F8}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		CreateMappingsRun2|Any CPU = CreateMappingsRun2|Any CPU
@@ -115,30 +111,6 @@ Global
 		{FDF3CC16-26A0-47CE-A129-4A06F829DB12}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FDF3CC16-26A0-47CE-A129-4A06F829DB12}.Release|x86.ActiveCfg = Release|Any CPU
 		{FDF3CC16-26A0-47CE-A129-4A06F829DB12}.Release|x86.Build.0 = Release|Any CPU
-		{00A86E3A-617B-4CCF-8A8C-B82969ED05E7}.CreateMappingsRun2|Any CPU.ActiveCfg = CreateMappingsRun2|Any CPU
-		{00A86E3A-617B-4CCF-8A8C-B82969ED05E7}.CreateMappingsRun2|Any CPU.Build.0 = CreateMappingsRun2|Any CPU
-		{00A86E3A-617B-4CCF-8A8C-B82969ED05E7}.CreateMappingsRun2|x86.ActiveCfg = CreateMappingsRun2|Any CPU
-		{00A86E3A-617B-4CCF-8A8C-B82969ED05E7}.CreateMappingsRun2|x86.Build.0 = CreateMappingsRun2|Any CPU
-		{00A86E3A-617B-4CCF-8A8C-B82969ED05E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{00A86E3A-617B-4CCF-8A8C-B82969ED05E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{00A86E3A-617B-4CCF-8A8C-B82969ED05E7}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{00A86E3A-617B-4CCF-8A8C-B82969ED05E7}.Debug|x86.Build.0 = Debug|Any CPU
-		{00A86E3A-617B-4CCF-8A8C-B82969ED05E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{00A86E3A-617B-4CCF-8A8C-B82969ED05E7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{00A86E3A-617B-4CCF-8A8C-B82969ED05E7}.Release|x86.ActiveCfg = Release|Any CPU
-		{00A86E3A-617B-4CCF-8A8C-B82969ED05E7}.Release|x86.Build.0 = Release|Any CPU
-		{33F4D413-3DAC-4349-83BF-C8FFA303B4F8}.CreateMappingsRun2|Any CPU.ActiveCfg = CreateMappingsRun2|Any CPU
-		{33F4D413-3DAC-4349-83BF-C8FFA303B4F8}.CreateMappingsRun2|Any CPU.Build.0 = CreateMappingsRun2|Any CPU
-		{33F4D413-3DAC-4349-83BF-C8FFA303B4F8}.CreateMappingsRun2|x86.ActiveCfg = CreateMappingsRun2|Any CPU
-		{33F4D413-3DAC-4349-83BF-C8FFA303B4F8}.CreateMappingsRun2|x86.Build.0 = CreateMappingsRun2|Any CPU
-		{33F4D413-3DAC-4349-83BF-C8FFA303B4F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{33F4D413-3DAC-4349-83BF-C8FFA303B4F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{33F4D413-3DAC-4349-83BF-C8FFA303B4F8}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{33F4D413-3DAC-4349-83BF-C8FFA303B4F8}.Debug|x86.Build.0 = Debug|Any CPU
-		{33F4D413-3DAC-4349-83BF-C8FFA303B4F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{33F4D413-3DAC-4349-83BF-C8FFA303B4F8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{33F4D413-3DAC-4349-83BF-C8FFA303B4F8}.Release|x86.ActiveCfg = Release|Any CPU
-		{33F4D413-3DAC-4349-83BF-C8FFA303B4F8}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -146,6 +118,5 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{2B93607F-5DC6-493C-A62A-8D5B3F813EF4} = {0F79F59B-0BAF-47D1-A2C5-CEDD9D41160A}
 		{1D33CD7B-13EA-4534-83E9-40D07478EAAD} = {0F79F59B-0BAF-47D1-A2C5-CEDD9D41160A}
-		{00A86E3A-617B-4CCF-8A8C-B82969ED05E7} = {0F79F59B-0BAF-47D1-A2C5-CEDD9D41160A}
 	EndGlobalSection
 EndGlobal

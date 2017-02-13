@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace XMLMod
+namespace NamespaceRefactorer
 {
-    class Program
+    class XMLTransform
     {
         static void Main(string[] args)
         {
@@ -15,6 +15,10 @@ namespace XMLMod
                // find the namsespace by calling Descendents() on the Root and drill down into the properties to find the namsespace you need
             XNamespace ns = XNamespace.Get("http://schemas.microsoft.com/developer/msbuild/2003"); // https://granadacoder.wordpress.com/2012/10/11/how-to-find-references-in-a-c-project-file-csproj-using-linq-xml/
             XDocument xdoc = XDocument.Load(fileName);
+
+            var outputpathlinq = from outp in xdoc.Descendants(ns + "OutputPath")
+                             select outp;
+            string outputpath = outputpathlinq.First().Value;
 
             var references = from reference in xdoc.Descendants(ns + "Reference")
                              where reference.Element(ns + "HintPath") != null
@@ -34,6 +38,17 @@ namespace XMLMod
             {
                 // null exception is thrown because the reference is remove from the list, so just ignore
             }
+
+            // TODO make sure you do something like outputfilepath + basename(newSDKAbsoluteFilePath), before you add to xml
+
+            // https://www.youtube.com/playlist?list=PL6n9fhu94yhX-U0Ruy_4eIG8umikVmBrk
+            XElement addedref = new XElement("Reference", new XAttribute("Include", "SDK, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"),
+                    new XElement("SpecificVersion", "False"),
+                    new XElement("HintPath", outputpath + "SDK2.dll"),
+                    new XElement("Private", "False")
+                );
+
+            xdoc.Descendants(ns + "ItemGroup").First().AddFirst(addedref);
 
             xdoc.Save(fileName);
         }

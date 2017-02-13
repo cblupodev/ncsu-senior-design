@@ -35,7 +35,22 @@
   <ItemGroup>
     <Reference Include="SDK, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" xmlns="">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\\SDK2.dll</HintPath>
+      <HintPath>..\..\bin\newsdk3.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SDK, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" xmlns="">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\newsdk2.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SDK, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" xmlns="">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\newsdk.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SDK, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\SDK.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />

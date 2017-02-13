@@ -114,6 +114,20 @@ namespace DBConnector
 
         }
 
+        public HashSet<String> GetAllNewDllPaths(int sdkId)
+        {
+            var query = (from sm in dbConnection.sdk_maps where sm.sdk_id == sdkId select sm.new_assembly_path).Distinct();
+            HashSet<String> newdllSet = new HashSet<String>(query);
+            return newdllSet;
+        }
+
+        public HashSet<String> GetAllOldDllPaths(int sdkId)
+        {
+            var query = (from sm in dbConnection.sdk_maps where sm.sdk_id == sdkId select sm.old_assembly_path).Distinct();
+            HashSet<String> olddllSet = new HashSet<String>(query);
+            return olddllSet;
+        }
+
         public Dictionary<String, String> GetOldToNewNamespaceMap(int sdkId)
         {
             var query = (from sm in dbConnection.sdk_maps
