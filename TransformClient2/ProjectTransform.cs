@@ -55,7 +55,7 @@ namespace NamespaceRefactorer
             {
                 if (isDocCSharp(doc))
                 {
-                    //ProcessDocumentCSharp(doc, namespaceSet, namespaceToClassnameSetMap); 
+                    ProcessDocumentCSharp(doc, namespaceSet, namespaceToClassnameSetMap);
                 }
 
                 if (isDocVB(doc))
@@ -66,7 +66,8 @@ namespace NamespaceRefactorer
             HashSet<String> newdllSet = mappingConnector.GetAllNewDllPaths(sdkId);
             HashSet<String> olddllSet = mappingConnector.GetAllOldDllPaths(sdkId);
             XMLTransform xmlTransform = new XMLTransform();
-            xmlTransform.transformXml(proj.FilePath, newdllSet, olddllSet);
+            // Don't remove the line below
+            //xmlTransform.transformXml(proj.FilePath, newdllSet, olddllSet);
         }
 
         private void ProcessDocumentVB(Document doc)

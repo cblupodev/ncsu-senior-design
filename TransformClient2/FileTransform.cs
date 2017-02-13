@@ -95,6 +95,11 @@ namespace NamespaceRefactorer
         {
             foreach (var usingDirective in oldUsings)
             {
+                // iterate over the namespaces we care about
+                   // then iterate over the classnames that are in each namespace
+                      // then replace the old with new
+                   // don't forget about fully qualified
+
                 Dictionary<String, String> oldToNewMap = SDKMappingSQLConnector.GetInstance().GetOldToNewNamespaceMap(ProjectTransform.sdkId);
                 var oldUsingName = usingDirective.Name.GetText().ToString();
                 var newUsingName = oldToNewMap[oldUsingName];
@@ -111,9 +116,8 @@ namespace NamespaceRefactorer
             throw new NotImplementedException();
         }
 
-        private void replaceObjectCreations()
+        private void replaceObjectCreations(List<ObjectCreationExpressionSyntax> oldCreations)
         {
-
             // https://duckduckgo.com/?q=nested+selection+linq&ia=qa
             IEnumerable<ObjectCreationExpressionSyntax> objectCreations = tree.GetRoot().DescendantNodes().OfType<ObjectCreationExpressionSyntax>();
             foreach (ObjectCreationExpressionSyntax item in objectCreations) // iterate over all object creations in the file
@@ -145,7 +149,7 @@ namespace NamespaceRefactorer
             return rtn;
         }
 
-        //return a list of using classnames that exist in the database
+        // return a list of using classnames that exist in the database
         private List<ObjectCreationExpressionSyntax> findMatchingClassnames(Dictionary<String, HashSet<String>> namespaceToClassnameSetMap)
         {
             List<ObjectCreationExpressionSyntax> rtn = new List<ObjectCreationExpressionSyntax>();
