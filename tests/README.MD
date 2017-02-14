@@ -34,6 +34,9 @@ Client uses fully qualified name for SDK class (rather than using a 'using' stat
 ###fullyQualifiedModelIdentifier
 The ModelIdentifier in the new and old SDK uses the full path of the ModelIdentifier, rather than relying on using/namespace sharing.
 
+###generics
+The client code uses the SDK class as the type qualifier for a generic class.
+
 ###instantiatesSDKClass
 The client creates a new instance of an SDK class.
 

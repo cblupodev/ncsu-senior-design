@@ -91,10 +91,18 @@ namespace UnitTest.BlackBox
         }
 
         [TestMethod]
-        [DeploymentItem("tests/fullyQualifiedModelIdentifier", "fullyQualifiedModelIdentifier")]
-        public void TestFullyQualifiedModelIdentifier()
+        [DeploymentItem("tests/fullyQualifiedModelIdentifier", "generics")]
+        public void TestGenerics()
         {
-            TestFolder = "fullyQualifiedModelIdentifier";
+            TestFolder = "generics";
+            RunTest();
+        }
+
+        [TestMethod]
+        [DeploymentItem("tests/generics", "instantiatesSDKClass")]
+        public void TestInstantiatesSDKClass()
+        {
+            TestFolder = "instantiatesSDKClass";
             RunTest();
         }
 
