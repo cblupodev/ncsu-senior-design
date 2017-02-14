@@ -56,7 +56,7 @@ namespace UnitTest.BlackBox
                 {
                     pathToCreateMappings = proj.OutputFilePath;
                 }
-                else if ( proj.Name.Equals("NamespaceRefactorer") )
+                else if ( proj.Name.Equals("TransformClient2") )
                 {
                     pathToTransformClient = proj.OutputFilePath;
                 }
@@ -160,7 +160,7 @@ namespace UnitTest.BlackBox
         {
             var createMapping = new Process();
             createMapping.StartInfo.FileName = pathToCreateMappings;
-            createMapping.StartInfo.Arguments = "\"" + Path.Combine(TestFolder, "bin") + "\" \"" + sdkNameId + "\""; //TODO fill in
+            createMapping.StartInfo.Arguments = "\"" + Path.Combine(TestFolder, "bin") + "\" \"" + sdkNameId + "\"";
             createMapping.Start();
             createMapping.WaitForExit();
             Assert.AreEqual(0, createMapping.ExitCode, "Error running the creating mapping program on old dlls");
@@ -186,7 +186,7 @@ namespace UnitTest.BlackBox
         {
             var createMapping = new Process();
             createMapping.StartInfo.FileName = pathToCreateMappings;
-            createMapping.StartInfo.Arguments = "\"" + Path.Combine(TestFolder, "bin") + "\" \"" + sdkNameId + "\""; //TODO fill in
+            createMapping.StartInfo.Arguments = "\"" + Path.Combine(TestFolder, "bin") + "\" \"" + sdkNameId + "\"";
             createMapping.Start();
             createMapping.WaitForExit();
             Assert.AreEqual(0, createMapping.ExitCode, "Error running the creating mapping program on new dlls");
@@ -200,7 +200,7 @@ namespace UnitTest.BlackBox
             {
                 var translateClient = new Process();
                 translateClient.StartInfo.FileName = pathToTransformClient;
-                translateClient.StartInfo.Arguments = "\"" + project + "\"";
+                translateClient.StartInfo.Arguments = "\"" + project + "\" \"" + sdkNameId + "\"";
                 translateClient.Start();
                 translateClient.WaitForExit();
                 Assert.AreEqual(0, translateClient.ExitCode, "error running the translate client program on: " + project);
