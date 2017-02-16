@@ -50,7 +50,8 @@ namespace NamespaceRefactorer
         void ProcessProject(Project proj)
         {
             HashSet<String> namespaceSet =  mappingConnector.GetAllNamespaces(sdkId);
-            Dictionary<String, HashSet<String>> namespaceToClassnameSetMap = mappingConnector.GetNamespaceToClassnameSetMap(sdkId);
+            //Dictionary<String, HashSet<String>> namespaceToClassnameSetMap = mappingConnector.GetNamespaceToClassnameSetMap(sdkId);
+            Dictionary<String, HashSet<String>> namespaceToClassnameSetMap = new Dictionary<string, HashSet<string>>();
             foreach (Document doc in proj.Documents)
             {
                 if (isDocCSharp(doc))

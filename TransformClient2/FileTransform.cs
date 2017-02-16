@@ -66,7 +66,7 @@ namespace NamespaceRefactorer
             //{
             //    replaceUsingStatements(oldUsings);
             //}
-            replaceObjectCreations();
+            replaceObjectCreations(oldObjectCreations);
             //replaceCastings(usingDirective);
             //replaceFullyQualifiedNames(UsingDirective);
             //replaceAliasing(UsingDirective);
@@ -118,19 +118,40 @@ namespace NamespaceRefactorer
 
         private void replaceObjectCreations(List<ObjectCreationExpressionSyntax> oldCreations)
         {
+            Dictionary<String, Dictionary<String, String>> map = DBConnector.SDKMappingSQLConnector.GetInstance().GetNamespaceToClassnameMapMap(ProjectTransform.sdkId);
             // https://duckduckgo.com/?q=nested+selection+linq&ia=qa
-            IEnumerable<ObjectCreationExpressionSyntax> objectCreations = tree.GetRoot().DescendantNodes().OfType<ObjectCreationExpressionSyntax>();
-            foreach (ObjectCreationExpressionSyntax item in objectCreations) // iterate over all object creations in the file
+            IEnumerable<VariableDeclarationSyntax> objectCreations = tree.GetRoot().DescendantNodes().OfType<VariableDeclarationSyntax>();
+            foreach (VariableDeclarationSyntax item in objectCreations) // iterate over all object creations in the file
             {
                 var semanticObjCreation = semanticModel.GetSymbolInfo(item.Type);
 
                 // semanticObcCreation
                 // if find a class that was tagged then replace the old using with the new one
-                //var descendentTokens = item.DescendantTokens().OfType<SyntaxToken>(); // TODO use the semantic model instead of this way
-                //if (descendentTokens.ElementAt(1).Value.Equals("Sample")) // [1] gets the identifier syntax, magic
+                //var descendenttokens = item.descendanttokens().oftype<syntaxtoken>(); // todo use the semantic model instead of this way
+                //if (descendenttokens.elementat(1).value.equals("sample")) // [1] gets the identifier syntax, magic
                 //{
-                //    replaceOldUsingWithNew(usingDirective);
+                //    replaceoldusingwithnew(usingdirective);
                 //}
+                var oldNamespace = semanticObjCreation.Symbol.ContainingNamespace.Name;
+                if (map.ContainsKey(oldNamespace))
+                {
+                    String oldClassname = semanticObjCreation.Symbol.Name.ToString();
+                    String newClassname = map[oldNamespace][oldClassname];
+
+                    IdentifierNameSyntax test = IdentifierName(newClassname + " ");
+                    foreach (IdentifierNameSyntax oldNameNode in item.DescendantNodes().OfType<IdentifierNameSyntax>())
+                    {
+                        var nameSemantic = semanticObjCreation.Symbol.ContainingNamespace.Name;
+                        //We need to not overwrite classes that are not our own...Ask Josh for example. Do not delete if statement
+                        //if (map[oldNamespace].ContainsKey(nameSemantic))
+                        //{
+                        Object o = new Object();
+                            documentEditor.ReplaceNode(oldNameNode, test);
+                        //}
+                    }
+                   
+                    
+                }
             }
         }
 
