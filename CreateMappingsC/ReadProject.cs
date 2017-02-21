@@ -23,20 +23,20 @@ namespace CreateMappings
         public static List<GenericMapping> Mappings = new List<GenericMapping>();
 
         // param 0 = folder for old sdk
-        // param 1 = name for sdk (database object)
+        // param 1 = folder for new sdk
+        // param 2 = name for sdk (database object)
         public static void Main(string[] args)
         {
             ReadProject rp = new ReadProject();
-            rp.run(args[0], args[1]);
+            rp.run(args[0], args[1], args[2]);
         }
 
-        private void run(string folderPath, string sdkName)
+        private void run(string oldFolderPath, string newFolderPath, string sdkName)
         {
-
             SDKSQLConnector.GetInstance().SaveSDK(sdkName);
             sdkId = SDKSQLConnector.GetInstance().getByName(sdkName).id;
-            readFolderDllFiles(folderPath);
-
+            readFolderDllFiles(oldFolderPath);
+            readFolderDllFiles(newFolderPath);
 
             SDKMappingSQLConnector.GetInstance().SaveSDKMappings2(Mappings, sdkId);
         }
