@@ -18,6 +18,8 @@ namespace NamespaceRefactorer
             Helper.verifyFileExists(dllPath);
             var assem = Assembly.LoadFile(dllPath);
 
+            Console.WriteLine("Read from   " + dllPath);
+
             var types = assem.GetTypes(); // the types will tell you if there are custom data attributes
             foreach (var type in types) // itereate over old dll to find custom attributes
             {
@@ -25,7 +27,6 @@ namespace NamespaceRefactorer
                 {
                     if (attr.AttributeType.Name.Equals(ReadProject.CustomAttributeName))
                     {
-                        Console.WriteLine("ModelIdentifier read from    " + dllPath);
                         string modelIdentifier = (string)attr.ConstructorArguments.First().Value;
                         GenericMapping ma = new GenericMapping(type.Namespace, modelIdentifier, type.Name, dllPath, ReadProject.sdkId);
                         mapList.Add(ma);
