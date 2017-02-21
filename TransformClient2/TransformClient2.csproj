@@ -104,7 +104,6 @@
     <Compile Include="FileTransform.cs" />
     <Compile Include="ProjectTransform.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="XMLTransform.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
