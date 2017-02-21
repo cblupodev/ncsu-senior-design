@@ -67,8 +67,9 @@ namespace NamespaceRefactorer
             HashSet<String> newdllSet = mappingConnector.GetAllNewDllPaths(sdkId);
             HashSet<String> olddllSet = mappingConnector.GetAllOldDllPaths(sdkId);
             XMLTransform xmlTransform = new XMLTransform();
-            // Don't remove the line below
+            // Don't remove the line below, cblupo
             //xmlTransform.transformXml(proj.FilePath, newdllSet, olddllSet);
+            Console.WriteLine("Project file edited to use new references");
         }
 
         private void ProcessDocumentVB(Document doc)
@@ -98,6 +99,7 @@ namespace NamespaceRefactorer
 
             syntaxTree = ft.findOldUsingsAndReplaceOldSyntax(documentEditor, namespaceSet, namespaceToClassnameSetMap);
             File.WriteAllText(doc.FilePath, syntaxTree.GetText().ToString()); // http://stackoverflow.com/questions/18295837/c-sharp-roslyn-api-reading-a-cs-file-updating-a-class-writing-back-to-cs-fi
+            Console.WriteLine("Transformed   " + doc.FilePath);
         }
     }
 }
