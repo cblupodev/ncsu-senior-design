@@ -13,9 +13,8 @@ namespace NamespaceRefactorer
     public class ReadFile
     {
         // find the custom attributes in a dll and add mapping to the dictionary
-        public void findCustomAttributes(string dllPath)
+        public void findCustomAttributes(string dllPath, List<GenericMapping> mapList)
         {
-
             Helper.verifyFileExists(dllPath);
             var assem = Assembly.LoadFile(dllPath);
 
@@ -26,9 +25,10 @@ namespace NamespaceRefactorer
                 {
                     if (attr.AttributeType.Name.Equals(ReadProject.CustomAttributeName))
                     {
+                        Console.WriteLine("ModelIdentifier read from    " + dllPath);
                         string modelIdentifier = (string)attr.ConstructorArguments.First().Value;
                         GenericMapping ma = new GenericMapping(type.Namespace, modelIdentifier, type.Name, dllPath, ReadProject.sdkId);
-                        ReadProject.Mappings.Add(ma);
+                        mapList.Add(ma);
                     }
                 }
             }
