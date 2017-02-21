@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace UnitTest.BlackBox
 {
     [TestClass]
-    public class ExtraLibraryTest : BlackBoxTest
+    public class ExtraLibraryTest : TransformationBlackBox
     {
         public override void PreSetup()
         {

@@ -10,11 +10,7 @@ using DBConnector;
 namespace UnitTest.BlackBox
 {
     [TestClass]
-    [DeploymentItem("Microsoft.CodeAnalysis.CSharp.dll")]
-    [DeploymentItem("Microsoft.CodeAnalysis.CSharp.Workspaces.dll")]
-    [DeploymentItem("Microsoft.CodeAnalysis.VisualBasic.dll")]
-    [DeploymentItem("Microsoft.CodeAnalysis.VisualBasic.Workspaces.dll")]
-    public class MappingBlackBox
+    public class MappingBlackBox : BlackBoxBase
     {
         // this must be deployed using the attribute
         // [DeploymentItem(test_folder)]
@@ -192,7 +188,7 @@ namespace UnitTest.BlackBox
         [DeploymentItem("tests/alias", "alias")]
         public void TestMappingAlias()
         {
-            testFolder = "alias";
+            TestFolder = "alias";
             RunTest();
         }
 
@@ -200,7 +196,7 @@ namespace UnitTest.BlackBox
         [DeploymentItem("tests/assemblyChange", "assemblyChange")]
         public void TestMappingAssemblyChange()
         {
-            testFolder = "assemblyChange";
+            TestFolder = "assemblyChange";
             RunTest();
         }
 
@@ -208,7 +204,7 @@ namespace UnitTest.BlackBox
         [DeploymentItem("tests/assemblyMerge", "assemblyMerge")]
         public void TestMappingAssemblyMerge()
         {
-            testFolder = "assemblyMerge";
+            TestFolder = "assemblyMerge";
             RunTest();
         }
 
@@ -216,7 +212,7 @@ namespace UnitTest.BlackBox
         [DeploymentItem("tests/assemblySplit", "assemblySplit")]
         public void TestMappingAssemblySplit()
         {
-            testFolder = "assemblySplit";
+            TestFolder = "assemblySplit";
             RunTest();
         }
 
@@ -224,7 +220,7 @@ namespace UnitTest.BlackBox
         [DeploymentItem("tests/basic", "basic")]
         public void TestMappingBasic()
         {
-            testFolder = "basic";
+            TestFolder = "basic";
             RunTest();
         }
 
@@ -232,7 +228,7 @@ namespace UnitTest.BlackBox
         [DeploymentItem("tests/basicNamespace", "basicNamespace")]
         public void TestMappingBasicNamespace()
         {
-            testFolder = "basicNamespace";
+            TestFolder = "basicNamespace";
             RunTest();
         }
 
@@ -240,7 +236,7 @@ namespace UnitTest.BlackBox
         [DeploymentItem("tests/casting", "casting")]
         public void TestMappingCasting()
         {
-            testFolder = "casting";
+            TestFolder = "casting";
             RunTest();
         }
 
@@ -248,7 +244,7 @@ namespace UnitTest.BlackBox
         [DeploymentItem("tests/classInClass", "classInClass")]
         public void TestMappingClassInClass()
         {
-            testFolder = "classInClass";
+            TestFolder = "classInClass";
             RunTest();
         }
 
@@ -256,7 +252,7 @@ namespace UnitTest.BlackBox
         [DeploymentItem("tests/extendsSDKClass", "extendsSDKClass")]
         public void TestMappingExtendsSDKClass()
         {
-            testFolder = "extendsSDKClass";
+            TestFolder = "extendsSDKClass";
             RunTest();
         }
 
@@ -264,7 +260,7 @@ namespace UnitTest.BlackBox
         [DeploymentItem("tests/extraLibrary", "extraLibrary")]
         public void TestMappingExtraLibrary()
         {
-            testFolder = "extraLibrary";
+            TestFolder = "extraLibrary";
             RunTest();
         }
 
@@ -272,7 +268,7 @@ namespace UnitTest.BlackBox
         [DeploymentItem("tests/fullyQualified", "fullyQualified")]
         public void TestMappingFullyQualified()
         {
-            testFolder = "fullyQualified";
+            TestFolder = "fullyQualified";
             RunTest();
         }
 
@@ -280,7 +276,7 @@ namespace UnitTest.BlackBox
         [DeploymentItem("tests/fullyQualifiedModelIdentifier", "fullyQualifiedModelIdentifier")]
         public void TestMappingFullyQualifiedModelIdentifier()
         {
-            testFolder = "fullyQualifiedModelIdentifier";
+            TestFolder = "fullyQualifiedModelIdentifier";
             RunTest();
         }
 
@@ -288,7 +284,7 @@ namespace UnitTest.BlackBox
         [DeploymentItem("tests/generics", "generics")]
         public void TestMappingGenerics()
         {
-            testFolder = "generics";
+            TestFolder = "generics";
             RunTest();
         }
 
@@ -296,7 +292,7 @@ namespace UnitTest.BlackBox
         [DeploymentItem("tests/instantiatesSDKClass", "instantiatesSDKClass")]
         public void TestMappingInstantiatesSDKClass()
         {
-            testFolder = "instantiatesSDKClass";
+            TestFolder = "instantiatesSDKClass";
             RunTest();
         }
 
@@ -304,7 +300,7 @@ namespace UnitTest.BlackBox
         [DeploymentItem("tests/multiAssembly", "multiAssembly")]
         public void TestMappingMultiAssembly()
         {
-            testFolder = "multiAssembly";
+            TestFolder = "multiAssembly";
             RunTest();
         }
 
@@ -312,7 +308,7 @@ namespace UnitTest.BlackBox
         [DeploymentItem("tests/multiBasic", "multiBasic")]
         public void TestMappingMultiBasic()
         {
-            testFolder = "multiBasic";
+            TestFolder = "multiBasic";
             RunTest();
         }
 
@@ -320,7 +316,7 @@ namespace UnitTest.BlackBox
         [DeploymentItem("tests/namespaceInNamespace", "namespaceInNamespace")]
         public void TestMappingNamespaceInNamespace()
         {
-            testFolder = "namespaceInNamespace";
+            TestFolder = "namespaceInNamespace";
             RunTest();
         }
 
@@ -328,7 +324,7 @@ namespace UnitTest.BlackBox
         [DeploymentItem("tests/newConflicts", "newConflicts")]
         public void TestMappingNewConflicts()
         {
-            testFolder = "newConflicts";
+            TestFolder = "newConflicts";
             RunTest();
         }
 
@@ -336,7 +332,7 @@ namespace UnitTest.BlackBox
         [DeploymentItem("tests/nonRootUsing", "nonRootUsing")]
         public void TestMappingNonRootUsing()
         {
-            testFolder = "nonRootUsing";
+            TestFolder = "nonRootUsing";
             RunTest();
         }
 
@@ -344,7 +340,7 @@ namespace UnitTest.BlackBox
         [DeploymentItem("tests/nothing", "nothing")]
         public void TestMappingNothing()
         {
-            testFolder = "nothing";
+            TestFolder = "nothing";
             RunTest();
         }
 
@@ -352,7 +348,7 @@ namespace UnitTest.BlackBox
         [DeploymentItem("tests/oldConflicts", "oldConflicts")]
         public void TestMappingOldConflicts()
         {
-            testFolder = "oldConflicts";
+            TestFolder = "oldConflicts";
             RunTest();
         }
 
@@ -360,7 +356,7 @@ namespace UnitTest.BlackBox
         [DeploymentItem("tests/typeof", "typeof")]
         public void TestMappingTypeof()
         {
-            testFolder = "typeof";
+            TestFolder = "typeof";
             RunTest();
         }
 
@@ -368,7 +364,7 @@ namespace UnitTest.BlackBox
         [DeploymentItem("tests/unused", "unused")]
         public void TestMappingUnused()
         {
-            testFolder = "unused";
+            TestFolder = "unused";
             RunTest();
         }
 
@@ -386,7 +382,7 @@ namespace UnitTest.BlackBox
 //  echo "        [DeploymentItem(\"tests/$d\", \"$d\")]"
 //  echo "        public void TestMapping${d^}()"
 //  echo "        {"
-//  echo "            testFolder = \"$d\";"
+//  echo "            TestFolder = \"$d\";"
 //  echo "            RunTest();"
 //  echo "        }"
 //done

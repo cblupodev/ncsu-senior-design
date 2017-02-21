@@ -9,7 +9,7 @@ namespace UnitTest.BlackBox
 {
     
     [TestClass]
-    public class NormalBlackBoxTests : BlackBoxTest
+    public class NormalBlackBoxTests : TransformationBlackBox
     {
         [TestMethod]
         [DeploymentItem("tests/alias", "alias")]

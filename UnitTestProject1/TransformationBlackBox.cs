@@ -9,11 +9,7 @@ using DBConnector;
 
 namespace UnitTest.BlackBox
 {
-    [DeploymentItem("Microsoft.CodeAnalysis.CSharp.dll")]
-    [DeploymentItem("Microsoft.CodeAnalysis.CSharp.Workspaces.dll")]
-    [DeploymentItem("Microsoft.CodeAnalysis.VisualBasic.dll")]
-    [DeploymentItem("Microsoft.CodeAnalysis.VisualBasic.Workspaces.dll")]
-    public class BlackBoxTest
+    public class TransformationBlackBox : BlackBoxBase
     {
         // this must be deployed using the attribute
         // [DeploymentItem(test_folder)]
@@ -37,7 +33,7 @@ namespace UnitTest.BlackBox
         static string pathToTransformClient = null;
         static string sdkNameId = null;
 
-        static BlackBoxTest()
+        static TransformationBlackBox()
         {
             var dir = new DirectoryInfo(".");
             while ( dir != null && dir.GetFiles("*.sln").Length == 0 )
@@ -255,7 +251,7 @@ namespace UnitTest.BlackBox
 //  echo "        [DeploymentItem(\"tests/$d\", \"$d\")]"
 //  echo "        public void Test${d^}()"
 //  echo "        {"
-//  echo "            testFolder = \"$d\";"
+//  echo "            TestFolder = \"$d\";"
 //  echo "            RunTest();"
 //  echo "        }"
 //done
