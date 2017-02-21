@@ -140,22 +140,27 @@ namespace DBConnector
             return query;
         }
 
-        public Dictionary<String, HashSet<String>> GetNamespaceToClassnameSetMap(int sdkId)
+        public Dictionary<String, Dictionary<String, String>> GetNamespaceToClassnameMapMap(int sdkId)
         {
-            Dictionary<String, HashSet<String>> namespaceToClassNameSetMap = new Dictionary<String, HashSet<String>>();
+            Dictionary < String, Dictionary<String, String>> namespaceToClassNameSetMap = new Dictionary<String, Dictionary<String, String>>();
             var query = (from sm in dbConnection.sdk_maps where sm.sdk_id == sdkId select sm.old_namespace).Distinct();
             foreach (var ns in query)
             {
-                namespaceToClassNameSetMap.Add(ns, GetClassnameSet(ns, sdkId));
+                namespaceToClassNameSetMap.Add(ns, GetClassnameMap(ns, sdkId));
             }
             return namespaceToClassNameSetMap;
         }
 
-        private HashSet<String> GetClassnameSet(string ns, int sdkId)
+        private Dictionary<String, String> GetClassnameMap(string ns, int sdkId)
         {
-            var query = (from sm in dbConnection.sdk_maps where sm.old_namespace == ns && sm.sdk_id == sdkId select sm.old_classname);
-            HashSet<String> classnameSet = new HashSet<String>(query);
-            return classnameSet;
+            var query = (from sm in dbConnection.sdk_maps
+                         where sm.old_namespace == ns && sm.sdk_id == sdkId
+                         select new
+                         {
+                             col1 = sm.old_classname,
+                             col2 = sm.new_classname
+                         }).ToDictionary(sm => sm.col1, sm => sm.col2, StringComparer.OrdinalIgnoreCase);
+            return query;
         }
 
         public Mapping GetByFullyQualifiedName(string oldNamespace, string oldClassname, int sdkId)
