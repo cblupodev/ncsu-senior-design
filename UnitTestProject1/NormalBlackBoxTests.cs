@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace UnitTest.BlackBox
 {
+    
     [TestClass]
     public class NormalBlackBoxTests : BlackBoxTest
     {
@@ -91,18 +92,18 @@ namespace UnitTest.BlackBox
         }
 
         [TestMethod]
-        [DeploymentItem("tests/fullyQualifiedModelIdentifier", "generics")]
-        public void TestGenerics()
+        [DeploymentItem("tests/fullyQualifiedModelIdentifier", "fullyQualifiedModelIdentifier")]
+        public void TestFullyQualifiedModelIdentifier()
         {
-            TestFolder = "generics";
+            TestFolder = "fullyQualifiedModelIdentifier";
             RunTest();
         }
 
         [TestMethod]
-        [DeploymentItem("tests/generics", "instantiatesSDKClass")]
-        public void TestInstantiatesSDKClass()
+        [DeploymentItem("tests/generics", "generics")]
+        public void TestGenerics()
         {
-            TestFolder = "instantiatesSDKClass";
+            TestFolder = "generics";
             RunTest();
         }
 
