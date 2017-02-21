@@ -34,8 +34,8 @@ namespace UnitTest.BlackBox
                 sdkNameId = Path.GetFileName(testFolder);
             }
         }
-        private string testFolder;
-        private string sdkNameId;
+        string testFolder;
+        string sdkNameId;
         public string SdkNameId
         {
             get
@@ -46,20 +46,38 @@ namespace UnitTest.BlackBox
         
         public virtual void RunMappingTest()
         {
-            LoadExpectedMappings();
-            ResetDatabase();
+            MappingSetup();
             RunMapping();
             VerifyMapping();
         }
-        
-        public virtual void RunPreTransformTest()
+
+        string projectUnderTest;
+
+        public virtual void RunPreTransformCSTest()
         {
+            projectUnderTest = Path.Combine(TestFolder, "clientC#", "Client", "Client.csproj");
             SetupPreTransformTest();
             VerifyPreTransformTest();
         }
 
-        public virtual void RunPostTransformTest()
+        public virtual void RunPostTransformCSTest()
         {
+            projectUnderTest = Path.Combine(TestFolder, "clientC#", "Client", "Client.csproj");
+            SetupPostTransformTest();
+            ProcessPostTransformTest();
+            VerifyPostTransformTest();
+        }
+
+        public virtual void RunPreTransformVBTest()
+        {
+            projectUnderTest = Path.Combine(TestFolder, "clientVB", "Client", "Client.vbproj");
+            SetupPreTransformTest();
+            VerifyPreTransformTest();
+        }
+
+        public virtual void RunPostTransformVBTest()
+        {
+            projectUnderTest = Path.Combine(TestFolder, "clientVB", "Client", "Client.vbproj");
             SetupPostTransformTest();
             ProcessPostTransformTest();
             VerifyPostTransformTest();
@@ -103,7 +121,12 @@ namespace UnitTest.BlackBox
                 return;
             }
         }
-        
+
+        public virtual void ResetDatabase()
+        {
+            SDKSQLConnector.GetInstance().DeleteSDKByName(sdkNameId);
+        }
+
         public string CompileProject(string projPath)
         {
             var proj = MSBuildWorkspace.Create().OpenProjectAsync(projPath).Result;
@@ -134,6 +157,7 @@ namespace UnitTest.BlackBox
             proc.StartInfo.UseShellExecute = false;
             proc.StartInfo.RedirectStandardOutput = true;
             proc.Start();
+            Assert.AreEqual(0, proc.ExitCode, "project exited unexpectedly");
             var expectedOut = new StreamReader(expectedPath);
             while (!proc.StandardOutput.EndOfStream && !expectedOut.EndOfStream)
             {
@@ -142,7 +166,16 @@ namespace UnitTest.BlackBox
             Assert.AreEqual(expectedOut.EndOfStream, proc.StandardOutput.EndOfStream);
         }
 
-        // MappingTest
+        public virtual void CompileLibraries()
+        {
+            Directory.Delete(Path.Combine(TestFolder, "bin1"), true);
+            Directory.CreateDirectory(Path.Combine(TestFolder, "bin1"));
+            CompileSolution(Path.Combine(TestFolder, "oldSDK", "SDK.sln"));
+            Directory.Delete(Path.Combine(TestFolder, "bin2"), true);
+            Directory.CreateDirectory(Path.Combine(TestFolder, "bin2"));
+            CompileSolution(Path.Combine(TestFolder, "newSDK", "SDK.sln"));
+        }
+            
         List<Mapping> expectedMappings;
 
         public virtual void LoadExpectedMappings()
@@ -202,13 +235,22 @@ namespace UnitTest.BlackBox
                 Assert.AreEqual(lineOne.Length, curLine.Length, "wrong number of entries on line " + i);
                 expectedMappings.Add(new Mapping(curLine[old_namespace_id], curLine[new_namespace_id],
                     curLine[model_identifier_id], curLine[old_classname_id], curLine[new_classname_id],
-                    curLine[old_assembly_path_id], curLine[new_namespace_id]));
+                    Path.GetFullPath(Path.Combine(TestFolder, curLine[old_assembly_path_id])),
+                    Path.GetFullPath(Path.Combine(TestFolder, curLine[new_assembly_path_id])) ));
             }
         }
 
-        public virtual void ResetDatabase()
+        public virtual void LoadExpectedMappingsToDatabase()
         {
-            SDKSQLConnector.GetInstance().DeleteSDKByName(sdkNameId);
+            LoadExpectedMappings();
+        }
+        
+        // MappingTest
+        public virtual void MappingSetup()
+        {
+            CompileLibraries();
+            LoadExpectedMappings();
+            ResetDatabase();
         }
 
         public virtual void RunMapping()
@@ -229,30 +271,9 @@ namespace UnitTest.BlackBox
             Assert.AreEqual(expectedMappings.Count, actualMappings.Count, "Wrong number of generated mappings");
             foreach (var expect in actualMappings)
             {
-                var found = false;
-                foreach (var actual in expectedMappings)
+                if ( ! actualMappings.Contains(expect) )
                 {
-                    if (expect.ModelIdentifierGUID.Equals(actual.ModelIdentifierGUID))
-                    {
-                        found = true;
-                        Assert.AreEqual(expect.NewClassName, actual.NewClassName, "NewClassName mismatch");
-                        Assert.AreEqual(expect.NewNamespace, actual.NewNamespace, "NewNamespace mismatch");
-                        Assert.AreEqual(expect.OldClassName, actual.OldClassName, "OldClassName mismatch");
-                        Assert.AreEqual(expect.OldNamespace, actual.OldNamespace, "OldNamespace mismatch");
-                        Assert.AreEqual(
-                            Path.GetFullPath(Path.Combine(TestFolder, expect.NewDllPath)),
-                            Path.GetFullPath(actual.NewDllPath),
-                            "NewDllPath mismatch");
-                        Assert.AreEqual(
-                            Path.GetFullPath(Path.Combine(TestFolder, expect.OldDllPath)),
-                            Path.GetFullPath(actual.OldDllPath),
-                            "NewDllPath mismatch");
-                        break;
-                    }
-                }
-                if (!found)
-                {
-                    Assert.Fail("Could not find actual mapping for " + expect.ModelIdentifierGUID);
+                    Assert.Fail("Missing actual mapping for " + expect.ModelIdentifierGUID);
                 }
             }
         }
@@ -261,9 +282,7 @@ namespace UnitTest.BlackBox
         // PreTransformTest
         public virtual void SetupPreTransformTest()
         {
-            Directory.Delete(Path.Combine(TestFolder, "bin1"), true);
-            Directory.CreateDirectory(Path.Combine(TestFolder, "bin1"));
-            CompileSolution(Path.Combine(TestFolder, "oldSDK", "SDK.sln"));
+            CompileLibraries();
         }
 
         public virtual void VerifyPreTransformTest()
@@ -277,29 +296,40 @@ namespace UnitTest.BlackBox
                     Assert.Fail("No file containing expected output.");
                 }
             }
-            VerifyProject(Path.Combine(TestFolder, "clientC#", "Client", "Client.csproj"), expectedPath);
-            VerifyProject(Path.Combine(TestFolder, "clientVB", "Client", "Client.vbproj"), expectedPath);
+            VerifyProject(projectUnderTest, expectedPath);
         }
 
         // PostTransformTest
         public virtual void SetupPostTransformTest()
         {
-            Directory.Delete(Path.Combine(TestFolder, "bin1"), true);
-            Directory.CreateDirectory(Path.Combine(TestFolder, "bin1"));
-            CompileSolution(Path.Combine(TestFolder, "oldSDK", "SDK.sln"));
-            Directory.Delete(Path.Combine(TestFolder, "bin2"), true);
-            Directory.CreateDirectory(Path.Combine(TestFolder, "bin2"));
-            CompileSolution(Path.Combine(TestFolder, "newSDK", "SDK.sln"));
+            CompileLibraries();
+            ResetDatabase();
+            LoadExpectedMappingsToDatabase();
         }
 
         public virtual void ProcessPostTransformTest()
         {
-
+            var translateClient = new Process();
+            translateClient.StartInfo.FileName = pathToTransformClient;
+            translateClient.StartInfo.Arguments = "\"" + projectUnderTest + "\" \"" + sdkNameId + "\"";
+            translateClient.Start();
+            translateClient.WaitForExit();
+            Assert.AreEqual(0, translateClient.ExitCode, "error running the translate client program on");
         }
 
         public virtual void VerifyPostTransformTest()
         {
-
+            Directory.Delete(Path.Combine(TestFolder, "bin1"));
+            string expectedPath = Path.Combine(TestFolder, "expectedOutNew.txt");
+            if (!File.Exists(expectedPath))
+            {
+                expectedPath = (Path.Combine(TestFolder, "expectedOut.txt"));
+                if (!File.Exists(expectedPath))
+                {
+                    Assert.Fail("No file containing expected output.");
+                }
+            }
+            VerifyProject(projectUnderTest, expectedPath);
         }
     }
 }
