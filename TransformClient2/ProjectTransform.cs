@@ -92,7 +92,7 @@ namespace NamespaceRefactorer
             var semanticModel = doc.GetSemanticModelAsync().Result;
             var syntaxTree = doc.GetSyntaxTreeAsync().Result;
 
-            //do processing here
+            // do processing here
             var documentEditor = DocumentEditor.CreateAsync(doc).Result; //https://joshvarty.wordpress.com/2015/08/18/learn-roslyn-now-part-12-the-documenteditor/
 
             FileTransform ft = new FileTransform(documentEditor);
