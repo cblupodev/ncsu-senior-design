@@ -216,7 +216,7 @@ namespace DBConnector
                 sdk_map row = res.Single();
                 Mapping mapping = new Mapping(row.old_namespace, row.new_namespace, row.model_identifier, row.old_classname, row.new_classname, row.old_assembly_path, row.new_assembly_path);
                 return mapping;
-            } catch(Exception e)
+            } catch(Exception)
             {
                 //Do nothing
             }

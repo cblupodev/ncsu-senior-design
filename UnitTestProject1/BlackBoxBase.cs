@@ -243,6 +243,9 @@ namespace UnitTest.BlackBox
         public virtual void LoadExpectedMappingsToDatabase()
         {
             LoadExpectedMappings();
+            SDKSQLConnector.GetInstance().SaveSDK(sdkNameId);
+            var sdkId = SDKSQLConnector.GetInstance().getByName(sdkNameId).id;
+            SDKMappingSQLConnector.GetInstance().SaveSDKMappings2(expectedMappings, sdkId);
         }
         
         // MappingTest
@@ -259,6 +262,7 @@ namespace UnitTest.BlackBox
             createMapping.StartInfo.FileName = pathToCreateMappings;
             createMapping.StartInfo.Arguments = "\"" + Path.Combine(TestFolder, "bin1") + "\" \"" +
                 Path.Combine(TestFolder, "bin2") + "\" \"" + sdkNameId + "\"";
+            Trace.WriteLine(createMapping.StartInfo.Arguments);
             createMapping.Start();
             createMapping.WaitForExit();
             Assert.AreEqual(0, createMapping.ExitCode, "Error running the creating mappings");
@@ -267,7 +271,7 @@ namespace UnitTest.BlackBox
         public virtual void VerifyMapping()
         {
             var sdkId = SDKSQLConnector.GetInstance().getByName(sdkNameId).id;
-            var actualMappings = SDKMappingSQLConnector.GetInstance().GetAllByWhereClause(m => m.id == sdkId);
+            var actualMappings = SDKMappingSQLConnector.GetInstance().GetAllSDKMapsBySDKId(sdkId);
             Assert.AreEqual(expectedMappings.Count, actualMappings.Count, "Wrong number of generated mappings");
             foreach (var expect in actualMappings)
             {
@@ -331,5 +335,49 @@ namespace UnitTest.BlackBox
             }
             VerifyProject(projectUnderTest, expectedPath);
         }
+        
     }
 }
+
+// To generate test methods, run this code in bash:
+//
+//for f in ./*/
+//do
+//  d=$(basename "${f}")
+//  echo ""
+//  echo "    [TestClass]"
+//  echo "    [DeploymentItem(\"tests/$d\", \"$d\")]"
+//  echo "    public class ${d^}Tests : BlackBoxBase"
+//  echo "    {"
+//  echo "        [TestInitialize]"
+//  echo "        public void Init${d^}()"
+//  echo "        {"
+//  echo "            TestFolder = \"$d\";"
+//  echo "        }"
+//  echo "        [TestMethod]"
+//  echo "        public void TestMapping${d^}()"
+//  echo "        {"
+//  echo "            RunMappingTest();"
+//  echo "        }"
+//  echo "        [TestMethod]"
+//  echo "        public void TestPreTransformCS${d^}()"
+//  echo "        {"
+//  echo "            RunPreTransformCSTest();"
+//  echo "        }"
+//  echo "        [TestMethod]"
+//  echo "        public void TestPostTransformCS${d^}()"
+//  echo "        {"
+//  echo "            RunPostTransformCSTest();"
+//  echo "        }"
+//  echo "        [TestMethod]"
+//  echo "        public void TestPreTransformVB${d^}()"
+//  echo "        {"
+//  echo "            RunPreTransformVBTest();"
+//  echo "        }"
+//  echo "        [TestMethod]"
+//  echo "        public void TestPostTransformCB${d^}()"
+//  echo "        {"
+//  echo "            RunPostTransformVBTest();"
+//  echo "        }"
+//  echo "    }"
+//done

@@ -65,7 +65,7 @@ namespace DBConnector
                 sdk row = res.Single();
                 return row;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 //Do nothing
             }
