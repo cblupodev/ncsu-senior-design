@@ -262,10 +262,24 @@ namespace UnitTest.BlackBox
             createMapping.StartInfo.FileName = pathToCreateMappings;
             createMapping.StartInfo.Arguments = "\"" + Path.Combine(TestFolder, "bin1") + "\" \"" +
                 Path.Combine(TestFolder, "bin2") + "\" \"" + sdkNameId + "\"";
-            Trace.WriteLine(createMapping.StartInfo.Arguments);
+            createMapping.StartInfo.UseShellExecute = false;
+            createMapping.StartInfo.RedirectStandardOutput = true;
+            createMapping.StartInfo.RedirectStandardError = true;
             createMapping.Start();
+            Trace.WriteLine("------------ Start mapping standard output ");
+            while ( !createMapping.StandardOutput.EndOfStream )
+            {
+                Trace.WriteLine(createMapping.StandardOutput.ReadLine());
+            }
+            Trace.WriteLine("------------ End mapping standard output ");
+            Trace.WriteLine("------------ Start mapping error output ");
+            while (!createMapping.StandardError.EndOfStream)
+            {
+                Trace.WriteLine(createMapping.StandardError.ReadLine());
+            }
+            Trace.WriteLine("------------ End mapping error output ");
             createMapping.WaitForExit();
-            Assert.AreEqual(0, createMapping.ExitCode, "Error running the creating mappings");
+            Assert.AreEqual(0, createMapping.ExitCode, "Error running the create mappings program");
         }
 
         public virtual void VerifyMapping()
@@ -316,9 +330,27 @@ namespace UnitTest.BlackBox
             var translateClient = new Process();
             translateClient.StartInfo.FileName = pathToTransformClient;
             translateClient.StartInfo.Arguments = "\"" + projectUnderTest + "\" \"" + sdkNameId + "\"";
+            translateClient.StartInfo.UseShellExecute = false;
+            translateClient.StartInfo.RedirectStandardOutput = true;
             translateClient.Start();
+            translateClient.StartInfo.UseShellExecute = false;
+            translateClient.StartInfo.RedirectStandardOutput = true;
+            translateClient.StartInfo.RedirectStandardError = true;
+            translateClient.Start();
+            Trace.WriteLine("------------ Start translate client standard output ");
+            while (!translateClient.StandardOutput.EndOfStream)
+            {
+                Trace.WriteLine(translateClient.StandardOutput.ReadLine());
+            }
+            Trace.WriteLine("------------ End translate client standard output ");
+            Trace.WriteLine("------------ Start translate client error output ");
+            while (!translateClient.StandardError.EndOfStream)
+            {
+                Trace.WriteLine(translateClient.StandardError.ReadLine());
+            }
+            Trace.WriteLine("------------ End translate client error output ");
             translateClient.WaitForExit();
-            Assert.AreEqual(0, translateClient.ExitCode, "error running the translate client program on");
+            Assert.AreEqual(0, translateClient.ExitCode, "error running the translate client program");
         }
 
         public virtual void VerifyPostTransformTest()
