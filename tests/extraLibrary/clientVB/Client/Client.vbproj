@@ -20,7 +20,7 @@
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\bin\</OutputPath>
+    <OutputPath>..\..\bin1\</OutputPath>
     <DocumentationFile>Client.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
@@ -30,7 +30,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\bin\</OutputPath>
+    <OutputPath>..\..\bin1\</OutputPath>
     <DocumentationFile>Client.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
@@ -48,12 +48,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="extraLibrary">
-      <HintPath>..\..\bin\extraLibrary.dll</HintPath>
+      <HintPath>..\..\bin1\extraLibrary.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="SDK, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\SDK.dll</HintPath>
+      <HintPath>..\..\bin1\SDK.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />

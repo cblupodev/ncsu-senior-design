@@ -14,7 +14,7 @@ namespace Customer
     {
         static void Main(string[] args)
         {
-            Sample s = new Sample();
+Sample s = new Sample ();
         }
     }
 }

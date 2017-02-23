@@ -1,0 +1,2 @@
+model_identifier	old_namespace	old_classname	new_namespace	new_classname	old_assembly_path	new_assembly_path
+00000000-0000-4000-8000-00000001	SDK	Sample1	SDK	Change1	bin/SDK.dll	bin/newSDK.dll

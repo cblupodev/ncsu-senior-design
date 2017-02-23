@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateMappings", "CreateMap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NamespaceRefactorer", "NamespaceRefactorerC\NamespaceRefactorer.csproj", "{5C2E2338-E81A-4223-B26B-BEDD64B2DF88}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject1", "UnitTestProject1\UnitTestProject1.csproj", "{92C6F12A-DE3E-4D59-A952-4D22753139E2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackBoxTesting", "UnitTestProject1\BlackBoxTesting.csproj", "{92C6F12A-DE3E-4D59-A952-4D22753139E2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransformClient2", "TransformClient2\TransformClient2.csproj", "{7375D960-5EE1-4D1B-B668-7B2093E02B7A}"
 EndProject
