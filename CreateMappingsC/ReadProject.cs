@@ -32,11 +32,13 @@ namespace CreateMappings
                     // http://stackoverflow.com/questions/1273139/c-sharp-java-hashmap-equivalent
             List<GenericMapping> oldMappings = new List<GenericMapping>();
             List<GenericMapping> newMappings = new List<GenericMapping>();
+            string outputPath = "";
 
-            SDKSQLConnector.GetInstance().SaveSDK(sdkName);
+            readFolderDllFiles(oldFolderPath, oldMappings, ref outputPath);
+            readFolderDllFiles(newFolderPath, newMappings, ref outputPath);
+            SDKSQLConnector.GetInstance().SaveSDK(sdkName, outputPath);
             sdkId = SDKSQLConnector.GetInstance().getByName(sdkName).id;
-            readFolderDllFiles(oldFolderPath, oldMappings);
-            readFolderDllFiles(newFolderPath, newMappings);
+            
 
             SDKMappingSQLConnector.GetInstance().SaveSDKMappings2(oldMappings, newMappings, sdkId);
             Console.WriteLine("Mappings were saved to database");
@@ -44,7 +46,7 @@ namespace CreateMappings
 
         // itereate over all the dll files in a folder
         // for each file ,find the custom attributes
-        public void readFolderDllFiles(string folderPath, List<GenericMapping> mapList) {
+        public void readFolderDllFiles(string folderPath, List<GenericMapping> mapList, ref string outputPath) {
 
             ReadFile rf = new ReadFile();
             Helper.verifyFolderExists(folderPath);
@@ -52,7 +54,7 @@ namespace CreateMappings
 
             foreach (string dll in dllFiles)
             {
-                rf.findCustomAttributes(dll, mapList);
+                rf.findCustomAttributes(dll, mapList, ref outputPath);
             }
         }
 

@@ -390,6 +390,8 @@ namespace DBConnector
 		
 		private string _name;
 		
+		private string _output_path;
+		
 		private EntitySet<sdk_map> _sdk_maps;
 		
     #region Extensibility Method Definitions
@@ -400,6 +402,8 @@ namespace DBConnector
     partial void OnidChanged();
     partial void OnnameChanging(string value);
     partial void OnnameChanged();
+    partial void Onoutput_pathChanging(string value);
+    partial void Onoutput_pathChanged();
     #endregion
 		
 		public sdk()
@@ -444,6 +448,26 @@ namespace DBConnector
 					this._name = value;
 					this.SendPropertyChanged("name");
 					this.OnnameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_output_path", DbType="VarChar(MAX)")]
+		public string output_path
+		{
+			get
+			{
+				return this._output_path;
+			}
+			set
+			{
+				if ((this._output_path != value))
+				{
+					this.Onoutput_pathChanging(value);
+					this.SendPropertyChanging();
+					this._output_path = value;
+					this.SendPropertyChanged("output_path");
+					this.Onoutput_pathChanged();
 				}
 			}
 		}
