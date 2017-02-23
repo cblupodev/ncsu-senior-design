@@ -92,7 +92,7 @@ namespace NamespaceRefactorer
             var semanticModel = doc.GetSemanticModelAsync().Result;
             var syntaxTree = doc.GetSyntaxTreeAsync().Result;
 
-            //do processing here
+            // do processing here
             var documentEditor = DocumentEditor.CreateAsync(doc).Result; //https://joshvarty.wordpress.com/2015/08/18/learn-roslyn-now-part-12-the-documenteditor/
 
             FileTransform ft = new FileTransform(documentEditor);
@@ -102,23 +102,25 @@ namespace NamespaceRefactorer
             Console.WriteLine("Transformed   " + doc.FilePath);
         }
 
-        public void transformXml(string filePath, HashSet<String> newdllSet, HashSet<String> olddllSet)
+        public void transformXml(string csprojFilePath, HashSet<String> newdllSet, HashSet<String> olddllSet)
         {
             string xmlElementOutputPathName = "OutputPath";
             string xmlElementReferenceName = "Reference";
             string xmlElementHintPathName = "HintPath";
 
-            filePath = @"C:\Users\Christopher Lupo\Documents\Visual Studio 2015\Projects\2017SpringTeam25\TransformClient2\Client - Copy.xml"; // magic
+            csprojFilePath = @"C:\Users\Christopher Lupo\Documents\Visual Studio 2015\Projects\2017SpringTeam25\TransformClient2\Client - Copy.xml"; // magic
             // find the namsespace by calling Descendents() on the Root and drill down into the properties to find the namsespace you need
             XNamespace ns = XNamespace.Get("http://schemas.microsoft.com/developer/msbuild/2003"); // https://granadacoder.wordpress.com/2012/10/11/how-to-find-references-in-a-c-project-file-csproj-using-linq-xml/
-            XDocument xdoc = XDocument.Load(filePath);
+            XDocument xdoc = XDocument.Load(csprojFilePath);
+
+            // TODO change output file path
 
             string outputPath = (from outp in xdoc.Descendants(ns + xmlElementOutputPathName)
                                  select outp).First().Value;
 
             var references = from reference in xdoc.Descendants(ns + xmlElementReferenceName)
                              where reference.Element(ns + xmlElementHintPathName) != null
-                             //where olddllSet.Contains(Path.GetFullPath((outputPath+Path.GetFileName(reference.Descendants(ns + xmlElementHintPathName).First().Value)))) == true
+                             // where olddllSet.Contains(Path.GetFullPath((outputPath+Path.GetFileName(reference.Descendants(ns + xmlElementHintPathName).First().Value)))) == true
                              // Don't remove the line above
                              // that checks if the reference is part of the old sdk
                              // if the reference is not part of the old sdk then don't include it in the selection output

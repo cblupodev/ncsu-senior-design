@@ -18,6 +18,7 @@
     <Type Name="sdk">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="name" Type="System.String" DbType="VarChar(896)" CanBeNull="true" />
+      <Column Name="output_path" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Association Name="sdk_sdk_map" Member="sdk_maps" ThisKey="id" OtherKey="sdk_id" Type="sdk_map" />
     </Type>
   </Table>
