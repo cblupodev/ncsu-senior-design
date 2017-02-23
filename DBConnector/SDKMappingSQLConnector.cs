@@ -128,7 +128,7 @@ namespace DBConnector
 
         public List<Mapping> GetAllSDKMapsBySDKId(int sdk_id)
         {
-            return GetAllByWhereClause(m => m.id == sdk_id);
+            return GetAllByWhereClause(m => m.sdk_id == sdk_id);
         }
 
         public Mapping GetByModelidentifier(String modelID)
