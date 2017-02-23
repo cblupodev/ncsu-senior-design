@@ -21,6 +21,39 @@ namespace DBConnector
             return instance;
         }
         
+        public Boolean SaveSDKMappings2(List<Mapping> mappings, int sdk_id)
+        {
+            List<sdk_map> dbMappings = new List<sdk_map>();
+
+            foreach (var m in mappings)
+            {
+                sdk_map dbMapping = new sdk_map
+                {
+                    model_identifier = m.ModelIdentifierGUID,
+                    old_namespace = m.OldNamespace,
+                    old_classname = m.OldClassName,
+                    old_assembly_path = m.OldDllPath,
+                    new_namespace = m.NewNamespace,
+                    new_classname = m.NewClassName,
+                    new_assembly_path = m.NewDllPath,
+                    sdk_id = sdk_id
+                };
+                dbMappings.Add(dbMapping);
+            }
+            dbConnection.sdk_maps.InsertAllOnSubmit(dbMappings);
+
+            try
+            {
+                dbConnection.SubmitChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+            return true;
+        }
+
         public Boolean SaveSDKMappings2(List<GenericMapping> oldMappingsToSave, List<GenericMapping> newMappingsToSave, int sdk_id)
         {
             List<sdk_map> dbMappings = new List<sdk_map>();
@@ -91,6 +124,11 @@ namespace DBConnector
                 mappings.Add(mapping);
             }
             return mappings;
+        }
+
+        public List<Mapping> GetAllSDKMapsBySDKId(int sdk_id)
+        {
+            return GetAllByWhereClause(m => m.id == sdk_id);
         }
 
         public Mapping GetByModelidentifier(String modelID)
