@@ -266,18 +266,19 @@ namespace UnitTest.BlackBox
             createMapping.StartInfo.RedirectStandardOutput = true;
             createMapping.StartInfo.RedirectStandardError = true;
             createMapping.Start();
-            Trace.WriteLine("------------ Start mapping standard output ");
+            Trace.WriteLine("------------ Started create mappings with arguments: " + createMapping.StartInfo.Arguments);
+            Trace.WriteLine("------------ Start create mappings standard output");
             while ( !createMapping.StandardOutput.EndOfStream )
             {
                 Trace.WriteLine(createMapping.StandardOutput.ReadLine());
             }
-            Trace.WriteLine("------------ End mapping standard output ");
-            Trace.WriteLine("------------ Start mapping error output ");
+            Trace.WriteLine("------------ End create mappings standard output ");
+            Trace.WriteLine("------------ Start create mappings error output ");
             while (!createMapping.StandardError.EndOfStream)
             {
                 Trace.WriteLine(createMapping.StandardError.ReadLine());
             }
-            Trace.WriteLine("------------ End mapping error output ");
+            Trace.WriteLine("------------ End create mappings error output ");
             createMapping.WaitForExit();
             Assert.AreEqual(0, createMapping.ExitCode, "Error running the create mappings program");
         }
@@ -339,6 +340,7 @@ namespace UnitTest.BlackBox
             translateClient.StartInfo.RedirectStandardOutput = true;
             translateClient.StartInfo.RedirectStandardError = true;
             translateClient.Start();
+            Trace.WriteLine("------------ Started translate client with arguments: " + translateClient.StartInfo.Arguments);
             Trace.WriteLine("------------ Start translate client standard output ");
             while (!translateClient.StandardOutput.EndOfStream)
             {
