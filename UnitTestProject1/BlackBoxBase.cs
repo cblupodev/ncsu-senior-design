@@ -243,7 +243,7 @@ namespace UnitTest.BlackBox
         public virtual void LoadExpectedMappingsToDatabase()
         {
             LoadExpectedMappings();
-            SDKSQLConnector.GetInstance().SaveSDK(sdkNameId);
+            SDKSQLConnector.GetInstance().SaveSDK(sdkNameId, Path.GetFullPath(Path.Combine(TestFolder, "bin2")));
             var sdkId = SDKSQLConnector.GetInstance().getByName(sdkNameId).id;
             SDKMappingSQLConnector.GetInstance().SaveSDKMappings2(expectedMappings, sdkId);
         }
@@ -285,6 +285,8 @@ namespace UnitTest.BlackBox
         public virtual void VerifyMapping()
         {
             var sdkId = SDKSQLConnector.GetInstance().getByName(sdkNameId).id;
+            Assert.AreEqual("bin2", SDKSQLConnector.GetInstance().getOutputPathById(sdkId),
+                "Wrong output path");
             var actualMappings = SDKMappingSQLConnector.GetInstance().GetAllSDKMapsBySDKId(sdkId);
             Assert.AreEqual(expectedMappings.Count, actualMappings.Count, "Wrong number of generated mappings");
             foreach (var expect in actualMappings)
