@@ -243,6 +243,9 @@ namespace UnitTest.BlackBox
         public virtual void LoadExpectedMappingsToDatabase()
         {
             LoadExpectedMappings();
+            SDKSQLConnector.GetInstance().SaveSDK(sdkNameId, Path.GetFullPath(Path.Combine(TestFolder, "bin2")));
+            var sdkId = SDKSQLConnector.GetInstance().getByName(sdkNameId).id;
+            SDKMappingSQLConnector.GetInstance().SaveSDKMappings2(expectedMappings, sdkId);
         }
         
         // MappingTest
@@ -259,15 +262,33 @@ namespace UnitTest.BlackBox
             createMapping.StartInfo.FileName = pathToCreateMappings;
             createMapping.StartInfo.Arguments = "\"" + Path.Combine(TestFolder, "bin1") + "\" \"" +
                 Path.Combine(TestFolder, "bin2") + "\" \"" + sdkNameId + "\"";
+            createMapping.StartInfo.UseShellExecute = false;
+            createMapping.StartInfo.RedirectStandardOutput = true;
+            createMapping.StartInfo.RedirectStandardError = true;
             createMapping.Start();
+            Trace.WriteLine("------------ Started create mappings with arguments: " + createMapping.StartInfo.Arguments);
+            Trace.WriteLine("------------ Start create mappings standard output");
+            while ( !createMapping.StandardOutput.EndOfStream )
+            {
+                Trace.WriteLine(createMapping.StandardOutput.ReadLine());
+            }
+            Trace.WriteLine("------------ End create mappings standard output ");
+            Trace.WriteLine("------------ Start create mappings error output ");
+            while (!createMapping.StandardError.EndOfStream)
+            {
+                Trace.WriteLine(createMapping.StandardError.ReadLine());
+            }
+            Trace.WriteLine("------------ End create mappings error output ");
             createMapping.WaitForExit();
-            Assert.AreEqual(0, createMapping.ExitCode, "Error running the creating mappings");
+            Assert.AreEqual(0, createMapping.ExitCode, "Error running the create mappings program");
         }
 
         public virtual void VerifyMapping()
         {
             var sdkId = SDKSQLConnector.GetInstance().getByName(sdkNameId).id;
-            var actualMappings = SDKMappingSQLConnector.GetInstance().GetAllByWhereClause(m => m.id == sdkId);
+            Assert.AreEqual("bin2", SDKSQLConnector.GetInstance().getOutputPathById(sdkId),
+                "Wrong output path");
+            var actualMappings = SDKMappingSQLConnector.GetInstance().GetAllSDKMapsBySDKId(sdkId);
             Assert.AreEqual(expectedMappings.Count, actualMappings.Count, "Wrong number of generated mappings");
             foreach (var expect in actualMappings)
             {
@@ -312,9 +333,28 @@ namespace UnitTest.BlackBox
             var translateClient = new Process();
             translateClient.StartInfo.FileName = pathToTransformClient;
             translateClient.StartInfo.Arguments = "\"" + projectUnderTest + "\" \"" + sdkNameId + "\"";
+            translateClient.StartInfo.UseShellExecute = false;
+            translateClient.StartInfo.RedirectStandardOutput = true;
             translateClient.Start();
+            translateClient.StartInfo.UseShellExecute = false;
+            translateClient.StartInfo.RedirectStandardOutput = true;
+            translateClient.StartInfo.RedirectStandardError = true;
+            translateClient.Start();
+            Trace.WriteLine("------------ Started translate client with arguments: " + translateClient.StartInfo.Arguments);
+            Trace.WriteLine("------------ Start translate client standard output ");
+            while (!translateClient.StandardOutput.EndOfStream)
+            {
+                Trace.WriteLine(translateClient.StandardOutput.ReadLine());
+            }
+            Trace.WriteLine("------------ End translate client standard output ");
+            Trace.WriteLine("------------ Start translate client error output ");
+            while (!translateClient.StandardError.EndOfStream)
+            {
+                Trace.WriteLine(translateClient.StandardError.ReadLine());
+            }
+            Trace.WriteLine("------------ End translate client error output ");
             translateClient.WaitForExit();
-            Assert.AreEqual(0, translateClient.ExitCode, "error running the translate client program on");
+            Assert.AreEqual(0, translateClient.ExitCode, "error running the translate client program");
         }
 
         public virtual void VerifyPostTransformTest()
@@ -331,5 +371,49 @@ namespace UnitTest.BlackBox
             }
             VerifyProject(projectUnderTest, expectedPath);
         }
+        
     }
 }
+
+// To generate test methods, run this code in bash:
+//
+//for f in ./*/
+//do
+//  d=$(basename "${f}")
+//  echo ""
+//  echo "    [TestClass]"
+//  echo "    [DeploymentItem(\"tests/$d\", \"$d\")]"
+//  echo "    public class ${d^}Tests : BlackBoxBase"
+//  echo "    {"
+//  echo "        [TestInitialize]"
+//  echo "        public void Init${d^}()"
+//  echo "        {"
+//  echo "            TestFolder = \"$d\";"
+//  echo "        }"
+//  echo "        [TestMethod]"
+//  echo "        public void TestMapping${d^}()"
+//  echo "        {"
+//  echo "            RunMappingTest();"
+//  echo "        }"
+//  echo "        [TestMethod]"
+//  echo "        public void TestPreTransformCS${d^}()"
+//  echo "        {"
+//  echo "            RunPreTransformCSTest();"
+//  echo "        }"
+//  echo "        [TestMethod]"
+//  echo "        public void TestPostTransformCS${d^}()"
+//  echo "        {"
+//  echo "            RunPostTransformCSTest();"
+//  echo "        }"
+//  echo "        [TestMethod]"
+//  echo "        public void TestPreTransformVB${d^}()"
+//  echo "        {"
+//  echo "            RunPreTransformVBTest();"
+//  echo "        }"
+//  echo "        [TestMethod]"
+//  echo "        public void TestPostTransformCB${d^}()"
+//  echo "        {"
+//  echo "            RunPostTransformVBTest();"
+//  echo "        }"
+//  echo "    }"
+//done

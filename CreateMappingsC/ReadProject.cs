@@ -27,16 +27,17 @@ namespace CreateMappings
 
         private void run(string oldFolderPath, string newFolderPath, string sdkName)
         {
-                    // key = model identifier
-                    // value = mapping
-                    // http://stackoverflow.com/questions/1273139/c-sharp-java-hashmap-equivalent
+            // key = model identifier
+            // value = mapping
+            // http://stackoverflow.com/questions/1273139/c-sharp-java-hashmap-equivalent
             List<GenericMapping> oldMappings = new List<GenericMapping>();
             List<GenericMapping> newMappings = new List<GenericMapping>();
 
-            SDKSQLConnector.GetInstance().SaveSDK(sdkName);
-            sdkId = SDKSQLConnector.GetInstance().getByName(sdkName).id;
             readFolderDllFiles(oldFolderPath, oldMappings);
             readFolderDllFiles(newFolderPath, newMappings);
+            SDKSQLConnector.GetInstance().SaveSDK(sdkName, newFolderPath);
+            sdkId = SDKSQLConnector.GetInstance().getByName(sdkName).id;
+            
 
             SDKMappingSQLConnector.GetInstance().SaveSDKMappings2(oldMappings, newMappings, sdkId);
             Console.WriteLine("Mappings were saved to database");

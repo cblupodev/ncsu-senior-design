@@ -21,11 +21,12 @@ namespace DBConnector
             return instance;
         }
 
-        public Boolean SaveSDK(string sdkName)
+        public Boolean SaveSDK(string sdkName, string outputPath)
         {
             sdk dbSdk = new sdk
             {
-                name = sdkName
+                name = sdkName,
+                output_path = outputPath
             };
             dbConnection.sdks.InsertOnSubmit(dbSdk);
 
@@ -51,6 +52,11 @@ namespace DBConnector
             return GetByWhereClause(s => s.id == sdkId);
         }
 
+        public string getOutputPathById(int sdkId)
+        {
+            return GetByWhereClause(s => s.id == sdkId).output_path;
+        }
+
         private sdk GetByWhereClause(Expression<Func<sdk, bool>> whereClause)
         {
             var res = dbConnection.sdks.Where(whereClause);
@@ -59,7 +65,7 @@ namespace DBConnector
                 sdk row = res.Single();
                 return row;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 //Do nothing
             }

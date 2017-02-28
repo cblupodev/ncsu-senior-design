@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using NamespaceRefactorer;
 using CreateMappings;
 using DBConnector;
+using System.IO;
 
 namespace NamespaceRefactorer
 {
@@ -15,6 +16,7 @@ namespace NamespaceRefactorer
         // find the custom attributes in a dll and add mapping to the dictionary
         public void findCustomAttributes(string dllPath, List<GenericMapping> mapList)
         {
+
             Helper.verifyFileExists(dllPath);
             var assem = Assembly.LoadFile(dllPath);
 

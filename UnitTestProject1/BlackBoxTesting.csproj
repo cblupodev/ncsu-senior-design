@@ -118,11 +118,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="BlackBoxBase.cs" />
-    <Compile Include="TransformationBlackBox.cs" />
-    <Compile Include="MappingBlackBox.cs" />
-    <Compile Include="NormalTransformationBlackBoxTests.cs" />
+    <Compile Include="BlackBoxTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SpecialTransformationCaseBlackBoxTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
