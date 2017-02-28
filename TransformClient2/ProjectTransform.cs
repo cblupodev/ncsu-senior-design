@@ -68,7 +68,7 @@ namespace NamespaceRefactorer
             HashSet<String> newdllSet = mappingConnector.GetAllNewDllPaths(sdkId);
             HashSet<String> olddllSet = mappingConnector.GetAllOldDllPaths(sdkId);
             // Don't remove the line below, cblupo
-            transformXml(proj.FilePath, newdllSet, olddllSet, sdkId);
+            //transformXml(proj.FilePath, newdllSet, olddllSet, sdkId);
             Console.WriteLine("Project file edited to use new references");
         }
 
