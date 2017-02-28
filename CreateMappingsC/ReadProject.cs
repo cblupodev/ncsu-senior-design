@@ -33,10 +33,10 @@ namespace CreateMappings
             List<GenericMapping> oldMappings = new List<GenericMapping>();
             List<GenericMapping> newMappings = new List<GenericMapping>();
 
-            readFolderDllFiles(oldFolderPath, oldMappings);
-            readFolderDllFiles(newFolderPath, newMappings);
             SDKSQLConnector.GetInstance().SaveSDK(sdkName, newFolderPath);
             sdkId = SDKSQLConnector.GetInstance().getByName(sdkName).id;
+            readFolderDllFiles(oldFolderPath, oldMappings);
+            readFolderDllFiles(newFolderPath, newMappings);
             
 
             SDKMappingSQLConnector.GetInstance().SaveSDKMappings2(oldMappings, newMappings, sdkId);
