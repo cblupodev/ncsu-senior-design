@@ -286,7 +286,7 @@ namespace UnitTest.BlackBox
         public virtual void VerifyMapping()
         {
             var sdkId = SDKSQLConnector.GetInstance().getByName(sdkNameId).id;
-            Assert.AreEqual("bin2", SDKSQLConnector.GetInstance().getOutputPathById(sdkId),
+            Assert.AreEqual(Path.GetFullPath(Path.Combine(TestFolder,"bin2")), SDKSQLConnector.GetInstance().getOutputPathById(sdkId),
                 "Wrong output path");
             var actualMappings = SDKMappingSQLConnector.GetInstance().GetAllSDKMapsBySDKId(sdkId);
             Assert.AreEqual(expectedMappings.Count, actualMappings.Count, "Wrong number of generated mappings");
