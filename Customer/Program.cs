@@ -15,11 +15,13 @@ namespace Customer
     {
 
         private FujitsuSDKOld.Sample a = new FujitsuSDKOld.Sample();
+        //this is a comment to test keeping track of trivia
         private asdf.fudgeold2 b = new asdf.fudgeold2();
 
         static void Main(string[] args)
         {
             FujitsuSDKOld.Sample s = new FujitsuSDKOld.Sample();
+            // this is also a test comment
             asdf.fudgeold2 t = new asdf.fudgeold2();
         }
     }

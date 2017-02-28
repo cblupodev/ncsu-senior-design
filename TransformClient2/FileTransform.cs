@@ -198,13 +198,18 @@ namespace NamespaceRefactorer
             {
                 IEnumerable<IdentifierNameSyntax> idNames = tree.GetRoot().DescendantNodes().OfType<IdentifierNameSyntax>();
                 var qualifiedSymbolInfo = semanticModel.GetSymbolInfo(oldQualifiedNameNode);
+                var rightNodeTypeInfo = semanticModel.GetTypeInfo(oldQualifiedNameNode.Right);
                 string nsString = qualifiedSymbolInfo.Symbol.ContainingNamespace.ToString();
                 string className = qualifiedSymbolInfo.Symbol.Name.ToString();
-                if (nsMap.ContainsKey(nsString))
+                if (nsMap.ContainsKey(nsString) && rightNodeTypeInfo.Type != null)
                 {
                     String newNamespace = nsMap[nsString];
-                    QualifiedNameSyntax newQualifiedNameNode = QualifiedName(IdentifierName(newNamespace), IdentifierName(newNamespace)).WithTriviaFrom(oldQualifiedNameNode);
-                    documentEditor.ReplaceNode(oldQualifiedNameNode, newQualifiedNameNode);
+                    if (map[nsString].ContainsKey(className))
+                    {
+                        string newClassname = map[nsString][className];
+                        QualifiedNameSyntax newQualifiedNameNode = QualifiedName(IdentifierName(newNamespace), IdentifierName(newClassname)).WithTriviaFrom(oldQualifiedNameNode);
+                        documentEditor.ReplaceNode(oldQualifiedNameNode, newQualifiedNameNode);
+                    }
                 }
             }
         }
