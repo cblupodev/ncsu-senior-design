@@ -129,9 +129,17 @@
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.0.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CreateMappingsC\CreateMappings.csproj">
+      <Project>{1c52df0c-67fd-4a54-9160-732ff0a5143f}</Project>
+      <Name>CreateMappings</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DBConnector\DBConnector.csproj">
       <Project>{FDF3CC16-26A0-47CE-A129-4A06F829DB12}</Project>
       <Name>DBConnector</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TransformClient2\TransformClient2.csproj">
+      <Project>{7375d960-5ee1-4d1b-b668-7b2093e02b7a}</Project>
+      <Name>TransformClient2</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
