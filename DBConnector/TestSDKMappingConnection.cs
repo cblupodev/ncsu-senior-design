@@ -11,7 +11,7 @@ namespace DBConnector
     {
         static void Main(String[] args)
         {
-            SDKSQLConnector.GetInstance().SaveSDK("alabama");
+            SDKSQLConnector.GetInstance().SaveSDK("alabama", "uyvyu");
             int sdkId = SDKSQLConnector.GetInstance().getByName("alabama").id;
             List<GenericMapping> oldMappingList = new List<GenericMapping>();
             List<GenericMapping> newMappingList = new List<GenericMapping>();
