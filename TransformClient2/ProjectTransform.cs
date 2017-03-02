@@ -97,7 +97,7 @@ namespace NamespaceRefactorer
 
             FileTransform ft = new FileTransform(documentEditor);
 
-            syntaxTree = ft.findOldUsingsAndReplaceOldSyntax(documentEditor, namespaceSet, namespaceToClassnameSetMap);
+            syntaxTree = ft.replaceSyntax();
             File.WriteAllText(doc.FilePath, syntaxTree.GetText().ToString()); // http://stackoverflow.com/questions/18295837/c-sharp-roslyn-api-reading-a-cs-file-updating-a-class-writing-back-to-cs-fi
             Console.WriteLine("Transformed   " + doc.FilePath);
         }

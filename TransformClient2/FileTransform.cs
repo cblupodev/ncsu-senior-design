@@ -58,196 +58,86 @@ namespace NamespaceRefactorer
         // search for using statements with the old sdk. Then if they are found then look for classes that coresponded to the custom attributes
         // if classes are found then replace the old using statement with the new one
         // oldSDKUsings is a list of the old sdk using statements
-        public SyntaxTree findOldUsingsAndReplaceOldSyntax(DocumentEditor documentEditor, HashSet<string> namespaceSet, Dictionary<String, HashSet<String>> namespaceToClassnameSetMap)
+        public SyntaxTree replaceSyntax()
         {
-            List<UsingDirectiveSyntax> oldUsings = findMatchingUsings(namespaceSet);
-            List<ObjectCreationExpressionSyntax> oldObjectCreations = findMatchingClassnames(namespaceToClassnameSetMap);
-            //if (oldUsings.Any()) // continue if there are usings in the database
-            //{
-            //    replaceUsingStatements(oldUsings);
-            //}
-            //replaceObjectCreations(oldObjectCreations);
+            replaceUsingStatements();
+            replaceQualifiedNames();
             replaceIdentifierNames();
-            //replaceCastings(usingDirective);
-            //replaceFullyQualifiedNames(UsingDirective);
-            //replaceAliasing(UsingDirective);
-            //replaceClassExtensions(UsingDirective);
-            // etc.
-
             return documentEditor.GetChangedRoot().SyntaxTree;
         }
 
-        private void replaceClassExtensions(Func<NameEqualsSyntax, NameSyntax, UsingDirectiveSyntax> usingDirective)
+        private void replaceUsingStatements()
         {
-            throw new NotImplementedException();
-        }
-
-        private void replaceAliasing(Func<NameEqualsSyntax, NameSyntax, UsingDirectiveSyntax> usingDirective)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void replaceFullyQualifiedNames(Func<NameEqualsSyntax, NameSyntax, UsingDirectiveSyntax> usingDirective)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void replaceUsingStatements(List<UsingDirectiveSyntax> oldUsings)
-        {
-            foreach (var usingDirective in oldUsings)
+            Dictionary<String, String> nsMap = SDKMappingSQLConnector.GetInstance().GetOldToNewNamespaceMap(ProjectTransform.sdkId);
+            IEnumerable<UsingDirectiveSyntax> usingDirectiveNodes = tree.GetRoot().DescendantNodes().OfType<UsingDirectiveSyntax>();
+            foreach (UsingDirectiveSyntax oldUsingDirectiveNode in usingDirectiveNodes) // iterate over all qualified names in the file
             {
-                // iterate over the namespaces we care about
-                   // then iterate over the classnames that are in each namespace
-                      // then replace the old with new
-                   // don't forget about fully qualified
-
-                Dictionary<String, String> oldToNewMap = SDKMappingSQLConnector.GetInstance().GetOldToNewNamespaceMap(ProjectTransform.sdkId);
-                var oldUsingName = usingDirective.Name.GetText().ToString();
-                var newUsingName = oldToNewMap[oldUsingName];
-                NameSyntax mockName2 = IdentifierName(newUsingName);
-
-                var oldUsing = usingDirective;
-                var newUsing = oldUsing.WithName(mockName2);
-                documentEditor.ReplaceNode(oldUsing, newUsing);
+                var usingDirectiveSymbolInfo = semanticModel.GetSymbolInfo(oldUsingDirectiveNode);
+                var oldNamespace = oldUsingDirectiveNode.Name.GetText().ToString();
+                if (nsMap.ContainsKey(oldNamespace))
+                {
+                    var newNamespace = nsMap[oldNamespace];
+                    NameSyntax newIdentifierNode = IdentifierName(newNamespace);
+                    var newUsingDirectiveNode = oldUsingDirectiveNode.WithName(newIdentifierNode);
+                    documentEditor.ReplaceNode(oldUsingDirectiveNode, newUsingDirectiveNode);
+                }
             }
         }
 
-        private void replaceCastings(UsingDirectiveSyntax usingDirective)
+        private void replaceQualifiedNames()
         {
-            throw new NotImplementedException();
-        }
-
-        private void replaceObjectCreations(List<ObjectCreationExpressionSyntax> oldCreations)
-        {
-            Dictionary<String, Dictionary<String, String>> map = DBConnector.SDKMappingSQLConnector.GetInstance().GetNamespaceToClassnameMapMap(ProjectTransform.sdkId);
-            // https://duckduckgo.com/?q=nested+selection+linq&ia=qa
-            IEnumerable<VariableDeclarationSyntax> objectCreations = tree.GetRoot().DescendantNodes().OfType<VariableDeclarationSyntax>();
-            foreach (VariableDeclarationSyntax item in objectCreations) // iterate over all object creations in the file
+            Dictionary<String, String> nsMap = SDKMappingSQLConnector.GetInstance().GetOldToNewNamespaceMap(ProjectTransform.sdkId);
+            Dictionary<String, Dictionary<String, String>> csMap = SDKMappingSQLConnector.GetInstance().GetNamespaceToClassnameMapMap(ProjectTransform.sdkId);
+            IEnumerable<QualifiedNameSyntax> qualifiedNames = tree.GetRoot().DescendantNodes().OfType<QualifiedNameSyntax>();
+            foreach (QualifiedNameSyntax oldQualifiedNameNode in qualifiedNames) // iterate over all qualified names in the file
             {
-                var semanticObjCreation = semanticModel.GetSymbolInfo(item.Type);
-
-                // semanticObcCreation
-                // if find a class that was tagged then replace the old using with the new one
-                //var descendenttokens = item.descendanttokens().oftype<syntaxtoken>(); // todo use the semantic model instead of this way
-                //if (descendenttokens.elementat(1).value.equals("sample")) // [1] gets the identifier syntax, magic
-                //{
-                //    replaceoldusingwithnew(usingdirective);
-                //}
-                var oldNamespace = semanticObjCreation.Symbol.ContainingNamespace.Name;
-                if (map.ContainsKey(oldNamespace))
+                if (!(oldQualifiedNameNode.Parent is QualifiedNameSyntax))
                 {
-                    String oldClassname = semanticObjCreation.Symbol.Name.ToString();
-                    String newClassname = map[oldNamespace][oldClassname];
-
-                    //IdentifierNameSyntax test = IdentifierName(newClassname + " ");
-                    foreach (IdentifierNameSyntax oldNameNode in item.DescendantNodes().OfType<IdentifierNameSyntax>())
+                    var qualifiedSymbolInfo = semanticModel.GetSymbolInfo(oldQualifiedNameNode);
+                    string nsString = oldQualifiedNameNode.Left.WithoutTrivia().GetText().ToString();
+                    string className = qualifiedSymbolInfo.Symbol.Name.ToString();
+                    if (nsMap.ContainsKey(nsString) && csMap[nsString].ContainsKey(className))
                     {
-                        var nameSemantic = semanticObjCreation.Symbol.ContainingNamespace.Name;
-                        //We need to not overwrite classes that are not our own...Ask Josh for example. Do not delete if statement
-                        //if (map[oldNamespace].ContainsKey(nameSemantic))
-                        //{
-                        Object o = new Object();
-                        SyntaxToken oldNameToken = oldNameNode.DescendantTokens().First();
-                        SyntaxToken name = Identifier(newClassname).WithTriviaFrom(oldNameToken);
-                        IdentifierNameSyntax newNameNode = oldNameNode.WithIdentifier(name);
-                        documentEditor.ReplaceNode(oldNameNode, newNameNode);
-                        //}
+                        
+                        string newNamespace = nsMap[nsString];
+                        string newClassName = csMap[nsString][className];
+                        QualifiedNameSyntax newQualifiedNameNode = QualifiedName(IdentifierName(newNamespace), IdentifierName(newClassName)).WithTriviaFrom(oldQualifiedNameNode);
+                        documentEditor.ReplaceNode(oldQualifiedNameNode, newQualifiedNameNode);
+                        
                     }
-                   
-                    
                 }
             }
         }
 
         private void replaceIdentifierNames()
         {
-            Dictionary<String, Dictionary<String, String>> map = DBConnector.SDKMappingSQLConnector.GetInstance().GetNamespaceToClassnameMapMap(ProjectTransform.sdkId);
-            Dictionary<String, String> nsMap = DBConnector.SDKMappingSQLConnector.GetInstance().GetOldToNewNamespaceMap(ProjectTransform.sdkId);
+            Dictionary<String, Dictionary<String, String>> map = SDKMappingSQLConnector.GetInstance().GetNamespaceToClassnameMapMap(ProjectTransform.sdkId);
             // https://duckduckgo.com/?q=nested+selection+linq&ia=qa
             IEnumerable<IdentifierNameSyntax> identifierNames = tree.GetRoot().DescendantNodes().OfType<IdentifierNameSyntax>();
             foreach (IdentifierNameSyntax oldNameNode in identifierNames) // iterate over all identifier names in the file
             {
-                //Dictionary<String, DBConnector.SDKMappingSQLConnector> blah = new Dictionary<String, DBConnector.SDKMappingSQLConnector>();
-                var semanticObjCreation = semanticModel.GetSymbolInfo(oldNameNode);
-                var nodeTypeInfo = semanticModel.GetTypeInfo(oldNameNode);
-                if (nodeTypeInfo.Type != null)
+                if (!(oldNameNode.Parent is QualifiedNameSyntax))
                 {
-
-                    var oldNamespace = semanticObjCreation.Symbol.ContainingNamespace.Name;
-                    if (map.ContainsKey(oldNamespace))
+                    var semanticObjCreation = semanticModel.GetSymbolInfo(oldNameNode);
+                    var nodeTypeInfo = semanticModel.GetTypeInfo(oldNameNode);
+                    if (nodeTypeInfo.Type != null || oldNameNode.Parent is ObjectCreationExpressionSyntax)
                     {
-                        String oldClassname = semanticObjCreation.Symbol.Name.ToString();
-                        if (map[oldNamespace].ContainsKey(oldClassname))
+                        var oldNamespace = semanticObjCreation.Symbol.ContainingNamespace.Name;
+                        if (map.ContainsKey(oldNamespace))
                         {
-                            String newClassname = map[oldNamespace][oldClassname];
-                            //We need to not overwrite classes that are not our own...Ask Josh for example. Do not delete if statement
-                            //if (map[oldNamespace].ContainsKey(nameSemantic))
-                            //{
-                            SyntaxToken oldNameToken = oldNameNode.DescendantTokens().First();
-                            SyntaxToken name = Identifier(newClassname).WithTriviaFrom(oldNameToken);
-                            IdentifierNameSyntax newNameNode = oldNameNode.WithIdentifier(name);
-                            documentEditor.ReplaceNode(oldNameNode, newNameNode);
-
-                            //}
+                            String oldClassname = semanticObjCreation.Symbol.Name.ToString();
+                            if (map[oldNamespace].ContainsKey(oldClassname))
+                            {
+                                String newClassname = map[oldNamespace][oldClassname];
+                                SyntaxToken oldNameToken = oldNameNode.DescendantTokens().First();
+                                SyntaxToken name = Identifier(newClassname).WithTriviaFrom(oldNameToken);
+                                IdentifierNameSyntax newNameNode = oldNameNode.WithIdentifier(name);
+                                documentEditor.ReplaceNode(oldNameNode, newNameNode);
+                            }
                         }
                     }
                 }
             }
-            IEnumerable<QualifiedNameSyntax> qualifiedNames = tree.GetRoot().DescendantNodes().OfType<QualifiedNameSyntax>();
-            foreach (QualifiedNameSyntax oldQualifiedNameNode in qualifiedNames) // iterate over all qualified names in the file
-            {
-                IEnumerable<IdentifierNameSyntax> idNames = tree.GetRoot().DescendantNodes().OfType<IdentifierNameSyntax>();
-                var qualifiedSymbolInfo = semanticModel.GetSymbolInfo(oldQualifiedNameNode);
-                var rightNodeTypeInfo = semanticModel.GetTypeInfo(oldQualifiedNameNode.Right);
-                string nsString = qualifiedSymbolInfo.Symbol.ContainingNamespace.ToString();
-                string className = qualifiedSymbolInfo.Symbol.Name.ToString();
-                if (nsMap.ContainsKey(nsString) && rightNodeTypeInfo.Type != null)
-                {
-                    String newNamespace = nsMap[nsString];
-                    if (map[nsString].ContainsKey(className))
-                    {
-                        string newClassname = map[nsString][className];
-                        QualifiedNameSyntax newQualifiedNameNode = QualifiedName(IdentifierName(newNamespace), IdentifierName(newClassname)).WithTriviaFrom(oldQualifiedNameNode);
-                        documentEditor.ReplaceNode(oldQualifiedNameNode, newQualifiedNameNode);
-                    }
-                }
-            }
-        }
-
-        //return a list of using directives that exist in the database
-        private List<UsingDirectiveSyntax> findMatchingUsings(HashSet<string> namespaceSet)
-        {
-            List<UsingDirectiveSyntax> rtn = new List<UsingDirectiveSyntax>();
-            foreach (var usingDirective in root.Usings) // iterate over each using statement
-            {
-                var valueText = usingDirective.Name.GetText().ToString();
-                if (namespaceSet.Contains(valueText))
-                {
-                    rtn.Add(usingDirective);
-                }
-            }
-            return rtn;
-        }
-
-        // return a list of using classnames that exist in the database
-        private List<ObjectCreationExpressionSyntax> findMatchingClassnames(Dictionary<String, HashSet<String>> namespaceToClassnameSetMap)
-        {
-            List<ObjectCreationExpressionSyntax> rtn = new List<ObjectCreationExpressionSyntax>();
-            // https://duckduckgo.com/?q=nested+selection+linq&ia=qa
-            IEnumerable<ObjectCreationExpressionSyntax> objectCreations = tree.GetRoot().DescendantNodes().OfType<ObjectCreationExpressionSyntax>();
-            foreach (ObjectCreationExpressionSyntax item in objectCreations) // iterate over all object creations in the file
-            {
-                var semanticObjCreation = semanticModel.GetSymbolInfo(item.Type);
-                var oldNamespace = semanticObjCreation.Symbol.ContainingNamespace.ToString();
-                if (namespaceToClassnameSetMap.ContainsKey(oldNamespace))
-                {
-                    if (namespaceToClassnameSetMap[oldNamespace].Contains(semanticObjCreation.Symbol.Name))
-                    {
-                        rtn.Add(item);
-                    }
-                }
-            }
-            return rtn;
         }
     }
 }
