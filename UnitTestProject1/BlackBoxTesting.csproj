@@ -137,9 +137,9 @@
       <Project>{FDF3CC16-26A0-47CE-A129-4A06F829DB12}</Project>
       <Name>DBConnector</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TransformClient2\TransformClient2.csproj">
+    <ProjectReference Include="..\TransformClient2\TransformClient.csproj">
       <Project>{7375d960-5ee1-4d1b-b668-7b2093e02b7a}</Project>
-      <Name>TransformClient2</Name>
+      <Name>TransformClient</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

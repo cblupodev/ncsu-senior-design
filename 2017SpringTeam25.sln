@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NamespaceRefactorer", "Name
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackBoxTesting", "UnitTestProject1\BlackBoxTesting.csproj", "{92C6F12A-DE3E-4D59-A952-4D22753139E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransformClient2", "TransformClient2\TransformClient2.csproj", "{7375D960-5EE1-4D1B-B668-7B2093E02B7A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransformClient", "TransformClient2\TransformClient.csproj", "{7375D960-5EE1-4D1B-B668-7B2093E02B7A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBConnector", "DBConnector\DBConnector.csproj", "{FDF3CC16-26A0-47CE-A129-4A06F829DB12}"
 EndProject
