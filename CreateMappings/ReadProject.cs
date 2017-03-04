@@ -29,8 +29,9 @@ namespace CreateMappings
         {
             // key = model identifier
             // value = mapping
-            // http://stackoverflow.com/questions/1273139/c-sharp-java-hashmap-equivalent
+            // temporarily hold the old sdk partial mappings
             List<GenericMapping> oldMappings = new List<GenericMapping>();
+            // temporarily hold the new sdk partial mappings
             List<GenericMapping> newMappings = new List<GenericMapping>();
 
             SDKSQLConnector.GetInstance().SaveSDK(sdkName, newFolderPath);

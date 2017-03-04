@@ -51,7 +51,6 @@ namespace NamespaceRefactorer
         void ProcessProject(Project proj, string sdkid)
         {
             HashSet<String> namespaceSet =  mappingConnector.GetAllNamespaces(sdkId);
-            //Dictionary<String, HashSet<String>> namespaceToClassnameSetMap = mappingConnector.GetNamespaceToClassnameSetMap(sdkId);
             Dictionary<String, HashSet<String>> namespaceToClassnameSetMap = new Dictionary<string, HashSet<string>>();
             foreach (Document doc in proj.Documents)
             {
@@ -93,12 +92,12 @@ namespace NamespaceRefactorer
             var syntaxTree = doc.GetSyntaxTreeAsync().Result;
 
             // do processing here
-            var documentEditor = DocumentEditor.CreateAsync(doc).Result; //https://joshvarty.wordpress.com/2015/08/18/learn-roslyn-now-part-12-the-documenteditor/
+            var documentEditor = DocumentEditor.CreateAsync(doc).Result; 
 
             TransformFile ft = new TransformFile(documentEditor);
 
             syntaxTree = ft.replaceSyntax();
-            File.WriteAllText(doc.FilePath, syntaxTree.GetText().ToString()); // http://stackoverflow.com/questions/18295837/c-sharp-roslyn-api-reading-a-cs-file-updating-a-class-writing-back-to-cs-fi
+            File.WriteAllText(doc.FilePath, syntaxTree.GetText().ToString()); /
             Console.WriteLine("Transformed   " + doc.FilePath);
         }
 
@@ -110,7 +109,7 @@ namespace NamespaceRefactorer
 
             csprojFilePath = @"C:\Users\Christopher Lupo\Documents\Visual Studio 2015\Projects\2017SpringTeam25\TransformClient2\Client - Copy.xml"; // magic
             // find the namsespace by calling Descendents() on the Root and drill down into the properties to find the namsespace you need
-            XNamespace ns = XNamespace.Get("http://schemas.microsoft.com/developer/msbuild/2003"); // https://granadacoder.wordpress.com/2012/10/11/how-to-find-references-in-a-c-project-file-csproj-using-linq-xml/
+            XNamespace ns = XNamespace.Get("http://schemas.microsoft.com/developer/msbuild/2003");
             XDocument xdoc = XDocument.Load(csprojFilePath);
 
             string newoutPutPath = SDKSQLConnector.GetInstance().getOutputPathById(sdkId);

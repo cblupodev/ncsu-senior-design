@@ -23,32 +23,5 @@ namespace DBConnector
             this.dllPath = dllPath;
             this.sdkId = sdkId;
         }
-
-        // https://msdn.microsoft.com/en-us/library/ms173147(v=vs.90).aspx
-        public bool Equals(GenericMapping m)
-        {
-            // If parameter is null return false:
-            if ((object)m == null)
-            {
-                return false;
-            }
-
-            // Return true if the fields match:
-            if (
-                this.Namespace.Equals(m.Namespace) &&
-                this.ModelIdentifierGUID.Equals(m.ModelIdentifierGUID) &&
-                this.ClassName.Equals(m.ClassName)
-                )
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        public override int GetHashCode()
-        {
-            return this.ModelIdentifierGUID.GetHashCode(); // http://stackoverflow.com/questions/9317582/correct-way-to-override-equals-and-gethashcode
-        }
     }
 }
