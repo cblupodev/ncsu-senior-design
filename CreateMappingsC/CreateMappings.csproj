@@ -7,8 +7,8 @@
     <ProjectGuid>{1C52DF0C-67FD-4A54-9160-732FF0A5143F}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CreateMappingsC</RootNamespace>
-    <AssemblyName>CreateMappingsC</AssemblyName>
+    <RootNamespace>CreateMappings</RootNamespace>
+    <AssemblyName>CreateMappings</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

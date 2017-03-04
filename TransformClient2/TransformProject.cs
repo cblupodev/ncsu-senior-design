@@ -13,7 +13,7 @@ using System.Xml.Linq;
 
 namespace NamespaceRefactorer
 {
-    public class ProjectTransform
+    public class TransformProject
     {
 
         SDKMappingSQLConnector mappingConnector = SDKMappingSQLConnector.GetInstance();
@@ -22,7 +22,7 @@ namespace NamespaceRefactorer
         public static void Main(string[] args)
         {
             sdkId = SDKSQLConnector.GetInstance().getByName(args[1]).id;
-            (new ProjectTransform()).Run(args);
+            (new TransformProject()).Run(args);
         }
 
         public void Run(string[] args)
@@ -95,7 +95,7 @@ namespace NamespaceRefactorer
             // do processing here
             var documentEditor = DocumentEditor.CreateAsync(doc).Result; //https://joshvarty.wordpress.com/2015/08/18/learn-roslyn-now-part-12-the-documenteditor/
 
-            FileTransform ft = new FileTransform(documentEditor);
+            TransformFile ft = new TransformFile(documentEditor);
 
             syntaxTree = ft.replaceSyntax();
             File.WriteAllText(doc.FilePath, syntaxTree.GetText().ToString()); // http://stackoverflow.com/questions/18295837/c-sharp-roslyn-api-reading-a-cs-file-updating-a-class-writing-back-to-cs-fi

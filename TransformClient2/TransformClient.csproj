@@ -8,8 +8,8 @@
     <ProjectGuid>{7375D960-5EE1-4D1B-B668-7B2093E02B7A}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TransformClient2</RootNamespace>
-    <AssemblyName>TransformClient2</AssemblyName>
+    <RootNamespace>TransformClient</RootNamespace>
+    <AssemblyName>TransformClient</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -101,8 +101,8 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileTransform.cs" />
-    <Compile Include="ProjectTransform.cs" />
+    <Compile Include="TransformFile.cs" />
+    <Compile Include="TransformProject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

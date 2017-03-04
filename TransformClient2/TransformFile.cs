@@ -17,7 +17,7 @@ using Microsoft.CodeAnalysis.Editing;
 
 namespace NamespaceRefactorer
 {
-    public class FileTransform
+    public class TransformFile
     {
 
         private CompilationUnitSyntax root;
@@ -26,7 +26,7 @@ namespace NamespaceRefactorer
         private DocumentEditor documentEditor;
         private string clientFilePath;
 
-        public FileTransform(DocumentEditor documentEditor)
+        public TransformFile(DocumentEditor documentEditor)
         {
             this.documentEditor = documentEditor;
             this.root = (CompilationUnitSyntax)documentEditor.OriginalRoot;
@@ -34,7 +34,7 @@ namespace NamespaceRefactorer
             this.semanticModel = documentEditor.SemanticModel;
         }
 
-        public FileTransform(string fileName)
+        public TransformFile(string fileName)
         {
             Helper.verifyFileExists(fileName);
             SyntaxTree tree;
@@ -68,7 +68,7 @@ namespace NamespaceRefactorer
 
         private void replaceUsingStatements()
         {
-            Dictionary<String, String> nsMap = SDKMappingSQLConnector.GetInstance().GetOldToNewNamespaceMap(ProjectTransform.sdkId);
+            Dictionary<String, String> nsMap = SDKMappingSQLConnector.GetInstance().GetOldToNewNamespaceMap(TransformProject.sdkId);
             IEnumerable<UsingDirectiveSyntax> usingDirectiveNodes = tree.GetRoot().DescendantNodes().OfType<UsingDirectiveSyntax>();
             foreach (UsingDirectiveSyntax oldUsingDirectiveNode in usingDirectiveNodes) // iterate over all qualified names in the file
             {
@@ -86,8 +86,8 @@ namespace NamespaceRefactorer
 
         private void replaceQualifiedNames()
         {
-            Dictionary<String, String> nsMap = SDKMappingSQLConnector.GetInstance().GetOldToNewNamespaceMap(ProjectTransform.sdkId);
-            Dictionary<String, Dictionary<String, String>> csMap = SDKMappingSQLConnector.GetInstance().GetNamespaceToClassnameMapMap(ProjectTransform.sdkId);
+            Dictionary<String, String> nsMap = SDKMappingSQLConnector.GetInstance().GetOldToNewNamespaceMap(TransformProject.sdkId);
+            Dictionary<String, Dictionary<String, String>> csMap = SDKMappingSQLConnector.GetInstance().GetNamespaceToClassnameMapMap(TransformProject.sdkId);
             IEnumerable<QualifiedNameSyntax> qualifiedNames = tree.GetRoot().DescendantNodes().OfType<QualifiedNameSyntax>();
             foreach (QualifiedNameSyntax oldQualifiedNameNode in qualifiedNames) // iterate over all qualified names in the file
             {
@@ -111,7 +111,7 @@ namespace NamespaceRefactorer
 
         private void replaceIdentifierNames()
         {
-            Dictionary<String, Dictionary<String, String>> map = SDKMappingSQLConnector.GetInstance().GetNamespaceToClassnameMapMap(ProjectTransform.sdkId);
+            Dictionary<String, Dictionary<String, String>> map = SDKMappingSQLConnector.GetInstance().GetNamespaceToClassnameMapMap(TransformProject.sdkId);
             // https://duckduckgo.com/?q=nested+selection+linq&ia=qa
             IEnumerable<IdentifierNameSyntax> identifierNames = tree.GetRoot().DescendantNodes().OfType<IdentifierNameSyntax>();
             foreach (IdentifierNameSyntax oldNameNode in identifierNames) // iterate over all identifier names in the file
