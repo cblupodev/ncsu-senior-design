@@ -117,10 +117,6 @@
       <Project>{FDF3CC16-26A0-47CE-A129-4A06F829DB12}</Project>
       <Name>DBConnector</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NamespaceRefactorerC\NamespaceRefactorer.csproj">
-      <Project>{5C2E2338-E81A-4223-B26B-BEDD64B2DF88}</Project>
-      <Name>NamespaceRefactorer</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Client - Copy.xml" />

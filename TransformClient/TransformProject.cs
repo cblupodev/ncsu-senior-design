@@ -112,21 +112,38 @@ namespace NamespaceRefactorer
             XNamespace ns = XNamespace.Get("http://schemas.microsoft.com/developer/msbuild/2003");
             XDocument xdoc = XDocument.Load(csprojFilePath);
 
+            // transform the xml
+            changeOutputPath(xmlElementOutputPathName, ns, xdoc);
+            removeOldDllReferences(xmlElementOutputPathName, xmlElementReferenceName, xmlElementHintPathName, ns, xdoc);
+            addNewDllReferences(xmlElementOutputPathName, xmlElementReferenceName, ns, xdoc);
+
+            // save the xml
+            xdoc.Save(@"..\\..\\Client.xml");
+        }
+
+        private void addNewDllReferences(string xmlElementOutputPathName, string xmlElementReferenceName, XNamespace ns, XDocument xdoc)
+        {
+            mappingConnector.GetAllNewDllPaths(sdkId);
+
+            HashSet<string> newDlls = mappingConnector.GetAllNewDllPaths(sdkId);
+
             string newoutPutPath = SDKSQLConnector.GetInstance().getOutputPathById(sdkId);
 
-            var outputPathElements = from outp in xdoc.Descendants(ns + xmlElementOutputPathName)
-                                        select outp;
-            foreach (var e in outputPathElements)
+            foreach (var dll in newDlls)
             {
-                string oldpath = e.Value;
-                var oldar = oldpath.Split('\\');
-                oldar[oldar.Count() - 1] = newoutPutPath; // replace the old parent folder with the new one
-                newoutPutPath = String.Join("\\", oldar);
-                e.SetValue(newoutPutPath);
+                XElement addedref = new XElement(xmlElementReferenceName, new XAttribute("Include", "SDK, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"),
+                        new XElement("SpecificVersion", "False"),
+                        new XElement(xmlElementOutputPathName, newoutPutPath + Path.GetFileName(dll)),
+                        new XElement("Private", "False")
+                    );
+                xdoc.Descendants(ns + "ItemGroup").First().AddFirst(addedref);
             }
+        }
 
+        private static void removeOldDllReferences(string xmlElementOutputPathName, string xmlElementReferenceName, string xmlElementHintPathName, XNamespace ns, XDocument xdoc)
+        {
             string oldOutputPath = (from outp in xdoc.Descendants(ns + xmlElementOutputPathName)
-                                   select outp).First().Value;
+                                    select outp).First().Value;
             var references = from reference in xdoc.Descendants(ns + xmlElementReferenceName)
                              where reference.Element(ns + xmlElementHintPathName) != null
                              // where olddllSet.Contains(Path.GetFullPath((oldOutputPath+Path.GetFileName(reference.Descendants(ns + xmlElementHintPathName).First().Value)))) == true
@@ -148,22 +165,22 @@ namespace NamespaceRefactorer
             {
                 // null exception is thrown because the reference is remove from the list, so just ignore
             }
+        }
 
-            mappingConnector.GetAllNewDllPaths(sdkId);
+        private static void changeOutputPath(string xmlElementOutputPathName, XNamespace ns, XDocument xdoc)
+        {
+            string newoutPutPath = SDKSQLConnector.GetInstance().getOutputPathById(sdkId);
 
-            HashSet<string> newDlls = mappingConnector.GetAllNewDllPaths(sdkId);
-
-            foreach (var dll in newDlls)
+            var outputPathElements = from outp in xdoc.Descendants(ns + xmlElementOutputPathName)
+                                     select outp;
+            foreach (var e in outputPathElements)
             {
-                XElement addedref = new XElement(xmlElementReferenceName, new XAttribute("Include", "SDK, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"),
-                        new XElement("SpecificVersion", "False"),
-                        new XElement(xmlElementOutputPathName, newoutPutPath + Path.GetFileName(dll)),
-                        new XElement("Private", "False")
-                    );
-                xdoc.Descendants(ns + "ItemGroup").First().AddFirst(addedref);
+                string oldpath = e.Value;
+                var oldar = oldpath.Split('\\');
+                oldar[oldar.Count() - 1] = newoutPutPath; // replace the old parent folder with the new one
+                newoutPutPath = String.Join("\\", oldar);
+                e.SetValue(newoutPutPath);
             }
-
-            xdoc.Save(@"..\\..\\Client.xml");
         }
     }
 }
