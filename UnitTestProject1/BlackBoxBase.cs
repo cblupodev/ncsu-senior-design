@@ -83,6 +83,24 @@ namespace UnitTest.BlackBox
             VerifyPostTransformTest();
         }
 
+        public virtual void RunCSEndToEndTest()
+        {
+            projectUnderTest = Path.Combine(TestFolder, "clientC#", "Client", "Client.csproj");
+            SetupEndToEnd();
+            RunMapping();
+            ProcessPostTransformTest();
+            VerifyPostTransformTest();
+        }
+
+        public virtual void RunVBEndToEndTest()
+        {
+            projectUnderTest = Path.Combine(TestFolder, "clientVB", "Client", "Client.vbproj");
+            SetupEndToEnd();
+            RunMapping();
+            ProcessPostTransformTest();
+            VerifyPostTransformTest();
+        }
+
         static string pathToCreateMappings = null;
         static string pathToTransformClient = null;
 
@@ -105,7 +123,7 @@ namespace UnitTest.BlackBox
                 {
                     pathToCreateMappings = proj.OutputFilePath;
                 }
-                else if (proj.Name.Equals("TransformClient2"))
+                else if (proj.Name.Equals("TransformClient"))
                 {
                     pathToTransformClient = proj.OutputFilePath;
                 }
@@ -372,10 +390,25 @@ namespace UnitTest.BlackBox
             VerifyProject(projectUnderTest, expectedPath);
         }
         
+        //EndToEndTest
+        public virtual void SetupEndToEnd()
+        {
+            CompileLibraries();
+            ResetDatabase();
+        }
+
     }
 }
 
-// To generate test methods, run this code in bash:
+// current special cases:
+// extraLibrary (add this code) 
+//public override void CompileLibraries()
+//{
+//    base.CompileLibraries();
+//    CompileSolution(Path.Combine(TestFolder, "extraLibrary", "extraLibrary.sln"));
+//}
+//
+// To generate test methods, run this code in bash in the tests directory:
 //
 //for f in ./*/
 //do
@@ -411,7 +444,17 @@ namespace UnitTest.BlackBox
 //  echo "            RunPreTransformVBTest();"
 //  echo "        }"
 //  echo "        [TestMethod]"
-//  echo "        public void TestPostTransformCB${d^}()"
+//  echo "        public void TestPostTransformVB${d^}()"
+//  echo "        {"
+//  echo "            RunPostTransformVBTest();"
+//  echo "        }"
+//  echo "        [TestMethod]"
+//  echo "        public void TestEndToEndCS${d^}()"
+//  echo "        {"
+//  echo "            RunPostTransformVBTest();"
+//  echo "        }"
+//  echo "        [TestMethod]"
+//  echo "        public void TestEndToEndVB${d^}()"
 //  echo "        {"
 //  echo "            RunPostTransformVBTest();"
 //  echo "        }"
