@@ -40,7 +40,7 @@ namespace CreateMappings
             readFolderDllFiles(newFolderPath, newMappings);
             
 
-            SDKMappingSQLConnector.GetInstance().SaveSDKMappings2(oldMappings, newMappings, sdkId);
+            SDKMappingSQLConnector.GetInstance().SaveSDKMappings(oldMappings, newMappings, sdkId);
             Console.WriteLine("Mappings were saved to database");
         }
 
