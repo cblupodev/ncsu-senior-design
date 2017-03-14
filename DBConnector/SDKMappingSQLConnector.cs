@@ -21,7 +21,7 @@ namespace DBConnector
             return instance;
         }
         
-        public Boolean SaveSDKMappings2(List<Mapping> mappings, int sdk_id)
+        public Boolean SaveSDKMappings(List<Mapping> mappings, int sdk_id)
         {
             List<sdk_map> dbMappings = new List<sdk_map>();
 
@@ -54,7 +54,7 @@ namespace DBConnector
             return true;
         }
 
-        public Boolean SaveSDKMappings2(List<GenericMapping> oldMappingsToSave, List<GenericMapping> newMappingsToSave, int sdk_id)
+        public Boolean SaveSDKMappings(List<GenericMapping> oldMappingsToSave, List<GenericMapping> newMappingsToSave, int sdk_id)
         {
             List<sdk_map> dbMappings = new List<sdk_map>();
 
@@ -106,6 +106,55 @@ namespace DBConnector
                 return false;
             }
 
+        }
+
+        public Boolean SaveSDKMappings(List<GenericMapping> mappingsToSave, int sdk_id)
+        {
+            List<sdk_map> dbMappings = new List<sdk_map>();
+
+            List<String> ids = mappingsToSave.Select(m => m.ModelIdentifierGUID).ToList();
+            var query = from sm in dbConnection.sdk_maps
+                        where ids.Contains(sm.model_identifier) && sm.sdk_id == sdk_id
+                        select sm;
+
+            if (query.Any())
+            {
+                foreach (sdk_map dbMapping in query)
+                {
+                    var mapping = mappingsToSave.Where(mts => mts.ModelIdentifierGUID == dbMapping.model_identifier).First();
+                    dbMapping.new_classname = mapping.ClassName;
+                    dbMapping.new_namespace = mapping.Namespace;
+                    dbMapping.new_assembly_path = mapping.dllPath;
+                }
+            }
+            else
+            {
+
+                foreach (var m in mappingsToSave)
+                {
+                    sdk_map dbMapping = new sdk_map
+                    {
+                        model_identifier = m.ModelIdentifierGUID,
+                        old_namespace = m.Namespace,
+                        old_classname = m.ClassName,
+                        old_assembly_path = m.dllPath,
+                        sdk_id = m.sdkId
+                    };
+                    dbMappings.Add(dbMapping);
+                }
+                dbConnection.sdk_maps.InsertAllOnSubmit(dbMappings);
+            }
+
+            try
+            {
+                dbConnection.SubmitChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
         }
 
         public List<Mapping> GetAll()
