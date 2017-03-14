@@ -67,7 +67,7 @@ namespace NamespaceRefactorer
             HashSet<String> newdllSet = mappingConnector.GetAllNewDllPaths(sdkId);
             HashSet<String> olddllSet = mappingConnector.GetAllOldDllPaths(sdkId);
             // Don't remove the line below, cblupo
-            //transformXml(proj.FilePath, newdllSet, olddllSet, sdkId);
+            transformXml(proj.FilePath, newdllSet, olddllSet);
             Console.WriteLine("Project file edited to use new references");
         }
 
@@ -101,7 +101,7 @@ namespace NamespaceRefactorer
             Console.WriteLine("Transformed   " + doc.FilePath);
         }
 
-        public void transformXml(string csprojFilePath, HashSet<String> newdllSet, HashSet<String> olddllSet, string sdkid)
+        public void transformXml(string csprojFilePath, HashSet<String> newdllSet, HashSet<String> olddllSet)
         {
             string xmlElementOutputPathName = "OutputPath";
             string xmlElementReferenceName = "Reference";
@@ -114,7 +114,7 @@ namespace NamespaceRefactorer
 
             // transform the xml
             changeOutputPath(xmlElementOutputPathName, ns, xdoc);
-            removeOldDllReferences(xmlElementOutputPathName, xmlElementReferenceName, xmlElementHintPathName, ns, xdoc);
+            removeOldDllReferences(xmlElementOutputPathName, xmlElementReferenceName, xmlElementHintPathName, ns, xdoc, olddllSet);
             addNewDllReferences(xmlElementOutputPathName, xmlElementReferenceName, ns, xdoc);
 
             // save the xml
@@ -140,17 +140,14 @@ namespace NamespaceRefactorer
             }
         }
 
-        private static void removeOldDllReferences(string xmlElementOutputPathName, string xmlElementReferenceName, string xmlElementHintPathName, XNamespace ns, XDocument xdoc)
+        private static void removeOldDllReferences(string xmlElementOutputPathName, string xmlElementReferenceName, string xmlElementHintPathName, XNamespace ns, XDocument xdoc, HashSet<String> olddllSet)
         {
             string oldOutputPath = (from outp in xdoc.Descendants(ns + xmlElementOutputPathName)
                                     select outp).First().Value;
+            // get the reference tags that have a path in the old sdk
             var references = from reference in xdoc.Descendants(ns + xmlElementReferenceName)
                              where reference.Element(ns + xmlElementHintPathName) != null
-                             // where olddllSet.Contains(Path.GetFullPath((oldOutputPath+Path.GetFileName(reference.Descendants(ns + xmlElementHintPathName).First().Value)))) == true
-                             // Don't remove the line above
-                             // that checks if the reference is part of the old sdk
-                             // if the reference is not part of the old sdk then don't include it in the selection output
-                             // because if it is included in the output then it will get removed
+                             where olddllSet.Contains(Path.GetFullPath((oldOutputPath+Path.GetFileName(reference.Descendants(ns + xmlElementHintPathName).First().Value))))
                              select reference;
             try
             {
@@ -158,7 +155,7 @@ namespace NamespaceRefactorer
                 {
                     // also maybe do this work in the linq statement (cleaner)
                     // Don't remove the line below
-                    //r.Remove();
+                    // r.Remove();
                 }
             }
             catch (NullReferenceException nre)
