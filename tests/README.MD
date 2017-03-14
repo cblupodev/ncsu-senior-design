@@ -40,11 +40,17 @@ The client code uses the SDK class as the type qualifier for a generic class.
 ###instantiatesSDKClass
 The client creates a new instance of an SDK class.
 
+###methodCallOnParameter
+This tests that we can handle changeing (SDK.Sample1.Test.method()) into (SDK.Change1.Test.method())
+
 ###multiAssembly
 The SDK uses multiple assemblies (dll files).
 
 ###multiBasic
 Multiple namespaces, files, and classes per file in SDK.  Multiple files and classes per file in client.
+
+###multiTypeGeneric
+The client uses Dictionary<Sample1, Sample1>.
 
 ###namespaceInNamespace
 The SDK has a namespace directive inside of a namespace directive, creating an implicit nesting.
@@ -61,8 +67,14 @@ There is no difference between the SDK versions.
 ###oldConflicts
 Client code has a class name matching a class name in the old SDK.
 
+###returnClass
+Client method has a return type of an SDK class.
+
 ###typeof
 The client uses the typeof expression with an SDK class as the parameter.
 
 ###unused
 Client code does not use the SDK.  Tests that we're not making assumptions about a first element existing.
+
+##variables
+Client has variables typed with SDK classes.
