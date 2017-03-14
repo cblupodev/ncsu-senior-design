@@ -40,7 +40,17 @@ namespace UnitTest.BlackBox
             RunPreTransformVBTest();
         }
         [TestMethod]
-        public void TestPostTransformCBAlias()
+        public void TestPostTransformVBAlias()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndCSAlias()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndVBAlias()
         {
             RunPostTransformVBTest();
         }
@@ -76,7 +86,17 @@ namespace UnitTest.BlackBox
             RunPreTransformVBTest();
         }
         [TestMethod]
-        public void TestPostTransformCBAssemblyChange()
+        public void TestPostTransformVBAssemblyChange()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndCSAssemblyChange()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndVBAssemblyChange()
         {
             RunPostTransformVBTest();
         }
@@ -112,7 +132,17 @@ namespace UnitTest.BlackBox
             RunPreTransformVBTest();
         }
         [TestMethod]
-        public void TestPostTransformCBAssemblyMerge()
+        public void TestPostTransformVBAssemblyMerge()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndCSAssemblyMerge()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndVBAssemblyMerge()
         {
             RunPostTransformVBTest();
         }
@@ -148,7 +178,17 @@ namespace UnitTest.BlackBox
             RunPreTransformVBTest();
         }
         [TestMethod]
-        public void TestPostTransformCBAssemblySplit()
+        public void TestPostTransformVBAssemblySplit()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndCSAssemblySplit()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndVBAssemblySplit()
         {
             RunPostTransformVBTest();
         }
@@ -184,7 +224,17 @@ namespace UnitTest.BlackBox
             RunPreTransformVBTest();
         }
         [TestMethod]
-        public void TestPostTransformCBBasic()
+        public void TestPostTransformVBBasic()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndCSBasic()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndVBBasic()
         {
             RunPostTransformVBTest();
         }
@@ -220,7 +270,17 @@ namespace UnitTest.BlackBox
             RunPreTransformVBTest();
         }
         [TestMethod]
-        public void TestPostTransformCBBasicNamespace()
+        public void TestPostTransformVBBasicNamespace()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndCSBasicNamespace()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndVBBasicNamespace()
         {
             RunPostTransformVBTest();
         }
@@ -256,7 +316,17 @@ namespace UnitTest.BlackBox
             RunPreTransformVBTest();
         }
         [TestMethod]
-        public void TestPostTransformCBCasting()
+        public void TestPostTransformVBCasting()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndCSCasting()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndVBCasting()
         {
             RunPostTransformVBTest();
         }
@@ -292,7 +362,17 @@ namespace UnitTest.BlackBox
             RunPreTransformVBTest();
         }
         [TestMethod]
-        public void TestPostTransformCBClassInClass()
+        public void TestPostTransformVBClassInClass()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndCSClassInClass()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndVBClassInClass()
         {
             RunPostTransformVBTest();
         }
@@ -328,7 +408,17 @@ namespace UnitTest.BlackBox
             RunPreTransformVBTest();
         }
         [TestMethod]
-        public void TestPostTransformCBExtendsSDKClass()
+        public void TestPostTransformVBExtendsSDKClass()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndCSExtendsSDKClass()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndVBExtendsSDKClass()
         {
             RunPostTransformVBTest();
         }
@@ -369,7 +459,17 @@ namespace UnitTest.BlackBox
             RunPreTransformVBTest();
         }
         [TestMethod]
-        public void TestPostTransformCBExtraLibrary()
+        public void TestPostTransformVBExtraLibrary()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndCSExtraLibrary()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndVBExtraLibrary()
         {
             RunPostTransformVBTest();
         }
@@ -405,7 +505,17 @@ namespace UnitTest.BlackBox
             RunPreTransformVBTest();
         }
         [TestMethod]
-        public void TestPostTransformCBFullyQualified()
+        public void TestPostTransformVBFullyQualified()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndCSFullyQualified()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndVBFullyQualified()
         {
             RunPostTransformVBTest();
         }
@@ -441,7 +551,17 @@ namespace UnitTest.BlackBox
             RunPreTransformVBTest();
         }
         [TestMethod]
-        public void TestPostTransformCBFullyQualifiedModelIdentifier()
+        public void TestPostTransformVBFullyQualifiedModelIdentifier()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndCSFullyQualifiedModelIdentifier()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndVBFullyQualifiedModelIdentifier()
         {
             RunPostTransformVBTest();
         }
@@ -477,7 +597,17 @@ namespace UnitTest.BlackBox
             RunPreTransformVBTest();
         }
         [TestMethod]
-        public void TestPostTransformCBGenerics()
+        public void TestPostTransformVBGenerics()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndCSGenerics()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndVBGenerics()
         {
             RunPostTransformVBTest();
         }
@@ -513,7 +643,17 @@ namespace UnitTest.BlackBox
             RunPreTransformVBTest();
         }
         [TestMethod]
-        public void TestPostTransformCBInstantiatesSDKClass()
+        public void TestPostTransformVBInstantiatesSDKClass()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndCSInstantiatesSDKClass()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndVBInstantiatesSDKClass()
         {
             RunPostTransformVBTest();
         }
@@ -549,7 +689,17 @@ namespace UnitTest.BlackBox
             RunPreTransformVBTest();
         }
         [TestMethod]
-        public void TestPostTransformCBMultiAssembly()
+        public void TestPostTransformVBMultiAssembly()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndCSMultiAssembly()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndVBMultiAssembly()
         {
             RunPostTransformVBTest();
         }
@@ -585,7 +735,17 @@ namespace UnitTest.BlackBox
             RunPreTransformVBTest();
         }
         [TestMethod]
-        public void TestPostTransformCBMultiBasic()
+        public void TestPostTransformVBMultiBasic()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndCSMultiBasic()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndVBMultiBasic()
         {
             RunPostTransformVBTest();
         }
@@ -621,7 +781,17 @@ namespace UnitTest.BlackBox
             RunPreTransformVBTest();
         }
         [TestMethod]
-        public void TestPostTransformCBNamespaceInNamespace()
+        public void TestPostTransformVBNamespaceInNamespace()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndCSNamespaceInNamespace()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndVBNamespaceInNamespace()
         {
             RunPostTransformVBTest();
         }
@@ -657,7 +827,17 @@ namespace UnitTest.BlackBox
             RunPreTransformVBTest();
         }
         [TestMethod]
-        public void TestPostTransformCBNewConflicts()
+        public void TestPostTransformVBNewConflicts()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndCSNewConflicts()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndVBNewConflicts()
         {
             RunPostTransformVBTest();
         }
@@ -693,7 +873,17 @@ namespace UnitTest.BlackBox
             RunPreTransformVBTest();
         }
         [TestMethod]
-        public void TestPostTransformCBNonRootUsing()
+        public void TestPostTransformVBNonRootUsing()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndCSNonRootUsing()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndVBNonRootUsing()
         {
             RunPostTransformVBTest();
         }
@@ -729,7 +919,17 @@ namespace UnitTest.BlackBox
             RunPreTransformVBTest();
         }
         [TestMethod]
-        public void TestPostTransformCBNothing()
+        public void TestPostTransformVBNothing()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndCSNothing()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndVBNothing()
         {
             RunPostTransformVBTest();
         }
@@ -765,7 +965,17 @@ namespace UnitTest.BlackBox
             RunPreTransformVBTest();
         }
         [TestMethod]
-        public void TestPostTransformCBOldConflicts()
+        public void TestPostTransformVBOldConflicts()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndCSOldConflicts()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndVBOldConflicts()
         {
             RunPostTransformVBTest();
         }
@@ -801,7 +1011,17 @@ namespace UnitTest.BlackBox
             RunPreTransformVBTest();
         }
         [TestMethod]
-        public void TestPostTransformCBTypeof()
+        public void TestPostTransformVBTypeof()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndCSTypeof()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndVBTypeof()
         {
             RunPostTransformVBTest();
         }
@@ -837,7 +1057,17 @@ namespace UnitTest.BlackBox
             RunPreTransformVBTest();
         }
         [TestMethod]
-        public void TestPostTransformCBUnused()
+        public void TestPostTransformVBUnused()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndCSUnused()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndVBUnused()
         {
             RunPostTransformVBTest();
         }
