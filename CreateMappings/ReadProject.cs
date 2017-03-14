@@ -37,10 +37,10 @@ namespace CreateMappings
             SDKSQLConnector.GetInstance().SaveSDK(sdkName, newFolderPath);
             sdkId = SDKSQLConnector.GetInstance().getByName(sdkName).id;
             readFolderDllFiles(oldFolderPath, oldMappings);
+            SDKMappingSQLConnector.GetInstance().SaveSDKMappings(oldMappings, sdkId);
             readFolderDllFiles(newFolderPath, newMappings);
-            
+            SDKMappingSQLConnector.GetInstance().SaveSDKMappings(newMappings, sdkId)
 
-            SDKMappingSQLConnector.GetInstance().SaveSDKMappings(oldMappings, newMappings, sdkId);
             Console.WriteLine("Mappings were saved to database");
         }
 
