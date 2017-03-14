@@ -18,7 +18,20 @@ namespace NamespaceRefactorer
         {
 
             Helper.verifyFileExists(dllPath);
-            var assem = Assembly.LoadFile(dllPath);
+            var dom = AppDomain.CreateDomain("test");
+            var loadClass = (LoadingClass)dom.CreateInstanceAndUnwrap(typeof(LoadingClass).Assembly.FullName, typeof(LoadingClass).FullName);
+            loadClass.DoStuff(dllPath, mapList);
+            Console.ReadKey();
+            // TODO either figure out how to modify the mapList from DoStuff, or interact with the database dirrectly from DoStuff
+            // TODO rename classes to something better
+        }
+    }
+
+    public class LoadingClass : MarshalByRefObject
+    {
+        public void DoStuff(string dllPath, List<GenericMapping> mapList)
+        {
+            var assem = Assembly.LoadFrom(dllPath);
 
             Console.WriteLine("Read from   " + dllPath);
 
