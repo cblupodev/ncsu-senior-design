@@ -97,7 +97,7 @@ namespace NamespaceRefactorer
             TransformFile ft = new TransformFile(documentEditor);
 
             syntaxTree = ft.replaceSyntax();
-            File.WriteAllText(doc.FilePath, syntaxTree.GetText().ToString()); /
+            File.WriteAllText(doc.FilePath, syntaxTree.GetText().ToString());
             Console.WriteLine("Transformed   " + doc.FilePath);
         }
 
