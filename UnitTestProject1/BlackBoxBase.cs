@@ -263,7 +263,7 @@ namespace UnitTest.BlackBox
             LoadExpectedMappings();
             SDKSQLConnector.GetInstance().SaveSDK(sdkNameId, Path.GetFullPath(Path.Combine(TestFolder, "bin2")));
             var sdkId = SDKSQLConnector.GetInstance().getByName(sdkNameId).id;
-            SDKMappingSQLConnector.GetInstance().SaveSDKMappings2(expectedMappings, sdkId);
+            SDKMappingSQLConnector.GetInstance().SaveSDKMappings(expectedMappings, sdkId);
         }
         
         // MappingTest
