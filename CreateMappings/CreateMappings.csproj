@@ -69,7 +69,7 @@
       <Project>{fdf3cc16-26a0-47ce-a129-4a06f829db12}</Project>
       <Name>DBConnector</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NamespaceRefactorerC\NamespaceRefactorer.csproj">
+    <ProjectReference Include="..\NamespaceRefactorer\NamespaceRefactorer.csproj">
       <Project>{5c2e2338-e81a-4223-b26b-bedd64b2df88}</Project>
       <Name>NamespaceRefactorer</Name>
     </ProjectReference>
