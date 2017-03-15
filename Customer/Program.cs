@@ -12,7 +12,7 @@ using asdf;
 namespace Customer
 {
     [ModelIdentifier("26A993C4-65C6-4168-B045-9FABB2A1526D")]
-    class Program:asdf.fudgeold2
+    class Program : asdf.fudgeold2
     {
 
         private dsads.Sample a = new dsads.Sample();
