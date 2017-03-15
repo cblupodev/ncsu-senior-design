@@ -61,7 +61,7 @@ namespace NamespaceRefactorer
             {
                 if (isDocCSharp(doc))
                 {
-                    // ProcessDocumentCSharp(doc, namespaceSet, namespaceToClassnameSetMap); UNCOMMENT THIS
+                    // ProcessDocumentCSharp(doc, namespaceSet, namespaceToClassnameSetMap); UNCOMMENT
                 }
 
                 if (isDocVB(doc))
@@ -112,7 +112,7 @@ namespace NamespaceRefactorer
             string xmlElementReferenceName = "Reference";
             string xmlElementHintPathName = "HintPath";
 
-            csprojFilePath = @"C:\Users\Christopher Lupo\Desktop\2017SpringTeam25\tests\alias\clientC#\Client\Client - original.csproj"; // magic
+            csprojFilePath = @"C:\Users\Christopher Lupo\Desktop\2017SpringTeam25\tests\basic - testxml\clientC#\Client\Client - original.csproj"; // magic
             // find the namsespace by calling Descendents() on the Root and drill down into the properties to find the namsespace you need
             XNamespace ns = XNamespace.Get("http://schemas.microsoft.com/developer/msbuild/2003");
             XDocument xdoc = XDocument.Load(csprojFilePath);
@@ -123,7 +123,7 @@ namespace NamespaceRefactorer
             addNewDllReferences(xmlElementHintPathName, xmlElementReferenceName, ns, xdoc, newRelativeOutputPath);
 
             // save the xml
-            xdoc.Save(@"C:\Users\Christopher Lupo\Desktop\2017SpringTeam25\tests\alias\clientC#\Client\Client - transformed.csproj"); // magic
+            xdoc.Save(@"C:\Users\Christopher Lupo\Desktop\2017SpringTeam25\tests\basic - testxml\clientC#\Client\Client.csproj"); // magic
         }
 
         private void addNewDllReferences(string xmlElementHintPathName, string xmlElementReferenceName, XNamespace ns, XDocument xdoc, string newRelativeOutputPath)
@@ -134,7 +134,9 @@ namespace NamespaceRefactorer
 
             foreach (var dll in newDlls)
             {
-                XElement addedref = new XElement(xmlElementReferenceName, new XAttribute("Include", "SDK, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"),
+                XElement addedref = new XElement(xmlElementReferenceName, 
+                    new XAttribute("Include", "SDK, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"),
+                    new XAttribute("xmlns", ns),
                         new XElement("SpecificVersion", "False"),
                         new XElement(xmlElementHintPathName, newRelativeOutputPath + Path.GetFileName(dll)),
                         new XElement("Private", "False")
