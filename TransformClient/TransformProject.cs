@@ -20,19 +20,16 @@ namespace NamespaceRefactorer
         public static int sdkId;
 
         // args 0 = .csproj file path
-        // args 1 = the current working directory folder that will correctly navigate to the output folder when relative path names are used in the output path
-        // args 2 = sdk name
+        // args 1 = sdk name
         public static void Main(string[] args)
         {
-            sdkId = SDKSQLConnector.GetInstance().getByName(args[2]).id;
+            sdkId = SDKSQLConnector.GetInstance().getByName(args[1]).id;
             (new TransformProject()).Run(args);
         }
                 
         public void Run(string[] args)
         {
             var filePath = args[0];
-            Helper.verifyFolderExists(args[1]);
-            Directory.SetCurrentDirectory(args[1]);
             if (filePath.EndsWith(".soln", StringComparison.OrdinalIgnoreCase))
             {
                 ProcessSolution(MSBuildWorkspace.Create().OpenSolutionAsync(filePath).Result);
@@ -40,7 +37,7 @@ namespace NamespaceRefactorer
             else if (filePath.EndsWith(".csproj", StringComparison.OrdinalIgnoreCase)
                 || filePath.EndsWith(".vbproj", StringComparison.OrdinalIgnoreCase))
             {
-                ProcessProject(MSBuildWorkspace.Create().OpenProjectAsync(filePath).Result, args[2]);
+                ProcessProject(MSBuildWorkspace.Create().OpenProjectAsync(filePath).Result, args[1]);
             }
 
         }
@@ -118,7 +115,8 @@ namespace NamespaceRefactorer
             XDocument xdoc = XDocument.Load(csprojFilePath);
 
             // transform the xml
-            removeOldDllReferences(xmlElementOutputPathName, xmlElementReferenceName, xmlElementHintPathName, ns, xdoc, olddllSet);
+            removeOldDllReferences(xmlElementOutputPathName, xmlElementReferenceName, xmlElementHintPathName, ns, xdoc, olddllSet, csprojFilePath);
+            // this needs to be done in this order
             string newRelativeOutputPath = changeOutputPath(xmlElementOutputPathName, ns, xdoc);
             addNewDllReferences(xmlElementHintPathName, xmlElementReferenceName, ns, xdoc, newRelativeOutputPath);
 
@@ -136,7 +134,6 @@ namespace NamespaceRefactorer
             {
                 XElement addedref = new XElement(xmlElementReferenceName, 
                     new XAttribute("Include", "SDK, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"),
-                    new XAttribute("xmlns", ns),
                         new XElement("SpecificVersion", "False"),
                         new XElement(xmlElementHintPathName, newRelativeOutputPath + Path.GetFileName(dll)),
                         new XElement("Private", "False")
@@ -145,10 +142,13 @@ namespace NamespaceRefactorer
             }
         }
 
-        private static void removeOldDllReferences(string xmlElementOutputPathName, string xmlElementReferenceName, string xmlElementHintPathName, XNamespace ns, XDocument xdoc, HashSet<String> olddllSet)
+        private static void removeOldDllReferences(string xmlElementOutputPathName, string xmlElementReferenceName, string xmlElementHintPathName, XNamespace ns, XDocument xdoc, HashSet<String> olddllSet, string csprojFilePath)
         {
             string oldOutputPath = (from outp in xdoc.Descendants(ns + xmlElementOutputPathName)
                                     select outp).First().Value;
+            // need to anchor the output path to the folder the project file is in otherwise ../.. relative paths would navigate based on where this executable is
+            oldOutputPath = Path.GetFullPath(Path.Combine(new FileInfo(csprojFilePath).DirectoryName, oldOutputPath));
+
 
             var references = from reference in xdoc.Descendants(ns + xmlElementReferenceName)
                              where reference.Element(ns + xmlElementHintPathName) != null
@@ -179,8 +179,7 @@ namespace NamespaceRefactorer
                                      select outp;
             foreach (var e in outputPathElements)
             {
-                string oldpath = e.Value;
-                var oldar = oldpath.Split('\\');
+                var oldar = e.Value.Split('\\');
                 oldar[oldar.Count() - 2] = newEndPath; // replace the old parent folder with the new one
                 newoutPutPath = String.Join("\\", oldar);
                 e.SetValue(newoutPutPath);
