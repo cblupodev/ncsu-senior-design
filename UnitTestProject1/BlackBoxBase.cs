@@ -175,13 +175,14 @@ namespace UnitTest.BlackBox
             proc.StartInfo.UseShellExecute = false;
             proc.StartInfo.RedirectStandardOutput = true;
             proc.Start();
-            Assert.AreEqual(0, proc.ExitCode, "project exited unexpectedly");
             var expectedOut = new StreamReader(expectedPath);
             while (!proc.StandardOutput.EndOfStream && !expectedOut.EndOfStream)
             {
                 Assert.AreEqual(expectedOut.ReadLine(), proc.StandardOutput.ReadLine());
             }
             Assert.AreEqual(expectedOut.EndOfStream, proc.StandardOutput.EndOfStream);
+            proc.WaitForExit();
+            Assert.AreEqual(0, proc.ExitCode, "project exited unexpectedly");
         }
 
         public virtual void CompileLibraries()
