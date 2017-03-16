@@ -121,7 +121,8 @@ namespace NamespaceRefactorer
             addNewDllReferences(xmlElementHintPathName, xmlElementReferenceName, ns, xdoc, newRelativeOutputPath);
 
             // save the xml
-            xdoc.Save((new FileInfo(csprojFilePath).DirectoryName+"\\transformed_csproj_file.xml")); // magic
+            //xdoc.Save((new FileInfo(csprojFilePath).DirectoryName+"\\transformed_csproj_file.xml")); // magic
+            xdoc.Save(csprojFilePath);
         }
 
         private void addNewDllReferences(string xmlElementHintPathName, string xmlElementReferenceName, XNamespace ns, XDocument xdoc, string newRelativeOutputPath)
