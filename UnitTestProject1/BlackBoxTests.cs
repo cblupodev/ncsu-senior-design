@@ -47,7 +47,7 @@ namespace UnitTest.BlackBox
         [TestMethod]
         public void TestEndToEndCSAlias()
         {
-            RunPostTransformVBTest();
+            RunPostTransformCSTest();
         }
         [TestMethod]
         public void TestEndToEndVBAlias()
@@ -93,7 +93,7 @@ namespace UnitTest.BlackBox
         [TestMethod]
         public void TestEndToEndCSAssemblyChange()
         {
-            RunPostTransformVBTest();
+            RunPostTransformCSTest();
         }
         [TestMethod]
         public void TestEndToEndVBAssemblyChange()
@@ -139,7 +139,7 @@ namespace UnitTest.BlackBox
         [TestMethod]
         public void TestEndToEndCSAssemblyMerge()
         {
-            RunPostTransformVBTest();
+            RunPostTransformCSTest();
         }
         [TestMethod]
         public void TestEndToEndVBAssemblyMerge()
@@ -185,7 +185,7 @@ namespace UnitTest.BlackBox
         [TestMethod]
         public void TestEndToEndCSAssemblySplit()
         {
-            RunPostTransformVBTest();
+            RunPostTransformCSTest();
         }
         [TestMethod]
         public void TestEndToEndVBAssemblySplit()
@@ -231,7 +231,7 @@ namespace UnitTest.BlackBox
         [TestMethod]
         public void TestEndToEndCSBasic()
         {
-            RunPostTransformVBTest();
+            RunPostTransformCSTest();
         }
         [TestMethod]
         public void TestEndToEndVBBasic()
@@ -277,7 +277,7 @@ namespace UnitTest.BlackBox
         [TestMethod]
         public void TestEndToEndCSBasicNamespace()
         {
-            RunPostTransformVBTest();
+            RunPostTransformCSTest();
         }
         [TestMethod]
         public void TestEndToEndVBBasicNamespace()
@@ -323,7 +323,7 @@ namespace UnitTest.BlackBox
         [TestMethod]
         public void TestEndToEndCSCasting()
         {
-            RunPostTransformVBTest();
+            RunPostTransformCSTest();
         }
         [TestMethod]
         public void TestEndToEndVBCasting()
@@ -369,7 +369,7 @@ namespace UnitTest.BlackBox
         [TestMethod]
         public void TestEndToEndCSClassInClass()
         {
-            RunPostTransformVBTest();
+            RunPostTransformCSTest();
         }
         [TestMethod]
         public void TestEndToEndVBClassInClass()
@@ -415,7 +415,7 @@ namespace UnitTest.BlackBox
         [TestMethod]
         public void TestEndToEndCSExtendsSDKClass()
         {
-            RunPostTransformVBTest();
+            RunPostTransformCSTest();
         }
         [TestMethod]
         public void TestEndToEndVBExtendsSDKClass()
@@ -432,6 +432,8 @@ namespace UnitTest.BlackBox
         {
             base.CompileLibraries();
             CompileSolution(Path.Combine(TestFolder, "extraLibrary", "extraLibrary.sln"));
+            File.Copy(Path.Combine(TestFolder, "bin1", "extraLibrary.dll"),
+                Path.Combine(TestFolder, "bin2", "extraLibrary.dll"));
         }
         [TestInitialize]
         public void InitExtraLibrary()
@@ -466,7 +468,7 @@ namespace UnitTest.BlackBox
         [TestMethod]
         public void TestEndToEndCSExtraLibrary()
         {
-            RunPostTransformVBTest();
+            RunPostTransformCSTest();
         }
         [TestMethod]
         public void TestEndToEndVBExtraLibrary()
@@ -512,7 +514,7 @@ namespace UnitTest.BlackBox
         [TestMethod]
         public void TestEndToEndCSFullyQualified()
         {
-            RunPostTransformVBTest();
+            RunPostTransformCSTest();
         }
         [TestMethod]
         public void TestEndToEndVBFullyQualified()
@@ -558,7 +560,7 @@ namespace UnitTest.BlackBox
         [TestMethod]
         public void TestEndToEndCSFullyQualifiedModelIdentifier()
         {
-            RunPostTransformVBTest();
+            RunPostTransformCSTest();
         }
         [TestMethod]
         public void TestEndToEndVBFullyQualifiedModelIdentifier()
@@ -604,7 +606,7 @@ namespace UnitTest.BlackBox
         [TestMethod]
         public void TestEndToEndCSGenerics()
         {
-            RunPostTransformVBTest();
+            RunPostTransformCSTest();
         }
         [TestMethod]
         public void TestEndToEndVBGenerics()
@@ -650,10 +652,56 @@ namespace UnitTest.BlackBox
         [TestMethod]
         public void TestEndToEndCSInstantiatesSDKClass()
         {
-            RunPostTransformVBTest();
+            RunPostTransformCSTest();
         }
         [TestMethod]
         public void TestEndToEndVBInstantiatesSDKClass()
+        {
+            RunPostTransformVBTest();
+        }
+    }
+
+    [TestClass]
+    [DeploymentItem("tests/methodCallOnParameter", "methodCallOnParameter")]
+    public class MethodCallOnParameterTests : BlackBoxBase
+    {
+        [TestInitialize]
+        public void InitMethodCallOnParameter()
+        {
+            TestFolder = "methodCallOnParameter";
+        }
+        [TestMethod]
+        public void TestMappingMethodCallOnParameter()
+        {
+            RunMappingTest();
+        }
+        [TestMethod]
+        public void TestPreTransformCSMethodCallOnParameter()
+        {
+            RunPreTransformCSTest();
+        }
+        [TestMethod]
+        public void TestPostTransformCSMethodCallOnParameter()
+        {
+            RunPostTransformCSTest();
+        }
+        [TestMethod]
+        public void TestPreTransformVBMethodCallOnParameter()
+        {
+            RunPreTransformVBTest();
+        }
+        [TestMethod]
+        public void TestPostTransformVBMethodCallOnParameter()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndCSMethodCallOnParameter()
+        {
+            RunPostTransformCSTest();
+        }
+        [TestMethod]
+        public void TestEndToEndVBMethodCallOnParameter()
         {
             RunPostTransformVBTest();
         }
@@ -696,7 +744,7 @@ namespace UnitTest.BlackBox
         [TestMethod]
         public void TestEndToEndCSMultiAssembly()
         {
-            RunPostTransformVBTest();
+            RunPostTransformCSTest();
         }
         [TestMethod]
         public void TestEndToEndVBMultiAssembly()
@@ -742,10 +790,56 @@ namespace UnitTest.BlackBox
         [TestMethod]
         public void TestEndToEndCSMultiBasic()
         {
-            RunPostTransformVBTest();
+            RunPostTransformCSTest();
         }
         [TestMethod]
         public void TestEndToEndVBMultiBasic()
+        {
+            RunPostTransformVBTest();
+        }
+    }
+
+    [TestClass]
+    [DeploymentItem("tests/multiTypeGeneric", "multiTypeGeneric")]
+    public class MultiTypeGenericTests : BlackBoxBase
+    {
+        [TestInitialize]
+        public void InitMultiTypeGeneric()
+        {
+            TestFolder = "multiTypeGeneric";
+        }
+        [TestMethod]
+        public void TestMappingMultiTypeGeneric()
+        {
+            RunMappingTest();
+        }
+        [TestMethod]
+        public void TestPreTransformCSMultiTypeGeneric()
+        {
+            RunPreTransformCSTest();
+        }
+        [TestMethod]
+        public void TestPostTransformCSMultiTypeGeneric()
+        {
+            RunPostTransformCSTest();
+        }
+        [TestMethod]
+        public void TestPreTransformVBMultiTypeGeneric()
+        {
+            RunPreTransformVBTest();
+        }
+        [TestMethod]
+        public void TestPostTransformVBMultiTypeGeneric()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndCSMultiTypeGeneric()
+        {
+            RunPostTransformCSTest();
+        }
+        [TestMethod]
+        public void TestEndToEndVBMultiTypeGeneric()
         {
             RunPostTransformVBTest();
         }
@@ -788,7 +882,7 @@ namespace UnitTest.BlackBox
         [TestMethod]
         public void TestEndToEndCSNamespaceInNamespace()
         {
-            RunPostTransformVBTest();
+            RunPostTransformCSTest();
         }
         [TestMethod]
         public void TestEndToEndVBNamespaceInNamespace()
@@ -834,7 +928,7 @@ namespace UnitTest.BlackBox
         [TestMethod]
         public void TestEndToEndCSNewConflicts()
         {
-            RunPostTransformVBTest();
+            RunPostTransformCSTest();
         }
         [TestMethod]
         public void TestEndToEndVBNewConflicts()
@@ -880,7 +974,7 @@ namespace UnitTest.BlackBox
         [TestMethod]
         public void TestEndToEndCSNonRootUsing()
         {
-            RunPostTransformVBTest();
+            RunPostTransformCSTest();
         }
         [TestMethod]
         public void TestEndToEndVBNonRootUsing()
@@ -926,7 +1020,7 @@ namespace UnitTest.BlackBox
         [TestMethod]
         public void TestEndToEndCSNothing()
         {
-            RunPostTransformVBTest();
+            RunPostTransformCSTest();
         }
         [TestMethod]
         public void TestEndToEndVBNothing()
@@ -972,10 +1066,56 @@ namespace UnitTest.BlackBox
         [TestMethod]
         public void TestEndToEndCSOldConflicts()
         {
-            RunPostTransformVBTest();
+            RunPostTransformCSTest();
         }
         [TestMethod]
         public void TestEndToEndVBOldConflicts()
+        {
+            RunPostTransformVBTest();
+        }
+    }
+
+    [TestClass]
+    [DeploymentItem("tests/returnClass", "returnClass")]
+    public class ReturnClassTests : BlackBoxBase
+    {
+        [TestInitialize]
+        public void InitReturnClass()
+        {
+            TestFolder = "returnClass";
+        }
+        [TestMethod]
+        public void TestMappingReturnClass()
+        {
+            RunMappingTest();
+        }
+        [TestMethod]
+        public void TestPreTransformCSReturnClass()
+        {
+            RunPreTransformCSTest();
+        }
+        [TestMethod]
+        public void TestPostTransformCSReturnClass()
+        {
+            RunPostTransformCSTest();
+        }
+        [TestMethod]
+        public void TestPreTransformVBReturnClass()
+        {
+            RunPreTransformVBTest();
+        }
+        [TestMethod]
+        public void TestPostTransformVBReturnClass()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndCSReturnClass()
+        {
+            RunPostTransformCSTest();
+        }
+        [TestMethod]
+        public void TestEndToEndVBReturnClass()
         {
             RunPostTransformVBTest();
         }
@@ -1018,7 +1158,7 @@ namespace UnitTest.BlackBox
         [TestMethod]
         public void TestEndToEndCSTypeof()
         {
-            RunPostTransformVBTest();
+            RunPostTransformCSTest();
         }
         [TestMethod]
         public void TestEndToEndVBTypeof()
@@ -1064,7 +1204,7 @@ namespace UnitTest.BlackBox
         [TestMethod]
         public void TestEndToEndCSUnused()
         {
-            RunPostTransformVBTest();
+            RunPostTransformCSTest();
         }
         [TestMethod]
         public void TestEndToEndVBUnused()
@@ -1072,5 +1212,52 @@ namespace UnitTest.BlackBox
             RunPostTransformVBTest();
         }
     }
+
+    [TestClass]
+    [DeploymentItem("tests/variables", "variables")]
+    public class VariablesTests : BlackBoxBase
+    {
+        [TestInitialize]
+        public void InitVariables()
+        {
+            TestFolder = "variables";
+        }
+        [TestMethod]
+        public void TestMappingVariables()
+        {
+            RunMappingTest();
+        }
+        [TestMethod]
+        public void TestPreTransformCSVariables()
+        {
+            RunPreTransformCSTest();
+        }
+        [TestMethod]
+        public void TestPostTransformCSVariables()
+        {
+            RunPostTransformCSTest();
+        }
+        [TestMethod]
+        public void TestPreTransformVBVariables()
+        {
+            RunPreTransformVBTest();
+        }
+        [TestMethod]
+        public void TestPostTransformVBVariables()
+        {
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        public void TestEndToEndCSVariables()
+        {
+            RunPostTransformCSTest();
+        }
+        [TestMethod]
+        public void TestEndToEndVBVariables()
+        {
+            RunPostTransformVBTest();
+        }
+    }
+
 
 }
