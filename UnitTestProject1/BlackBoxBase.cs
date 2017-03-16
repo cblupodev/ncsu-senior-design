@@ -83,7 +83,7 @@ namespace UnitTest.BlackBox
             VerifyPostTransformTest();
         }
 
-        public virtual void RunCSEndToEndTest()
+        public virtual void RunEndToEndCSTest()
         {
             projectUnderTest = Path.Combine(TestFolder, "clientC#", "Client", "Client.csproj");
             SetupEndToEnd();
@@ -92,7 +92,7 @@ namespace UnitTest.BlackBox
             VerifyPostTransformTest();
         }
 
-        public virtual void RunVBEndToEndTest()
+        public virtual void RunEndToEndVBTest()
         {
             projectUnderTest = Path.Combine(TestFolder, "clientVB", "Client", "Client.vbproj");
             SetupEndToEnd();
@@ -418,48 +418,17 @@ namespace UnitTest.BlackBox
 //  d=$(basename "${f}")
 //  echo ""
 //  echo "    [TestClass]"
-//  echo "    [DeploymentItem(\"tests/$d\", \"$d\")]"
 //  echo "    public class ${d^}Tests : BlackBoxBase"
 //  echo "    {"
-//  echo "        [TestInitialize]"
-//  echo "        public void Init${d^}()"
-//  echo "        {"
-//  echo "            TestFolder = \"$d\";"
-//  echo "        }"
-//  echo "        [TestMethod]"
-//  echo "        public void TestMapping${d^}()"
-//  echo "        {"
-//  echo "            RunMappingTest();"
-//  echo "        }"
-//  echo "        [TestMethod]"
-//  echo "        public void TestPreTransformCS${d^}()"
-//  echo "        {"
-//  echo "            RunPreTransformCSTest();"
-//  echo "        }"
-//  echo "        [TestMethod]"
-//  echo "        public void TestPostTransformCS${d^}()"
-//  echo "        {"
-//  echo "            RunPostTransformCSTest();"
-//  echo "        }"
-//  echo "        [TestMethod]"
-//  echo "        public void TestPreTransformVB${d^}()"
-//  echo "        {"
-//  echo "            RunPreTransformVBTest();"
-//  echo "        }"
-//  echo "        [TestMethod]"
-//  echo "        public void TestPostTransformVB${d^}()"
-//  echo "        {"
-//  echo "            RunPostTransformVBTest();"
-//  echo "        }"
-//  echo "        [TestMethod]"
-//  echo "        public void TestEndToEndCS${d^}()"
-//  echo "        {"
-//  echo "            RunPostTransformCSTest();"
-//  echo "        }"
-//  echo "        [TestMethod]"
-//  echo "        public void TestEndToEndVB${d^}()"
-//  echo "        {"
-//  echo "            RunPostTransformVBTest();"
-//  echo "        }"
+//  for test in Mapping PreTransformCS PostTransformCS PreTransformVB PostTransformVB EndToEndCS EndToEndVB
+//  do
+//    echo "        [TestMethod]"
+//    echo "        [DeploymentItem(\"tests/$d\", \"${test}${d^}\")]"
+//    echo "        public void Test${test}${d^}()"
+//    echo "        {"
+//    echo "            TestFolder = \"${test}${d^}\";"
+//    echo "            Run${test}Test();"
+//    echo "        }"
+//  done
 //  echo "    }"
 //done

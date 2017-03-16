@@ -10,7 +10,7 @@ namespace SDK
     [ModelIdentifier("00000000-0000-4000-8000-00000001")]
     public class Change1
     {
-        public static Sample1 Item = new Sample1();
+        public static Change1 Item = new Change1();
 
         public static int add(int a, int b)
         {
