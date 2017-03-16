@@ -377,7 +377,7 @@ namespace UnitTest.BlackBox
 
         public virtual void VerifyPostTransformTest()
         {
-            Directory.Delete(Path.Combine(TestFolder, "bin1"));
+            Directory.Delete(Path.Combine(TestFolder, "bin1"), true);
             string expectedPath = Path.Combine(TestFolder, "expectedOutNew.txt");
             if (!File.Exists(expectedPath))
             {
@@ -406,6 +406,8 @@ namespace UnitTest.BlackBox
 //{
 //    base.CompileLibraries();
 //    CompileSolution(Path.Combine(TestFolder, "extraLibrary", "extraLibrary.sln"));
+//    File.Copy(Path.Combine(TestFolder, "bin1", "extraLibrary.dll"),
+//        Path.Combine(TestFolder, "bin2", "extraLibrary.dll"));
 //}
 //
 // To generate test methods, run this code in bash in the tests directory:
@@ -451,7 +453,7 @@ namespace UnitTest.BlackBox
 //  echo "        [TestMethod]"
 //  echo "        public void TestEndToEndCS${d^}()"
 //  echo "        {"
-//  echo "            RunPostTransformVBTest();"
+//  echo "            RunPostTransformCSTest();"
 //  echo "        }"
 //  echo "        [TestMethod]"
 //  echo "        public void TestEndToEndVB${d^}()"

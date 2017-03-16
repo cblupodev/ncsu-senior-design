@@ -14,11 +14,23 @@ namespace NamespaceRefactorer
     public class ReadFile
     {
         // find the custom attributes in a dll and add mapping to the dictionary
-        public void findCustomAttributes(string dllPath, List<GenericMapping> mapList)
+        public void findCustomAttributes(string dllPath, List<GenericMapping> mapList, bool isOld)
         {
 
             Helper.verifyFileExists(dllPath);
-            var assem = Assembly.LoadFile(dllPath);
+            var dom = AppDomain.CreateDomain("test");
+            var loadClass = (LoadingClass)dom.CreateInstanceAndUnwrap(typeof(LoadingClass).Assembly.FullName, typeof(LoadingClass).FullName);
+            loadClass.DoStuff(dllPath, mapList, isOld, ReadProject.sdkId);
+            // TODO either figure out how to modify the mapList from DoStuff, or interact with the database dirrectly from DoStuff
+            // TODO rename classes to something better
+        }
+    }
+
+    public class LoadingClass : MarshalByRefObject
+    {
+        public void DoStuff(string dllPath, List<GenericMapping> mapList, bool isOld, int sdkId)
+        {
+            var assem = Assembly.LoadFrom(dllPath);
 
             Console.WriteLine("Read from   " + dllPath);
 
@@ -30,8 +42,10 @@ namespace NamespaceRefactorer
                     if (attr.AttributeType.Name.Equals(ReadProject.CustomAttributeName))
                     {
                         string modelIdentifier = (string)attr.ConstructorArguments.First().Value;
-                        GenericMapping ma = new GenericMapping(type.Namespace, modelIdentifier, type.Name, dllPath, ReadProject.sdkId);
+                        GenericMapping ma = new GenericMapping(type.Namespace, modelIdentifier, type.Name, dllPath, sdkId);
                         mapList.Add(ma);
+                        
+                        SDKMappingSQLConnector.GetInstance().SaveSDKMappings(new List<GenericMapping>() { ma }, sdkId);
                     }
                 }
             }
