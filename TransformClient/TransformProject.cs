@@ -29,6 +29,7 @@ namespace NamespaceRefactorer
                 
         public void Run(string[] args)
         {
+            Helper.verifyFileExists(args[0]);
             var filePath = args[0];
             if (filePath.EndsWith(".soln", StringComparison.OrdinalIgnoreCase))
             {
@@ -58,7 +59,7 @@ namespace NamespaceRefactorer
             {
                 if (isDocCSharp(doc))
                 {
-                    // ProcessDocumentCSharp(doc, namespaceSet, namespaceToClassnameSetMap); UNCOMMENT
+                    ProcessDocumentCSharp(doc, namespaceSet, namespaceToClassnameSetMap);
                 }
 
                 if (isDocVB(doc))
@@ -109,7 +110,6 @@ namespace NamespaceRefactorer
             string xmlElementReferenceName = "Reference";
             string xmlElementHintPathName = "HintPath";
 
-            csprojFilePath = @"C:\Users\Christopher Lupo\Desktop\2017SpringTeam25\tests\basic - testxml\clientC#\Client\Client - original.csproj"; // magic
             // find the namsespace by calling Descendents() on the Root and drill down into the properties to find the namsespace you need
             XNamespace ns = XNamespace.Get("http://schemas.microsoft.com/developer/msbuild/2003");
             XDocument xdoc = XDocument.Load(csprojFilePath);
@@ -121,7 +121,7 @@ namespace NamespaceRefactorer
             addNewDllReferences(xmlElementHintPathName, xmlElementReferenceName, ns, xdoc, newRelativeOutputPath);
 
             // save the xml
-            xdoc.Save(@"C:\Users\Christopher Lupo\Desktop\2017SpringTeam25\tests\basic - testxml\clientC#\Client\Client.csproj"); // magic
+            xdoc.Save((new FileInfo(csprojFilePath).DirectoryName+"\\transformed_csproj_file.xml")); // magic
         }
 
         private void addNewDllReferences(string xmlElementHintPathName, string xmlElementReferenceName, XNamespace ns, XDocument xdoc, string newRelativeOutputPath)
@@ -159,9 +159,9 @@ namespace NamespaceRefactorer
                              select reference;
             try
             {
-                foreach (var r in references)
+                foreach (var reference in references)
                 {
-                    r.Remove();
+                    reference.Remove();
                 }
             }
             catch (NullReferenceException nre)
