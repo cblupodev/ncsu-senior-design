@@ -135,9 +135,9 @@ namespace NamespaceRefactorer
             {
                 XElement addedref = new XElement(ns + xmlElementReferenceName, 
                     new XAttribute("Include", "SDK, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"),
-                        new XElement("SpecificVersion", "False"),
-                        new XElement(xmlElementHintPathName, newRelativeOutputPath + Path.GetFileName(dll)),
-                        new XElement("Private", "False")
+                        new XElement(ns + "SpecificVersion", "False"),
+                        new XElement(ns + xmlElementHintPathName, newRelativeOutputPath + Path.GetFileName(dll)),
+                        new XElement(ns + "Private", "False")
                     );
                 xdoc.Descendants(ns + "ItemGroup").First().AddFirst(addedref);
             }
