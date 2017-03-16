@@ -377,7 +377,7 @@ namespace UnitTest.BlackBox
 
         public virtual void VerifyPostTransformTest()
         {
-            Directory.Delete(Path.Combine(TestFolder, "bin1"));
+            Directory.Delete(Path.Combine(TestFolder, "bin1"), true);
             string expectedPath = Path.Combine(TestFolder, "expectedOutNew.txt");
             if (!File.Exists(expectedPath))
             {
