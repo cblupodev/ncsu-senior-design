@@ -132,7 +132,7 @@ namespace NamespaceRefactorer
 
             foreach (var dll in newDlls)
             {
-                XElement addedref = new XElement(xmlElementReferenceName, 
+                XElement addedref = new XElement(ns + xmlElementReferenceName, 
                     new XAttribute("Include", "SDK, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"),
                         new XElement("SpecificVersion", "False"),
                         new XElement(xmlElementHintPathName, newRelativeOutputPath + Path.GetFileName(dll)),
