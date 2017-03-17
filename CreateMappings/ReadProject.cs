@@ -34,7 +34,6 @@ namespace CreateMappings
             // temporarily hold the new sdk partial mappings
             List<GenericMapping> newMappings = new List<GenericMapping>();
 
-            SDKSQLConnector.GetInstance().SaveSDK(sdkName, newFolderPath);
             sdkId = SDKSQLConnector.GetInstance().getByName(sdkName).id;
             readFolderDllFiles(oldFolderPath, oldMappings, true);
             SDKMappingSQLConnector.GetInstance().SaveSDKMappings(oldMappings, sdkId);

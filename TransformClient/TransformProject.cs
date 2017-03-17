@@ -38,8 +38,10 @@ namespace NamespaceRefactorer
             else if (filePath.EndsWith(".csproj", StringComparison.OrdinalIgnoreCase)
                 || filePath.EndsWith(".vbproj", StringComparison.OrdinalIgnoreCase))
             {
+                var aaaa = MSBuildWorkspace.Create().OpenProjectAsync(filePath).Result;
                 ProcessProject(MSBuildWorkspace.Create().OpenProjectAsync(filePath).Result, args[1]);
             }
+
 
         }
 
@@ -70,7 +72,7 @@ namespace NamespaceRefactorer
             HashSet<String> newdllSet = mappingConnector.GetAllNewDllPaths(sdkId);
             HashSet<String> olddllSet = mappingConnector.GetAllOldDllPaths(sdkId);
             // Don't remove the line below, cblupo
-            transformXml(proj.FilePath, newdllSet, olddllSet, sdkId);
+            transformXml(proj.FilePath, newdllSet, olddllSet, Path.GetExtension(proj.FilePath), sdkId);
             Console.WriteLine("Project file edited to use new references");
         }
 
@@ -104,7 +106,7 @@ namespace NamespaceRefactorer
             Console.WriteLine("Transformed   " + doc.FilePath);
         }
 
-        public void transformXml(string csprojFilePath, HashSet<String> newdllSet, HashSet<String> olddllSet, int sdkid)
+        public void transformXml(string csprojFilePath, HashSet<String> newdllSet, HashSet<String> olddllSet, string projectFileExtension, int sdkid)
         {
             string xmlElementOutputPathName = "OutputPath";
             string xmlElementReferenceName = "Reference";
@@ -121,8 +123,8 @@ namespace NamespaceRefactorer
             addNewDllReferences(xmlElementHintPathName, xmlElementReferenceName, ns, xdoc, newRelativeOutputPath);
 
             // save the xml
-            //xdoc.Save((new FileInfo(csprojFilePath).DirectoryName+"\\transformed_csproj_file.xml")); // magic
-            xdoc.Save(csprojFilePath);
+            xdoc.Save((new FileInfo(csprojFilePath).DirectoryName+"\\transformed_proj_file."+projectFileExtension)); // magic
+            // xdoc.Save(csprojFilePath); // UNCOMMENT this
         }
 
         private void addNewDllReferences(string xmlElementHintPathName, string xmlElementReferenceName, XNamespace ns, XDocument xdoc, string newRelativeOutputPath)
@@ -148,8 +150,12 @@ namespace NamespaceRefactorer
             string oldOutputPath = (from outp in xdoc.Descendants(ns + xmlElementOutputPathName)
                                     select outp).First().Value;
             // need to anchor the output path to the folder the project file is in otherwise ../.. relative paths would navigate based on where this executable is
-            oldOutputPath = Path.GetFullPath(Path.Combine(new FileInfo(csprojFilePath).DirectoryName, oldOutputPath));
-
+            // if the path has root in it then don't need to worry about getting the full path
+            if (Path.IsPathRooted(oldOutputPath) == false)
+            {
+                // this handles this kind of case: C:/users/user1/SDK1/aaa/bbb/ccc/../../bin1. Where relative paths are in the middle of the path
+                oldOutputPath = Path.GetFullPath(Path.Combine(new FileInfo(csprojFilePath).DirectoryName, oldOutputPath));
+            }
 
             var references = from reference in xdoc.Descendants(ns + xmlElementReferenceName)
                              where reference.Element(ns + xmlElementHintPathName) != null
