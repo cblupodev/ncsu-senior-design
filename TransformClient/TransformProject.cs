@@ -61,7 +61,8 @@ namespace NamespaceRefactorer
             {
                 if (isDocCSharp(doc))
                 {
-                    ProcessDocumentCSharp(doc, namespaceSet, namespaceToClassnameSetMap);
+                    // UNCOMMENT
+                    // ProcessDocumentCSharp(doc, namespaceSet, namespaceToClassnameSetMap);
                 }
 
                 if (isDocVB(doc))
