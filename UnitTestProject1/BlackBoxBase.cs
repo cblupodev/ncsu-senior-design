@@ -145,14 +145,41 @@ namespace UnitTest.BlackBox
             SDKSQLConnector.GetInstance().DeleteSDKByName(sdkNameId);
         }
 
+        public string CompileProject(Project proj)
+        {
+            Trace.WriteLine("------------ Compiling \"" + proj.FilePath + "\"");
+            var comp = proj.GetCompilationAsync().Result;
+            var diag = comp.GetDiagnostics();
+            foreach (var item in diag.Where(item => item.Severity != DiagnosticSeverity.Hidden))
+            {
+                Trace.WriteLine(item.ToString());
+            }
+            var issues = comp.GetDiagnostics().Where(item => item.Severity == DiagnosticSeverity.Error);
+            if ( issues.Count() > 0 )
+            {
+                Assert.Fail("Errors encountered when compiling \"" + proj.FilePath + "\"");
+            }
+            if (File.Exists(proj.OutputFilePath))
+                File.Delete(proj.OutputFilePath);
+            Trace.WriteLine("--- Emitting");
+            var emitResult = comp.Emit(proj.OutputFilePath);
+            var emitIssues = emitResult.Diagnostics.Where(item => item.Severity == DiagnosticSeverity.Error);
+            foreach (var item in emitResult.Diagnostics.Where(item => item.Severity != DiagnosticSeverity.Hidden))
+            {
+                Trace.WriteLine(item.ToString());
+            }
+            if ( emitIssues.Count() > 0 )
+            {
+                Assert.Fail("Errors encountered when emitting \"" + proj.FilePath + "\"");
+            }
+            Trace.WriteLine("------------ Finished compiling \"" + proj.FilePath + "\"");
+            return proj.OutputFilePath;
+        }
+
         public string CompileProject(string projPath)
         {
             var proj = MSBuildWorkspace.Create().OpenProjectAsync(projPath).Result;
-            var comp = proj.GetCompilationAsync().Result;
-            if (File.Exists(proj.OutputFilePath))
-                File.Delete(proj.OutputFilePath);
-            comp.Emit(proj.OutputFilePath);
-            return proj.OutputFilePath;
+            return CompileProject(proj);
         }
 
         public void CompileSolution(string solnPath)
@@ -160,10 +187,7 @@ namespace UnitTest.BlackBox
             var soln = MSBuildWorkspace.Create().OpenSolutionAsync(solnPath).Result;
             foreach ( var proj in soln.Projects )
             {
-                var comp = proj.GetCompilationAsync().Result;
-                if (File.Exists(proj.OutputFilePath))
-                    File.Delete(proj.OutputFilePath);
-                comp.Emit(proj.OutputFilePath);
+                CompileProject(proj);
             }
         }
 
