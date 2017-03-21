@@ -176,12 +176,6 @@ namespace UnitTest.BlackBox
             return proj.OutputFilePath;
         }
 
-        public string CompileProject(string projPath)
-        {
-            var proj = MSBuildWorkspace.Create().OpenProjectAsync(projPath).Result;
-            return CompileProject(proj);
-        }
-
         public void CompileSolution(string solnPath)
         {
             var soln = MSBuildWorkspace.Create().OpenSolutionAsync(solnPath).Result;
@@ -193,7 +187,16 @@ namespace UnitTest.BlackBox
 
         public void VerifyProject(string projectPath, string expectedPath)
         {
-            var result = CompileProject(projectPath);
+            var expectedReferences = System.Text.RegularExpressions.Regex.Matches(File.ReadAllText(projectPath),
+                "<Reference").Count;
+            expectedReferences += 1; // for the auto-included refernce to system libraries "mscorlib.dll"
+            if ( projectPath.EndsWith(".vbproj") )
+            {
+                expectedReferences += 1; // for the auto-included visual basic libraries ""Microsoft.VisualBasic.dll"
+            }
+            var proj = MSBuildWorkspace.Create().OpenProjectAsync(projectPath).Result;
+            Assert.AreEqual(expectedReferences, proj.MetadataReferences.Count, "Incorrect number of references, some are probably repeated or missing");
+            var result = CompileProject(proj);
             var proc = new Process();
             proc.StartInfo.FileName = result;
             proc.StartInfo.UseShellExecute = false;
