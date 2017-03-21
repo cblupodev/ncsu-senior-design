@@ -301,6 +301,10 @@ namespace UnitTest.BlackBox
 
         public virtual void RunMapping()
         {
+#if DEBUGABLE_EXECUTION
+            CreateMappings.ReadProject.Main(new[] { Path.Combine(TestFolder, "bin1"),
+                Path.Combine(TestFolder, "bin2"), sdkNameId });
+#else
             var createMapping = new Process();
             createMapping.StartInfo.FileName = pathToCreateMappings;
             createMapping.StartInfo.Arguments = "\"" + Path.Combine(TestFolder, "bin1") + "\" \"" +
@@ -324,6 +328,7 @@ namespace UnitTest.BlackBox
             Trace.WriteLine("------------ End create mappings error output ");
             createMapping.WaitForExit();
             Assert.AreEqual(0, createMapping.ExitCode, "Error running the create mappings program");
+#endif
         }
 
         public virtual void VerifyMapping()
@@ -373,6 +378,9 @@ namespace UnitTest.BlackBox
 
         public virtual void ProcessPostTransformTest()
         {
+#if DEBUGABLE_EXECUTION
+            NamespaceRefactorer.TransformProject.Main(new[] { projectUnderTest, sdkNameId });
+#else
             var translateClient = new Process();
             translateClient.StartInfo.FileName = pathToTransformClient;
             translateClient.StartInfo.Arguments = "\"" + projectUnderTest + "\" \"" + sdkNameId + "\"";
@@ -398,6 +406,7 @@ namespace UnitTest.BlackBox
             Trace.WriteLine("------------ End translate client error output ");
             translateClient.WaitForExit();
             Assert.AreEqual(0, translateClient.ExitCode, "error running the translate client program");
+#endif
         }
 
         public virtual void VerifyPostTransformTest()
