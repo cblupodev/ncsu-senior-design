@@ -443,6 +443,60 @@ namespace UnitTest.BlackBox
     }
 
     [TestClass]
+    public class EmptyDLLTests : BlackBoxBase
+    {
+        [TestMethod]
+        [DeploymentItem("tests/emptyDLL", "MappingEmptyDLL")]
+        public void TestMappingEmptyDLL()
+        {
+            TestFolder = "MappingEmptyDLL";
+            RunMappingTest();
+        }
+        [TestMethod]
+        [DeploymentItem("tests/emptyDLL", "PreTransformCSEmptyDLL")]
+        public void TestPreTransformCSEmptyDLL()
+        {
+            TestFolder = "PreTransformCSEmptyDLL";
+            RunPreTransformCSTest();
+        }
+        [TestMethod]
+        [DeploymentItem("tests/emptyDLL", "PostTransformCSEmptyDLL")]
+        public void TestPostTransformCSEmptyDLL()
+        {
+            TestFolder = "PostTransformCSEmptyDLL";
+            RunPostTransformCSTest();
+        }
+        [TestMethod]
+        [DeploymentItem("tests/emptyDLL", "PreTransformVBEmptyDLL")]
+        public void TestPreTransformVBEmptyDLL()
+        {
+            TestFolder = "PreTransformVBEmptyDLL";
+            RunPreTransformVBTest();
+        }
+        [TestMethod]
+        [DeploymentItem("tests/emptyDLL", "PostTransformVBEmptyDLL")]
+        public void TestPostTransformVBEmptyDLL()
+        {
+            TestFolder = "PostTransformVBEmptyDLL";
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        [DeploymentItem("tests/emptyDLL", "EndToEndCSEmptyDLL")]
+        public void TestEndToEndCSEmptyDLL()
+        {
+            TestFolder = "EndToEndCSEmptyDLL";
+            RunEndToEndCSTest();
+        }
+        [TestMethod]
+        [DeploymentItem("tests/emptyDLL", "EndToEndVBEmptyDLL")]
+        public void TestEndToEndVBEmptyDLL()
+        {
+            TestFolder = "EndToEndVBEmptyDLL";
+            RunEndToEndVBTest();
+        }
+    }
+
+    [TestClass]
     public class ExtendsSDKClassTests : BlackBoxBase
     {
         [TestMethod]
@@ -1474,5 +1528,6 @@ namespace UnitTest.BlackBox
             RunEndToEndVBTest();
         }
     }
+
 
 }

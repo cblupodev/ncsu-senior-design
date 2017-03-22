@@ -22,6 +22,9 @@ The client code casts to a class in the SDK.
 ###classInClass
 The SDK has a class defined inside of a class.
 
+###emptyDLL
+The SDK has an empty project, meaning a DLL with no classes.
+
 ###extendsSDKClass
 The client code extends an SDK class.
 
