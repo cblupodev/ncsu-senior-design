@@ -124,7 +124,7 @@ namespace NamespaceRefactorer
             addNewDllReferences(xmlElementHintPathName, xmlElementReferenceName, ns, xdoc, newRelativeOutputPath);
 
             // save the xml
-            xdoc.Save((new FileInfo(csprojFilePath).DirectoryName+"\\transformed_proj_file."+projectFileExtension)); // magic
+            xdoc.Save((new FileInfo(csprojFilePath).DirectoryName+"\\transformed_proj_file"+projectFileExtension)); // magic
             // xdoc.Save(csprojFilePath); // UNCOMMENT this
         }
 
@@ -137,7 +137,7 @@ namespace NamespaceRefactorer
             foreach (var dll in newDlls)
             {
                 XElement addedref = new XElement(ns + xmlElementReferenceName, 
-                    new XAttribute("Include", "SDK, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"),
+                    new XAttribute("Include", "SDK"), // magic
                         new XElement(ns + "SpecificVersion", "False"),
                         new XElement(ns + xmlElementHintPathName, newRelativeOutputPath + Path.GetFileName(dll)),
                         new XElement(ns + "Private", "False")
