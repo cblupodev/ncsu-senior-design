@@ -341,9 +341,26 @@ namespace UnitTest.BlackBox
                 "Wrong output path");
             var actualMappings = SDKMappingSQLConnector.GetInstance().GetAllSDKMapsBySDKId(sdkId);
             Assert.AreEqual(expectedMappings.Count, actualMappings.Count, "Wrong number of generated mappings");
-            foreach (var expect in actualMappings)
+            foreach (var expect in expectedMappings)
             {
-                if ( ! actualMappings.Contains(expect) )
+                var hasMapping = false;
+                foreach (var actual in actualMappings)
+                {
+                    if ( expect.ModelIdentifierGUID == actual.ModelIdentifierGUID)
+                    {
+                        if ( expect.NewClassName == actual.NewClassName &&
+                            expect.NewDllPath == actual.NewDllPath &&
+                            expect.NewNamespace == actual.NewNamespace &&
+                            expect.OldClassName == actual.OldClassName &&
+                            expect.OldDllPath == actual.OldDllPath &&
+                            expect.OldNamespace == actual.OldNamespace)
+                        {
+                            hasMapping = true;
+                        }
+                        break;
+                    }
+                }
+                if ( ! hasMapping/*actualMappings.Contains(expect)*/ )
                 {
                     Assert.Fail("Missing actual mapping for " + expect.ModelIdentifierGUID);
                 }
