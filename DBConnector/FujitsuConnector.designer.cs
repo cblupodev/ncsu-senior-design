@@ -30,12 +30,12 @@ namespace DBConnector
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void Insertsdk_map(sdk_map instance);
-    partial void Updatesdk_map(sdk_map instance);
-    partial void Deletesdk_map(sdk_map instance);
     partial void Insertsdk(sdk instance);
     partial void Updatesdk(sdk instance);
     partial void Deletesdk(sdk instance);
+    partial void Insertsdk_map(sdk_map instance);
+    partial void Updatesdk_map(sdk_map instance);
+    partial void Deletesdk_map(sdk_map instance);
     #endregion
 		
 		public FujitsuConnectorDataContext() : 
@@ -68,6 +68,14 @@ namespace DBConnector
 			OnCreated();
 		}
 		
+		public System.Data.Linq.Table<sdk> sdks
+		{
+			get
+			{
+				return this.GetTable<sdk>();
+			}
+		}
+		
 		public System.Data.Linq.Table<sdk_map> sdk_maps
 		{
 			get
@@ -75,13 +83,143 @@ namespace DBConnector
 				return this.GetTable<sdk_map>();
 			}
 		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.sdk")]
+	public partial class sdk : INotifyPropertyChanging, INotifyPropertyChanged
+	{
 		
-		public System.Data.Linq.Table<sdk> sdks
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private string _name;
+		
+		private string _output_path;
+		
+		private EntitySet<sdk_map> _sdk_maps;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnnameChanging(string value);
+    partial void OnnameChanged();
+    partial void Onoutput_pathChanging(string value);
+    partial void Onoutput_pathChanged();
+    #endregion
+		
+		public sdk()
+		{
+			this._sdk_maps = new EntitySet<sdk_map>(new Action<sdk_map>(this.attach_sdk_maps), new Action<sdk_map>(this.detach_sdk_maps));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
 		{
 			get
 			{
-				return this.GetTable<sdk>();
+				return this._id;
 			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="VarChar(896)")]
+		public string name
+		{
+			get
+			{
+				return this._name;
+			}
+			set
+			{
+				if ((this._name != value))
+				{
+					this.OnnameChanging(value);
+					this.SendPropertyChanging();
+					this._name = value;
+					this.SendPropertyChanged("name");
+					this.OnnameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_output_path", DbType="VarChar(MAX)")]
+		public string output_path
+		{
+			get
+			{
+				return this._output_path;
+			}
+			set
+			{
+				if ((this._output_path != value))
+				{
+					this.Onoutput_pathChanging(value);
+					this.SendPropertyChanging();
+					this._output_path = value;
+					this.SendPropertyChanged("output_path");
+					this.Onoutput_pathChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="sdk_sdk_map", Storage="_sdk_maps", ThisKey="id", OtherKey="sdk_id")]
+		public EntitySet<sdk_map> sdk_maps
+		{
+			get
+			{
+				return this._sdk_maps;
+			}
+			set
+			{
+				this._sdk_maps.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_sdk_maps(sdk_map entity)
+		{
+			this.SendPropertyChanging();
+			entity.sdk = this;
+		}
+		
+		private void detach_sdk_maps(sdk_map entity)
+		{
+			this.SendPropertyChanging();
+			entity.sdk = null;
 		}
 	}
 	
@@ -109,6 +247,8 @@ namespace DBConnector
 		
 		private string _new_namespace;
 		
+		private string _new_assembly_full_name;
+		
 		private EntityRef<sdk> _sdk;
 		
     #region Extensibility Method Definitions
@@ -133,6 +273,8 @@ namespace DBConnector
     partial void Onold_namespaceChanged();
     partial void Onnew_namespaceChanging(string value);
     partial void Onnew_namespaceChanged();
+    partial void Onnew_assembly_full_nameChanging(string value);
+    partial void Onnew_assembly_full_nameChanged();
     #endregion
 		
 		public sdk_map()
@@ -325,6 +467,26 @@ namespace DBConnector
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_new_assembly_full_name", DbType="VarChar(MAX)")]
+		public string new_assembly_full_name
+		{
+			get
+			{
+				return this._new_assembly_full_name;
+			}
+			set
+			{
+				if ((this._new_assembly_full_name != value))
+				{
+					this.Onnew_assembly_full_nameChanging(value);
+					this.SendPropertyChanging();
+					this._new_assembly_full_name = value;
+					this.SendPropertyChanged("new_assembly_full_name");
+					this.Onnew_assembly_full_nameChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="sdk_sdk_map", Storage="_sdk", ThisKey="sdk_id", OtherKey="id", IsForeignKey=true)]
 		public sdk sdk
 		{
@@ -377,144 +539,6 @@ namespace DBConnector
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.sdk")]
-	public partial class sdk : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id;
-		
-		private string _name;
-		
-		private string _output_path;
-		
-		private EntitySet<sdk_map> _sdk_maps;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void OnnameChanging(string value);
-    partial void OnnameChanged();
-    partial void Onoutput_pathChanging(string value);
-    partial void Onoutput_pathChanged();
-    #endregion
-		
-		public sdk()
-		{
-			this._sdk_maps = new EntitySet<sdk_map>(new Action<sdk_map>(this.attach_sdk_maps), new Action<sdk_map>(this.detach_sdk_maps));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this.OnidChanging(value);
-					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="VarChar(896)")]
-		public string name
-		{
-			get
-			{
-				return this._name;
-			}
-			set
-			{
-				if ((this._name != value))
-				{
-					this.OnnameChanging(value);
-					this.SendPropertyChanging();
-					this._name = value;
-					this.SendPropertyChanged("name");
-					this.OnnameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_output_path", DbType="VarChar(MAX)")]
-		public string output_path
-		{
-			get
-			{
-				return this._output_path;
-			}
-			set
-			{
-				if ((this._output_path != value))
-				{
-					this.Onoutput_pathChanging(value);
-					this.SendPropertyChanging();
-					this._output_path = value;
-					this.SendPropertyChanged("output_path");
-					this.Onoutput_pathChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="sdk_sdk_map", Storage="_sdk_maps", ThisKey="id", OtherKey="sdk_id")]
-		public EntitySet<sdk_map> sdk_maps
-		{
-			get
-			{
-				return this._sdk_maps;
-			}
-			set
-			{
-				this._sdk_maps.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_sdk_maps(sdk_map entity)
-		{
-			this.SendPropertyChanging();
-			entity.sdk = this;
-		}
-		
-		private void detach_sdk_maps(sdk_map entity)
-		{
-			this.SendPropertyChanging();
-			entity.sdk = null;
 		}
 	}
 }

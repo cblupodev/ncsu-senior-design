@@ -31,6 +31,7 @@ namespace NamespaceRefactorer
         public void DoStuff(string dllPath, List<GenericMapping> mapList, bool isOld, int sdkId)
         {
             var assem = Assembly.LoadFrom(dllPath);
+            string assemFullName = assem.FullName;
 
             Console.WriteLine("Read from   " + dllPath);
 
@@ -42,7 +43,7 @@ namespace NamespaceRefactorer
                     if (attr.AttributeType.Name.Equals(ReadProject.CustomAttributeName))
                     {
                         string modelIdentifier = (string)attr.ConstructorArguments.First().Value;
-                        GenericMapping ma = new GenericMapping(type.Namespace, modelIdentifier, type.Name, dllPath, sdkId);
+                        GenericMapping ma = new GenericMapping(type.Namespace, modelIdentifier, type.Name, dllPath, assemFullName, sdkId);
                         mapList.Add(ma);
                         
                         SDKMappingSQLConnector.GetInstance().SaveSDKMappings(new List<GenericMapping>() { ma }, sdkId);

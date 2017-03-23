@@ -61,7 +61,7 @@ namespace NamespaceRefactorer
             {
                 if (isDocCSharp(doc))
                 {
-                    // UNCOMMENT
+                    // uncomment
                     // ProcessDocumentCSharp(doc, namespaceSet, namespaceToClassnameSetMap);
                 }
 
@@ -132,14 +132,14 @@ namespace NamespaceRefactorer
         {
             mappingConnector.GetAllNewDllPaths(sdkId);
 
-            HashSet<string> newDlls = mappingConnector.GetAllNewDllPaths(sdkId);
+            var elements = mappingConnector.GetAllNewDllPathsWithFullName(sdkId);
 
-            foreach (var dll in newDlls)
+            foreach (var element in elements)
             {
                 XElement addedref = new XElement(ns + xmlElementReferenceName, 
-                    new XAttribute("Include", "SDK"), // magic
+                    new XAttribute("Include", element.Value),
                         new XElement(ns + "SpecificVersion", "False"),
-                        new XElement(ns + xmlElementHintPathName, newRelativeOutputPath + Path.GetFileName(dll)),
+                        new XElement(ns + xmlElementHintPathName, newRelativeOutputPath + Path.GetFileName(element.Key)),
                         new XElement(ns + "Private", "False")
                     );
                 xdoc.Descendants(ns + "ItemGroup").First().AddFirst(addedref);

@@ -65,8 +65,8 @@ namespace DBConnector
                     model_identifier = m.ModelIdentifierGUID,
                     old_namespace = m.Namespace,
                     old_classname = m.ClassName,
-                    old_assembly_path = m.dllPath,
-                    sdk_id = m.sdkId
+                    old_assembly_path = m.DllPath,
+                    sdk_id = m.SdkId
                 };
                 dbMappings.Add(dbMapping);
             }
@@ -92,7 +92,7 @@ namespace DBConnector
                 var mapping = newMappingsToSave.Where(mts => mts.ModelIdentifierGUID == dbMapping.model_identifier).First();
                 dbMapping.new_classname = mapping.ClassName;
                 dbMapping.new_namespace = mapping.Namespace;
-                dbMapping.new_assembly_path = mapping.dllPath;
+                dbMapping.new_assembly_path = mapping.DllPath;
             }
 
             try
@@ -124,7 +124,8 @@ namespace DBConnector
                     var mapping = mappingsToSave.Where(mts => mts.ModelIdentifierGUID == dbMapping.model_identifier).First();
                     dbMapping.new_classname = mapping.ClassName;
                     dbMapping.new_namespace = mapping.Namespace;
-                    dbMapping.new_assembly_path = mapping.dllPath;
+                    dbMapping.new_assembly_path = mapping.DllPath;
+                    dbMapping.new_assembly_full_name = mapping.NewDllFullName;
                 }
             }
             else
@@ -137,8 +138,8 @@ namespace DBConnector
                         model_identifier = m.ModelIdentifierGUID,
                         old_namespace = m.Namespace,
                         old_classname = m.ClassName,
-                        old_assembly_path = m.dllPath,
-                        sdk_id = m.sdkId
+                        old_assembly_path = m.DllPath,
+                        sdk_id = m.SdkId
                     };
                     dbMappings.Add(dbMapping);
                 }
@@ -207,6 +208,23 @@ namespace DBConnector
             var query = (from sm in dbConnection.sdk_maps where sm.sdk_id == sdkId select sm.new_assembly_path).Distinct();
             HashSet<String> newdllSet = new HashSet<String>(query);
             return newdllSet;
+        }
+
+        public Dictionary<String, String> GetAllNewDllPathsWithFullName(int sdkId)
+        {
+            var query = (from sm in dbConnection.sdk_maps where sm.sdk_id == sdkId
+                select new
+                {
+                    new_assembly_path = sm.new_assembly_path,
+                    new_assembly_full_name = sm.new_assembly_full_name
+                }).Distinct().ToDictionary(sm => sm.new_assembly_path, sm => sm.new_assembly_full_name, StringComparer.OrdinalIgnoreCase);
+            return query;
+        }
+
+        public class NewDllPathWithFullName
+        {
+            public string new_assembly_path { get; set; }
+            public int new_assembly_full_name { get; set; }
         }
 
         public HashSet<String> GetAllOldDllPaths(int sdkId)

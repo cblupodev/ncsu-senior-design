@@ -2,23 +2,23 @@
 <ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="FujitsuConnector">
   <DataContextMoniker Name="/FujitsuConnectorDataContext" />
   <nestedChildShapes>
-    <classShape Id="02ea1bf4-84e0-40e0-8e16-9a163d5af36c" absoluteBounds="5.625, 0.875, 2, 2.5401025390625005">
-      <DataClassMoniker Name="/FujitsuConnectorDataContext/sdk_map" />
-      <nestedChildShapes>
-        <elementListCompartment Id="b859ab56-96ea-4d55-a0df-90b2c9c7fdc5" absoluteBounds="5.6400000000000006, 1.335, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="de4e8a98-f30f-48b9-95cd-0483ad1c7564" absoluteBounds="2.625, 3.5, 2, 1.3862939453125">
+    <classShape Id="21debb73-2e11-4621-afaf-9a7a633cb578" absoluteBounds="2.5, 2.25, 2, 1.3862939453125">
       <DataClassMoniker Name="/FujitsuConnectorDataContext/sdk" />
       <nestedChildShapes>
-        <elementListCompartment Id="249f8bfa-e4e4-4eee-95d4-f5fc2d3d366b" absoluteBounds="2.64, 3.96, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="10a2019b-1ed9-4096-8e9f-f1848d3dca7c" absoluteBounds="2.515, 2.71, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(4.625 : 4.19314697265625); (6.625 : 4.19314697265625); (6.625 : 3.4151025390625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <classShape Id="568ef91d-e79b-42ce-b170-5b31a491f87d" absoluteBounds="5.125, 4.75, 2, 2.7324039713541666">
+      <DataClassMoniker Name="/FujitsuConnectorDataContext/sdk_map" />
+      <nestedChildShapes>
+        <elementListCompartment Id="2cb7c53c-d97f-4590-b0cc-b8d851493650" absoluteBounds="5.14, 5.21, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(3.5 : 3.6362939453125); (3.5 : 6.11620198567708); (5.125 : 6.11620198567708)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/FujitsuConnectorDataContext/sdk/sdk_sdk_map" />
       <nodes>
-        <classShapeMoniker Id="de4e8a98-f30f-48b9-95cd-0483ad1c7564" />
-        <classShapeMoniker Id="02ea1bf4-84e0-40e0-8e16-9a163d5af36c" />
+        <classShapeMoniker Id="21debb73-2e11-4621-afaf-9a7a633cb578" />
+        <classShapeMoniker Id="568ef91d-e79b-42ce-b170-5b31a491f87d" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>
