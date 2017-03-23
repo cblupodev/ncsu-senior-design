@@ -13,16 +13,16 @@ namespace NamespaceRefactorer
         {
             if (!File.Exists(filePath))
             {
-                throw new FileNotFoundException("file doesn't exist", filePath);
+                Console.WriteLine("this file doesn't exist   "+filePath);
             }
         }
 
-        public static void verifyFolderExists(string filePath)
+        public static void verifyFolderExists(string folderPath)
         {
-            Console.WriteLine(filePath);
-            if (!Directory.Exists(filePath))
+            Console.WriteLine(folderPath);
+            if (!Directory.Exists(folderPath))
             {
-                throw new DirectoryNotFoundException("directory doesn't exist");
+                Console.WriteLine("this directory doesn't exist   "+folderPath);
             }
         }
     }
