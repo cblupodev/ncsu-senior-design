@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace newasdf
+namespace oldNamespace
 {
     [ModelIdentifier("87875")]
-    public class fudgenew
+    public class OldClass
     {
     }
 }

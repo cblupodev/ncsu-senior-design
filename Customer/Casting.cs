@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Customer
 {
-    class Casting : asdf.fudgeold2
+    class Casting : oldNamespace.OldClass
     {
     }
 }

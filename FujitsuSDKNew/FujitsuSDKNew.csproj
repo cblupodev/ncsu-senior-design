@@ -49,7 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="fudgenew.cs" />
+    <Compile Include="NewClass.cs" />
     <Compile Include="FujitsuNew.cs" />
     <Compile Include="ModelIdentifier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
