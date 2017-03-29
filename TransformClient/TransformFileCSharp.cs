@@ -17,7 +17,7 @@ using Microsoft.CodeAnalysis.Editing;
 
 namespace NamespaceRefactorer
 {
-    public class TransformFile
+    public class TransformFileCSharp
     {
 
         private CompilationUnitSyntax root;
@@ -26,7 +26,7 @@ namespace NamespaceRefactorer
         private DocumentEditor documentEditor;
         private string clientFilePath;
 
-        public TransformFile(DocumentEditor documentEditor)
+        public TransformFileCSharp(DocumentEditor documentEditor)
         {
             this.documentEditor = documentEditor;
             this.root = (CompilationUnitSyntax)documentEditor.OriginalRoot;
@@ -34,7 +34,7 @@ namespace NamespaceRefactorer
             this.semanticModel = documentEditor.SemanticModel;
         }
 
-        public TransformFile(string fileName)
+        public TransformFileCSharp(string fileName)
         {
             Helper.verifyFileExists(fileName);
             SyntaxTree tree;

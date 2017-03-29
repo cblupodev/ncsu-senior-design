@@ -38,7 +38,6 @@ namespace NamespaceRefactorer
             else if (filePath.EndsWith(".csproj", StringComparison.OrdinalIgnoreCase)
                 || filePath.EndsWith(".vbproj", StringComparison.OrdinalIgnoreCase))
             {
-                var aaaa = MSBuildWorkspace.Create().OpenProjectAsync(filePath).Result;
                 ProcessProject(MSBuildWorkspace.Create().OpenProjectAsync(filePath).Result, args[1]);
             }
 
@@ -61,13 +60,12 @@ namespace NamespaceRefactorer
             {
                 if (isDocCSharp(doc))
                 {
-                    // uncomment
-                    // ProcessDocumentCSharp(doc, namespaceSet, namespaceToClassnameSetMap);
+                    ProcessDocumentCSharp(doc, namespaceSet, namespaceToClassnameSetMap);
                 }
 
                 if (isDocVB(doc))
                 {
-                    ProcessDocumentVB(doc);
+                    ProcessDocumentVB(doc, namespaceSet, namespaceToClassnameSetMap);
                 }
             }
             HashSet<String> newdllSet = mappingConnector.GetAllNewDllPaths(sdkId);
@@ -77,9 +75,19 @@ namespace NamespaceRefactorer
             Console.WriteLine("Project file edited to use new references");
         }
 
-        private void ProcessDocumentVB(Document doc)
+        private void ProcessDocumentVB(Document doc, HashSet<String> namespaceSet, Dictionary<String, HashSet<String>> namespaceToClassnameSetMap)
         {
-            throw new NotImplementedException();
+            var semanticModel = doc.GetSemanticModelAsync().Result;
+            var syntaxTree = doc.GetSyntaxTreeAsync().Result;
+
+            // do processing here
+            var documentEditor = DocumentEditor.CreateAsync(doc).Result;
+
+            TransformFileVBasic ft = new TransformFileVBasic(documentEditor);
+
+            syntaxTree = ft.replaceSyntax();
+            File.WriteAllText(doc.FilePath, syntaxTree.GetText().ToString());
+            Console.WriteLine("Transformed   " + doc.FilePath);
         }
 
         private bool isDocVB(Document doc)
@@ -100,7 +108,7 @@ namespace NamespaceRefactorer
             // do processing here
             var documentEditor = DocumentEditor.CreateAsync(doc).Result; 
 
-            TransformFile ft = new TransformFile(documentEditor);
+            TransformFileCSharp ft = new TransformFileCSharp(documentEditor);
 
             syntaxTree = ft.replaceSyntax();
             File.WriteAllText(doc.FilePath, syntaxTree.GetText().ToString());
