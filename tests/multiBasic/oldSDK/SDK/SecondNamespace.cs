@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace SDK.SecondSpace
 {
 
-    [ModelIdentifier("00000000-0000-4000-8000-000000000003")]
+    [ModelIdentifierAttribute("00000000-0000-4000-8000-000000000003")]
     public class Sample3
     {
         public static int add4(int a, int b, int c, int d)
@@ -16,7 +16,7 @@ namespace SDK.SecondSpace
         }
     }
 
-    [ModelIdentifier("00000000-0000-4000-8000-000000000004")]
+    [ModelIdentifierAttribute("00000000-0000-4000-8000-000000000004")]
     public class Sample4
     {
         public static int add5(int a, int b, int c, int d, int e)
