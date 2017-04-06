@@ -441,7 +441,8 @@ namespace UnitTest.BlackBox
                     Assert.Fail("No file containing expected output.");
                 }
             }
-            VerifyProject(projectUnderTest, expectedPath);
+            VerifyProject(Path.Combine(Directory.GetParent(projectUnderTest).FullName + "_transformed",
+                Path.GetFileName(projectUnderTest)), expectedPath);
         }
         
         //EndToEndTest
