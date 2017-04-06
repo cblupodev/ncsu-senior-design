@@ -20,7 +20,15 @@ namespace NamespaceRefactorer
             Helper.verifyFileExists(dllPath);
             var dom = AppDomain.CreateDomain("test");
             var loadClass = (LoadingClass)dom.CreateInstanceAndUnwrap(typeof(LoadingClass).Assembly.FullName, typeof(LoadingClass).FullName);
-            loadClass.DoStuff(dllPath, mapList, isOld, ReadProject.sdkId);
+            try
+            {
+                loadClass.DoStuff(dllPath, mapList, isOld, ReadProject.sdkId);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Environment.Exit(1);
+            }
             // TODO either figure out how to modify the mapList from DoStuff, or interact with the database dirrectly from DoStuff
             // TODO rename classes to something better
         }
