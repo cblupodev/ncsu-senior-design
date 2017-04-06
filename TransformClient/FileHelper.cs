@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NamespaceRefactorer
+namespace TransformClient
 {
     public class Helper
     {

@@ -4,12 +4,11 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using NamespaceRefactorer;
 using CreateMappings;
 using DBConnector;
 using System.IO;
 
-namespace NamespaceRefactorer
+namespace CreateMappings
 {
     public class ReadFile
     {
@@ -17,7 +16,7 @@ namespace NamespaceRefactorer
         public void findCustomAttributes(string dllPath, List<GenericMapping> mapList, bool isOld)
         {
 
-            Helper.verifyFileExists(dllPath);
+            FileHelper.verifyFileExists(dllPath);
             var dom = AppDomain.CreateDomain("test");
             var loadClass = (LoadingClass)dom.CreateInstanceAndUnwrap(typeof(LoadingClass).Assembly.FullName, typeof(LoadingClass).FullName);
             loadClass.DoStuff(dllPath, mapList, isOld, ReadProject.sdkId);

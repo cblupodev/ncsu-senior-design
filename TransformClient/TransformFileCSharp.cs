@@ -11,11 +11,11 @@ using System.IO;
 using System.Diagnostics;
 using System;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
-using NamespaceRefactorer;
 using DBConnector;
 using Microsoft.CodeAnalysis.Editing;
+using CreateMappings;
 
-namespace NamespaceRefactorer
+namespace TransformClient
 {
     public class TransformFileCSharp
     {
@@ -36,7 +36,7 @@ namespace NamespaceRefactorer
 
         public TransformFileCSharp(string fileName)
         {
-            Helper.verifyFileExists(fileName);
+            FileHelper.verifyFileExists(fileName);
             SyntaxTree tree;
             this.clientFilePath = fileName;
 

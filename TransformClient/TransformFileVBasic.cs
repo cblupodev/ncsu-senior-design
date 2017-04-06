@@ -11,11 +11,10 @@ using System.IO;
 using System.Diagnostics;
 using System;
 using static Microsoft.CodeAnalysis.VisualBasic.SyntaxFactory;
-using NamespaceRefactorer;
 using DBConnector;
 using Microsoft.CodeAnalysis.Editing;
 
-namespace NamespaceRefactorer
+namespace TransformClient
 {
     public class TransformFileVBasic
     {

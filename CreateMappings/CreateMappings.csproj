@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileHelper.cs" />
     <Compile Include="ReadFile.cs" />
     <Compile Include="ModelIdentifier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -68,10 +69,6 @@
     <ProjectReference Include="..\DBConnector\DBConnector.csproj">
       <Project>{fdf3cc16-26a0-47ce-a129-4a06f829db12}</Project>
       <Name>DBConnector</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NamespaceRefactorer\NamespaceRefactorer.csproj">
-      <Project>{5c2e2338-e81a-4223-b26b-bedd64b2df88}</Project>
-      <Name>NamespaceRefactorer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

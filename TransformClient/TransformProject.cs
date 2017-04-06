@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.MSBuild;
 using Microsoft.CodeAnalysis.Editing;
-using NamespaceRefactorer;
-using DBConnector;
 using System.Xml.Linq;
+using DBConnector;
 
-namespace NamespaceRefactorer
+namespace TransformClient
 {
     public class TransformProject
     {

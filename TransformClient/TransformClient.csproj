@@ -109,6 +109,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileHelper.cs" />
     <Compile Include="TransformFileVBasic.cs" />
     <Compile Include="TransformFileCSharp.cs" />
     <Compile Include="TransformProject.cs" />
@@ -118,13 +119,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CreateMappings\CreateMappings.csproj">
+      <Project>{1c52df0c-67fd-4a54-9160-732ff0a5143f}</Project>
+      <Name>CreateMappings</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DBConnector\DBConnector.csproj">
-      <Project>{FDF3CC16-26A0-47CE-A129-4A06F829DB12}</Project>
+      <Project>{fdf3cc16-26a0-47ce-a129-4a06f829db12}</Project>
       <Name>DBConnector</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NamespaceRefactorer\NamespaceRefactorer.csproj">
-      <Project>{5c2e2338-e81a-4223-b26b-bedd64b2df88}</Project>
-      <Name>NamespaceRefactorer</Name>
+    <ProjectReference Include="..\EFConnector\EFConnector.csproj">
+      <Project>{bed0724c-6dc8-4337-8ad1-3bbee84f8edd}</Project>
+      <Name>EFConnector</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,4 @@
-﻿using NamespaceRefactorer;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -49,7 +48,7 @@ namespace CreateMappings
         public void readFolderDllFiles(string folderPath, List<GenericMapping> mapList, bool isOld) {
 
             ReadFile rf = new ReadFile();
-            Helper.verifyFolderExists(folderPath);
+            FileHelper.verifyFolderExists(folderPath);
             string[] dllFiles = Directory.GetFiles(folderPath, "*.dll", SearchOption.AllDirectories); // get all the dll file paths
 
             foreach (string dll in dllFiles)
