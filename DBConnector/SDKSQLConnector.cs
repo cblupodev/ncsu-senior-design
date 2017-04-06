@@ -38,6 +38,7 @@ namespace DBConnector
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Environment.Exit(1);
                 return false;
             }
         }

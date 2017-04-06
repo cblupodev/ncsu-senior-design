@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace SDK
 {
 
-    [ModelIdentifier("00000000-0000-4000-8000-000000000001")]
+    [ModelIdentifierAttribute("00000000-0000-4000-8000-000000000001")]
     public class Change1
     {
         public static Change1 Item = new Change1();

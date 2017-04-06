@@ -34,8 +34,24 @@ namespace TransformClient
             }
             else if (filePath.EndsWith(".csproj", StringComparison.OrdinalIgnoreCase)
                 || filePath.EndsWith(".vbproj", StringComparison.OrdinalIgnoreCase))
-            {
-                ProcessProject(MSBuildWorkspace.Create().OpenProjectAsync(filePath).Result, args[1]);
+            {                
+                // put all changes in new project folder
+                // create copies of the project so don't have to overwrite the original files
+                string projectParentFolder = new FileInfo(filePath).DirectoryName;
+                string transformed_folder = projectParentFolder + "_transformed";
+                Directory.CreateDirectory(transformed_folder);
+
+                // Create all of the directories
+                foreach (string dirPath in Directory.GetDirectories(projectParentFolder, "*",
+                    SearchOption.AllDirectories))
+                    Directory.CreateDirectory(dirPath.Replace(projectParentFolder, transformed_folder));
+
+                // Copy all the files & Replaces any files with the same name
+                foreach (string newPath in Directory.GetFiles(projectParentFolder, "*.*",
+                    SearchOption.AllDirectories))
+                    File.Copy(newPath, newPath.Replace(projectParentFolder, transformed_folder), true);
+
+                ProcessProject(MSBuildWorkspace.Create().OpenProjectAsync(transformed_folder + "\\" + Path.GetFileName(filePath)).Result, args[1]);
             }
 
 
@@ -53,6 +69,8 @@ namespace TransformClient
         {
             HashSet<String> namespaceSet =  mappingConnector.GetAllNamespaces(sdkId);
             Dictionary<String, HashSet<String>> namespaceToClassnameSetMap = new Dictionary<string, HashSet<string>>();
+
+
             foreach (Document doc in proj.Documents)
             {
                 if (isDocCSharp(doc))
@@ -129,8 +147,7 @@ namespace TransformClient
             addNewDllReferences(xmlElementHintPathName, xmlElementReferenceName, ns, xdoc, newRelativeOutputPath);
 
             // save the xml
-            xdoc.Save((new FileInfo(csprojFilePath).DirectoryName+"\\transformed_proj_file"+projectFileExtension)); // magic
-            // xdoc.Save(csprojFilePath); // UNCOMMENT this
+            xdoc.Save(csprojFilePath);
         }
 
         private void addNewDllReferences(string xmlElementHintPathName, string xmlElementReferenceName, XNamespace ns, XDocument xdoc, string newRelativeOutputPath)
