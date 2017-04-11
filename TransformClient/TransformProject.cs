@@ -44,7 +44,7 @@ namespace NamespaceRefactorer
                 string transformed_folder = projectParentFolder + "_transformed";
                 CopyDirectory(projectParentFolder, transformed_folder);
 
-                ProcessProject(MSBuildWorkspace.Create().OpenProjectAsync(transformed_folder + "\\" + Path.GetFileName(filePath)).Result, args[1]);
+                ProcessProject(MSBuildWorkspace.Create().OpenProjectAsync(filePath).Result, args[1], projectParentFolder, transformed_folder);
             }
 
 
@@ -79,7 +79,7 @@ namespace NamespaceRefactorer
             }
         }
 
-        void ProcessProject(Project proj, string sdkid)
+        void ProcessProject(Project proj, string sdkid, string currentParent, string newParent)
         {
             HashSet<String> namespaceSet =  mappingConnector.GetAllNamespaces(sdkId);
             Dictionary<String, HashSet<String>> namespaceToClassnameSetMap = new Dictionary<string, HashSet<string>>();
@@ -89,22 +89,22 @@ namespace NamespaceRefactorer
             {
                 if (isDocCSharp(doc))
                 {
-                    ProcessDocumentCSharp(doc, namespaceSet, namespaceToClassnameSetMap);
+                    ProcessDocumentCSharp(doc, namespaceSet, namespaceToClassnameSetMap, currentParent, newParent);
                 }
 
                 if (isDocVB(doc))
                 {
-                    ProcessDocumentVB(doc, namespaceSet, namespaceToClassnameSetMap);
+                    ProcessDocumentVB(doc, namespaceSet, namespaceToClassnameSetMap, currentParent, newParent);
                 }
             }
             HashSet<String> newdllSet = mappingConnector.GetAllNewDllPaths(sdkId);
             HashSet<String> olddllSet = mappingConnector.GetAllOldDllPaths(sdkId);
             // Don't remove the line below, cblupo
-            transformXml(proj.FilePath, newdllSet, olddllSet, Path.GetExtension(proj.FilePath), sdkId);
+            transformXml(proj.FilePath, newdllSet, olddllSet, Path.GetExtension(proj.FilePath), sdkId, currentParent, newParent);
             Console.WriteLine("Project file edited to use new references");
         }
 
-        private void ProcessDocumentVB(Document doc, HashSet<String> namespaceSet, Dictionary<String, HashSet<String>> namespaceToClassnameSetMap)
+        private void ProcessDocumentVB(Document doc, HashSet<String> namespaceSet, Dictionary<String, HashSet<String>> namespaceToClassnameSetMap, string currentParent, string newParent)
         {
             var semanticModel = doc.GetSemanticModelAsync().Result;
             var syntaxTree = doc.GetSyntaxTreeAsync().Result;
@@ -115,7 +115,7 @@ namespace NamespaceRefactorer
             TransformFileVBasic ft = new TransformFileVBasic(documentEditor);
 
             syntaxTree = ft.replaceSyntax();
-            File.WriteAllText(doc.FilePath, syntaxTree.GetText().ToString());
+            File.WriteAllText(doc.FilePath.Replace(currentParent, newParent), syntaxTree.GetText().ToString());
             Console.WriteLine("Transformed   " + doc.FilePath);
         }
 
@@ -129,7 +129,7 @@ namespace NamespaceRefactorer
             return Path.GetExtension(doc.FilePath).Equals(".cs");
         }
 
-        void ProcessDocumentCSharp(Document doc, HashSet<String> namespaceSet, Dictionary<String, HashSet<String>> namespaceToClassnameSetMap)
+        void ProcessDocumentCSharp(Document doc, HashSet<String> namespaceSet, Dictionary<String, HashSet<String>> namespaceToClassnameSetMap, string currentParent, string newParent)
         {
             var semanticModel = doc.GetSemanticModelAsync().Result;
             var syntaxTree = doc.GetSyntaxTreeAsync().Result;
@@ -140,11 +140,11 @@ namespace NamespaceRefactorer
             TransformFileCSharp ft = new TransformFileCSharp(documentEditor);
 
             syntaxTree = ft.replaceSyntax();
-            File.WriteAllText(doc.FilePath, syntaxTree.GetText().ToString());
+            File.WriteAllText(doc.FilePath.Replace(currentParent, newParent), syntaxTree.GetText().ToString());
             Console.WriteLine("Transformed   " + doc.FilePath);
         }
 
-        public void transformXml(string csprojFilePath, HashSet<String> newdllSet, HashSet<String> olddllSet, string projectFileExtension, int sdkid)
+        public void transformXml(string csprojFilePath, HashSet<String> newdllSet, HashSet<String> olddllSet, string projectFileExtension, int sdkid, string currentParent, string newParent)
         {
             string xmlElementOutputPathName = "OutputPath";
             string xmlElementReferenceName = "Reference";
@@ -161,7 +161,7 @@ namespace NamespaceRefactorer
             addNewDllReferences(xmlElementHintPathName, xmlElementReferenceName, ns, xdoc, newRelativeOutputPath);
 
             // save the xml
-            xdoc.Save(csprojFilePath);
+            xdoc.Save(csprojFilePath.Replace(currentParent, newParent));
         }
 
         private void addNewDllReferences(string xmlElementHintPathName, string xmlElementReferenceName, XNamespace ns, XDocument xdoc, string newRelativeOutputPath)
