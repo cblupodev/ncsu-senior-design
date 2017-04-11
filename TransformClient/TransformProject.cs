@@ -42,22 +42,33 @@ namespace NamespaceRefactorer
                 // create copies of the project so don't have to overwrite the original files
                 string projectParentFolder = new FileInfo(filePath).DirectoryName;
                 string transformed_folder = projectParentFolder + "_transformed";
-                Directory.CreateDirectory(transformed_folder);
-
-                // Create all of the directories
-                foreach (string dirPath in Directory.GetDirectories(projectParentFolder, "*",
-                    SearchOption.AllDirectories))
-                    Directory.CreateDirectory(dirPath.Replace(projectParentFolder, transformed_folder));
-
-                // Copy all the files & Replaces any files with the same name
-                foreach (string newPath in Directory.GetFiles(projectParentFolder, "*.*",
-                    SearchOption.AllDirectories))
-                    File.Copy(newPath, newPath.Replace(projectParentFolder, transformed_folder), true);
+                CopyDirectory(projectParentFolder, transformed_folder);
 
                 ProcessProject(MSBuildWorkspace.Create().OpenProjectAsync(transformed_folder + "\\" + Path.GetFileName(filePath)).Result, args[1]);
             }
 
 
+        }
+
+        // taken from http://stackoverflow.com/questions/1066674/how-do-i-copy-a-folder-and-all-subfolders-and-files-in-net/1066811#1066811
+        private static void CopyDirectory(string sourcePath, string destPath)
+        {
+            if (!Directory.Exists(destPath))
+            {
+                Directory.CreateDirectory(destPath);
+            }
+
+            foreach (string file in Directory.GetFiles(sourcePath))
+            {
+                string dest = Path.Combine(destPath, Path.GetFileName(file));
+                File.Copy(file, dest);
+            }
+
+            foreach (string folder in Directory.GetDirectories(sourcePath))
+            {
+                string dest = Path.Combine(destPath, Path.GetFileName(folder));
+                CopyDirectory(folder, dest);
+            }
         }
 
         void ProcessSolution(Solution soln)
