@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ea368ead519d49b0824eda50039dd4b6" Name="Diagram1">
+        <EntityTypeShape EntityType="Fujitsu.MappingModel.assembly_map" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Fujitsu.MappingModel.namespace_map" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Fujitsu.MappingModel.sdk_map2" Width="1.5" PointX="5.25" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Fujitsu.MappingModel.sdk2" Width="1.5" PointX="0.75" PointY="3" IsExpanded="true" />
+        <AssociationConnector Association="Fujitsu.MappingModel.FK__assembly___sdk_i__59FA5E80" ManuallyRouted="false" />
+        <AssociationConnector Association="Fujitsu.MappingModel.FK__sdk_map2__assemb__619B8048" ManuallyRouted="false" />
+        <AssociationConnector Association="Fujitsu.MappingModel.FK__namespace__sdk_i__5CD6CB2B" ManuallyRouted="false" />
+        <AssociationConnector Association="Fujitsu.MappingModel.FK__sdk_map2__namesp__60A75C0F" ManuallyRouted="false" />
+        <AssociationConnector Association="Fujitsu.MappingModel.FK__sdk_map2__sdk_id__5FB337D6" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

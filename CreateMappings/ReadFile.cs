@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using CreateMappings;
-using DBConnector;
+using EFSQLConnector;
 using System.IO;
 
 namespace CreateMappings
@@ -13,7 +13,7 @@ namespace CreateMappings
     public class ReadFile
     {
         // find the custom attributes in a dll and add mapping to the dictionary
-        public void findCustomAttributes(string dllPath, List<GenericMapping> mapList, bool isOld)
+        public void findCustomAttributes(string dllPath, bool isOld)
         {
 
             FileHelper.verifyFileExists(dllPath);
@@ -21,7 +21,7 @@ namespace CreateMappings
             var loadClass = (LoadingClass)dom.CreateInstanceAndUnwrap(typeof(LoadingClass).Assembly.FullName, typeof(LoadingClass).FullName);
             try
             {
-                loadClass.DoStuff(dllPath, mapList, isOld, ReadProject.sdkId);
+                loadClass.DoStuff(dllPath, isOld, ReadProject.sdkId);
             }
             catch (Exception e)
             {
@@ -35,7 +35,7 @@ namespace CreateMappings
 
     public class LoadingClass : MarshalByRefObject
     {
-        public void DoStuff(string dllPath, List<GenericMapping> mapList, bool isOld, int sdkId)
+        public void DoStuff(string dllPath, bool isOld, int sdkId)
         {
             var assem = Assembly.LoadFrom(dllPath);
             string assemFullName = assem.FullName;
@@ -50,10 +50,20 @@ namespace CreateMappings
                     if (attr.AttributeType.Name.Equals(ReadProject.CustomAttributeName))
                     {
                         string modelIdentifier = (string)attr.ConstructorArguments.First().Value;
-                        GenericMapping ma = new GenericMapping(type.Namespace, modelIdentifier, type.Name, dllPath, assemFullName, sdkId);
-                        mapList.Add(ma);
-                        
-                        SDKMappingSQLConnector.GetInstance().SaveSDKMappings(new List<GenericMapping>() { ma }, sdkId);
+                        if (isOld)
+                        {
+                            namespace_map nsMap = NSMappingSQLConnector.GetInstance().GetOrCreateOldNSMap(sdkId, type.Namespace);
+                            assembly_map asMap = AssemblyMappingSQLConnector.GetInstance().GetOrCreateOldAssemblyMap(sdkId, dllPath);
+                            SDKMappingSQLConnector.GetInstance().SaveOldSDKMapping(sdkId, modelIdentifier, type.Name, nsMap, asMap);
+                        }
+                        else
+                        {
+                            namespace_map nsMap = SDKMappingSQLConnector.GetInstance().GetOldNSForSDKMapping(sdkId, modelIdentifier);
+                            NSMappingSQLConnector.GetInstance().UpdateNSMapping(nsMap, type.Namespace);
+                            assembly_map asMap = SDKMappingSQLConnector.GetInstance().GetOldAssemblyForSDKMapping(sdkId, modelIdentifier);
+                            AssemblyMappingSQLConnector.GetInstance().UpdateAssemblyMapping(asMap, dllPath, assemFullName);
+                            SDKMappingSQLConnector.GetInstance().SaveNewSDKMapping(sdkId, modelIdentifier, type.Name);
+                        }
                     }
                 }
             }

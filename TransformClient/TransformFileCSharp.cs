@@ -11,7 +11,7 @@ using System.IO;
 using System.Diagnostics;
 using System;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
-using DBConnector;
+using EFSQLConnector;
 using Microsoft.CodeAnalysis.Editing;
 using CreateMappings;
 
@@ -95,15 +95,18 @@ namespace TransformClient
                 {
                     var qualifiedSymbolInfo = semanticModel.GetSymbolInfo(oldQualifiedNameNode);
                     string nsString = oldQualifiedNameNode.Left.WithoutTrivia().GetText().ToString();
-                    string className = qualifiedSymbolInfo.Symbol.Name.ToString();
-                    if (nsMap.ContainsKey(nsString) && csMap[nsString].ContainsKey(className))
+                    if (qualifiedSymbolInfo.Symbol != null)
                     {
-                        
-                        string newNamespace = nsMap[nsString];
-                        string newClassName = csMap[nsString][className];
-                        QualifiedNameSyntax newQualifiedNameNode = QualifiedName(IdentifierName(newNamespace), IdentifierName(newClassName)).WithTriviaFrom(oldQualifiedNameNode);
-                        documentEditor.ReplaceNode(oldQualifiedNameNode, newQualifiedNameNode);
-                        
+                        string className = qualifiedSymbolInfo.Symbol.Name.ToString();
+                        if (nsMap.ContainsKey(nsString) && csMap[nsString].ContainsKey(className))
+                        {
+
+                            string newNamespace = nsMap[nsString];
+                            string newClassName = csMap[nsString][className];
+                            QualifiedNameSyntax newQualifiedNameNode = QualifiedName(IdentifierName(newNamespace), IdentifierName(newClassName)).WithTriviaFrom(oldQualifiedNameNode);
+                            documentEditor.ReplaceNode(oldQualifiedNameNode, newQualifiedNameNode);
+
+                        }
                     }
                 }
             }
@@ -120,7 +123,7 @@ namespace TransformClient
                 {
                     var semanticObjCreation = semanticModel.GetSymbolInfo(oldNameNode);
                     var nodeTypeInfo = semanticModel.GetTypeInfo(oldNameNode);
-                    if (nodeTypeInfo.Type != null || oldNameNode.Parent is ObjectCreationExpressionSyntax)
+                    if ((nodeTypeInfo.Type != null || oldNameNode.Parent is ObjectCreationExpressionSyntax) && semanticObjCreation.Symbol != null)
                     {
                         var oldNamespace = semanticObjCreation.Symbol.ContainingNamespace.Name;
                         if (map.ContainsKey(oldNamespace))

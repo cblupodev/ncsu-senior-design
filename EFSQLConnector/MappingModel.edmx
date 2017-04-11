@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Fujitsu.MappingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="assembly_map">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sdk_id" Type="int" Nullable="false" />
+          <Property Name="old_path" Type="varchar(max)" />
+          <Property Name="new_path" Type="varchar(max)" />
+          <Property Name="name" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="namespace_map">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sdk_id" Type="int" Nullable="false" />
+          <Property Name="old_namespace" Type="varchar(max)" />
+          <Property Name="new_namespace" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="sdk_map2">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sdk_id" Type="int" Nullable="false" />
+          <Property Name="namespace_map_id" Type="int" Nullable="false" />
+          <Property Name="assembly_map_id" Type="int" Nullable="false" />
+          <Property Name="model_identifier" Type="varchar" MaxLength="896" Nullable="false" />
+          <Property Name="old_classname" Type="varchar(max)" />
+          <Property Name="new_classname" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="sdk2">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="896" Nullable="false" />
+          <Property Name="output_path" Type="varchar(max)" />
+        </EntityType>
+        <Association Name="FK__assembly___sdk_i__59FA5E80">
+          <End Role="sdk2" Type="Self.sdk2" Multiplicity="1" />
+          <End Role="assembly_map" Type="Self.assembly_map" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sdk2">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="assembly_map">
+              <PropertyRef Name="sdk_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__namespace__sdk_i__5CD6CB2B">
+          <End Role="sdk2" Type="Self.sdk2" Multiplicity="1" />
+          <End Role="namespace_map" Type="Self.namespace_map" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sdk2">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="namespace_map">
+              <PropertyRef Name="sdk_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__sdk_map2__assemb__619B8048">
+          <End Role="assembly_map" Type="Self.assembly_map" Multiplicity="1" />
+          <End Role="sdk_map2" Type="Self.sdk_map2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="assembly_map">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sdk_map2">
+              <PropertyRef Name="assembly_map_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__sdk_map2__namesp__60A75C0F">
+          <End Role="namespace_map" Type="Self.namespace_map" Multiplicity="1" />
+          <End Role="sdk_map2" Type="Self.sdk_map2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="namespace_map">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sdk_map2">
+              <PropertyRef Name="namespace_map_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__sdk_map2__sdk_id__5FB337D6">
+          <End Role="sdk2" Type="Self.sdk2" Multiplicity="1" />
+          <End Role="sdk_map2" Type="Self.sdk_map2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sdk2">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sdk_map2">
+              <PropertyRef Name="sdk_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FujitsuMappingModelStoreContainer">
+          <EntitySet Name="assembly_map" EntityType="Self.assembly_map" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="namespace_map" EntityType="Self.namespace_map" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sdk_map2" EntityType="Self.sdk_map2" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sdk2" EntityType="Self.sdk2" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__assembly___sdk_i__59FA5E80" Association="Self.FK__assembly___sdk_i__59FA5E80">
+            <End Role="sdk2" EntitySet="sdk2" />
+            <End Role="assembly_map" EntitySet="assembly_map" />
+          </AssociationSet>
+          <AssociationSet Name="FK__namespace__sdk_i__5CD6CB2B" Association="Self.FK__namespace__sdk_i__5CD6CB2B">
+            <End Role="sdk2" EntitySet="sdk2" />
+            <End Role="namespace_map" EntitySet="namespace_map" />
+          </AssociationSet>
+          <AssociationSet Name="FK__sdk_map2__assemb__619B8048" Association="Self.FK__sdk_map2__assemb__619B8048">
+            <End Role="assembly_map" EntitySet="assembly_map" />
+            <End Role="sdk_map2" EntitySet="sdk_map2" />
+          </AssociationSet>
+          <AssociationSet Name="FK__sdk_map2__namesp__60A75C0F" Association="Self.FK__sdk_map2__namesp__60A75C0F">
+            <End Role="namespace_map" EntitySet="namespace_map" />
+            <End Role="sdk_map2" EntitySet="sdk_map2" />
+          </AssociationSet>
+          <AssociationSet Name="FK__sdk_map2__sdk_id__5FB337D6" Association="Self.FK__sdk_map2__sdk_id__5FB337D6">
+            <End Role="sdk2" EntitySet="sdk2" />
+            <End Role="sdk_map2" EntitySet="sdk_map2" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Fujitsu.MappingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="assembly_map">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sdk_id" Type="Int32" Nullable="false" />
+          <Property Name="old_path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="new_path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="sdk2" Relationship="Self.FK__assembly___sdk_i__59FA5E80" FromRole="assembly_map" ToRole="sdk2" />
+          <NavigationProperty Name="sdk_map2" Relationship="Self.FK__sdk_map2__assemb__619B8048" FromRole="assembly_map" ToRole="sdk_map2" />
+        </EntityType>
+        <EntityType Name="namespace_map">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sdk_id" Type="Int32" Nullable="false" />
+          <Property Name="old_namespace" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="new_namespace" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="sdk2" Relationship="Self.FK__namespace__sdk_i__5CD6CB2B" FromRole="namespace_map" ToRole="sdk2" />
+          <NavigationProperty Name="sdk_map2" Relationship="Self.FK__sdk_map2__namesp__60A75C0F" FromRole="namespace_map" ToRole="sdk_map2" />
+        </EntityType>
+        <EntityType Name="sdk_map2">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sdk_id" Type="Int32" Nullable="false" />
+          <Property Name="namespace_map_id" Type="Int32" Nullable="false" />
+          <Property Name="assembly_map_id" Type="Int32" Nullable="false" />
+          <Property Name="model_identifier" Type="String" MaxLength="896" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="old_classname" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="new_classname" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="assembly_map" Relationship="Self.FK__sdk_map2__assemb__619B8048" FromRole="sdk_map2" ToRole="assembly_map" />
+          <NavigationProperty Name="namespace_map" Relationship="Self.FK__sdk_map2__namesp__60A75C0F" FromRole="sdk_map2" ToRole="namespace_map" />
+          <NavigationProperty Name="sdk2" Relationship="Self.FK__sdk_map2__sdk_id__5FB337D6" FromRole="sdk_map2" ToRole="sdk2" />
+        </EntityType>
+        <EntityType Name="sdk2">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="896" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="output_path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="assembly_map" Relationship="Self.FK__assembly___sdk_i__59FA5E80" FromRole="sdk2" ToRole="assembly_map" />
+          <NavigationProperty Name="namespace_map" Relationship="Self.FK__namespace__sdk_i__5CD6CB2B" FromRole="sdk2" ToRole="namespace_map" />
+          <NavigationProperty Name="sdk_map2" Relationship="Self.FK__sdk_map2__sdk_id__5FB337D6" FromRole="sdk2" ToRole="sdk_map2" />
+        </EntityType>
+        <Association Name="FK__assembly___sdk_i__59FA5E80">
+          <End Role="sdk2" Type="Self.sdk2" Multiplicity="1" />
+          <End Role="assembly_map" Type="Self.assembly_map" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sdk2">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="assembly_map">
+              <PropertyRef Name="sdk_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__sdk_map2__assemb__619B8048">
+          <End Role="assembly_map" Type="Self.assembly_map" Multiplicity="1" />
+          <End Role="sdk_map2" Type="Self.sdk_map2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="assembly_map">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sdk_map2">
+              <PropertyRef Name="assembly_map_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__namespace__sdk_i__5CD6CB2B">
+          <End Role="sdk2" Type="Self.sdk2" Multiplicity="1" />
+          <End Role="namespace_map" Type="Self.namespace_map" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sdk2">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="namespace_map">
+              <PropertyRef Name="sdk_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__sdk_map2__namesp__60A75C0F">
+          <End Role="namespace_map" Type="Self.namespace_map" Multiplicity="1" />
+          <End Role="sdk_map2" Type="Self.sdk_map2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="namespace_map">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sdk_map2">
+              <PropertyRef Name="namespace_map_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__sdk_map2__sdk_id__5FB337D6">
+          <End Role="sdk2" Type="Self.sdk2" Multiplicity="1" />
+          <End Role="sdk_map2" Type="Self.sdk_map2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sdk2">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sdk_map2">
+              <PropertyRef Name="sdk_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MappingContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="assembly_map" EntityType="Self.assembly_map" />
+          <EntitySet Name="namespace_map" EntityType="Self.namespace_map" />
+          <EntitySet Name="sdk_map2" EntityType="Self.sdk_map2" />
+          <EntitySet Name="sdk2" EntityType="Self.sdk2" />
+          <AssociationSet Name="FK__assembly___sdk_i__59FA5E80" Association="Self.FK__assembly___sdk_i__59FA5E80">
+            <End Role="sdk2" EntitySet="sdk2" />
+            <End Role="assembly_map" EntitySet="assembly_map" />
+          </AssociationSet>
+          <AssociationSet Name="FK__sdk_map2__assemb__619B8048" Association="Self.FK__sdk_map2__assemb__619B8048">
+            <End Role="assembly_map" EntitySet="assembly_map" />
+            <End Role="sdk_map2" EntitySet="sdk_map2" />
+          </AssociationSet>
+          <AssociationSet Name="FK__namespace__sdk_i__5CD6CB2B" Association="Self.FK__namespace__sdk_i__5CD6CB2B">
+            <End Role="sdk2" EntitySet="sdk2" />
+            <End Role="namespace_map" EntitySet="namespace_map" />
+          </AssociationSet>
+          <AssociationSet Name="FK__sdk_map2__namesp__60A75C0F" Association="Self.FK__sdk_map2__namesp__60A75C0F">
+            <End Role="namespace_map" EntitySet="namespace_map" />
+            <End Role="sdk_map2" EntitySet="sdk_map2" />
+          </AssociationSet>
+          <AssociationSet Name="FK__sdk_map2__sdk_id__5FB337D6" Association="Self.FK__sdk_map2__sdk_id__5FB337D6">
+            <End Role="sdk2" EntitySet="sdk2" />
+            <End Role="sdk_map2" EntitySet="sdk_map2" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FujitsuMappingModelStoreContainer" CdmEntityContainer="MappingContext">
+          <EntitySetMapping Name="assembly_map">
+            <EntityTypeMapping TypeName="Fujitsu.MappingModel.assembly_map">
+              <MappingFragment StoreEntitySet="assembly_map">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="sdk_id" ColumnName="sdk_id" />
+                <ScalarProperty Name="old_path" ColumnName="old_path" />
+                <ScalarProperty Name="new_path" ColumnName="new_path" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="namespace_map">
+            <EntityTypeMapping TypeName="Fujitsu.MappingModel.namespace_map">
+              <MappingFragment StoreEntitySet="namespace_map">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="sdk_id" ColumnName="sdk_id" />
+                <ScalarProperty Name="old_namespace" ColumnName="old_namespace" />
+                <ScalarProperty Name="new_namespace" ColumnName="new_namespace" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sdk_map2">
+            <EntityTypeMapping TypeName="Fujitsu.MappingModel.sdk_map2">
+              <MappingFragment StoreEntitySet="sdk_map2">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="sdk_id" ColumnName="sdk_id" />
+                <ScalarProperty Name="namespace_map_id" ColumnName="namespace_map_id" />
+                <ScalarProperty Name="assembly_map_id" ColumnName="assembly_map_id" />
+                <ScalarProperty Name="model_identifier" ColumnName="model_identifier" />
+                <ScalarProperty Name="old_classname" ColumnName="old_classname" />
+                <ScalarProperty Name="new_classname" ColumnName="new_classname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sdk2">
+            <EntityTypeMapping TypeName="Fujitsu.MappingModel.sdk2">
+              <MappingFragment StoreEntitySet="sdk2">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="output_path" ColumnName="output_path" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

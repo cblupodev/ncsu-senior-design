@@ -6,14 +6,17 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.MSBuild;
 using Microsoft.CodeAnalysis.Editing;
 using System.Xml.Linq;
-using DBConnector;
+using EFSQLConnector;
 
 namespace TransformClient
 {
     public class TransformProject
     {
 
-        SDKMappingSQLConnector mappingConnector = SDKMappingSQLConnector.GetInstance();
+        SDKMappingSQLConnector sdkMappingConnector = SDKMappingSQLConnector.GetInstance();
+        AssemblyMappingSQLConnector asMappingConnector = AssemblyMappingSQLConnector.GetInstance();
+        NSMappingSQLConnector nsMappingConnector = NSMappingSQLConnector.GetInstance();
+
         public static int sdkId;
 
         // args 0 = .csproj file path
@@ -67,7 +70,7 @@ namespace TransformClient
 
         void ProcessProject(Project proj, string sdkid)
         {
-            HashSet<String> namespaceSet =  mappingConnector.GetAllNamespaces(sdkId);
+            HashSet<String> namespaceSet = nsMappingConnector.GetAllNamespaces(sdkId);
             Dictionary<String, HashSet<String>> namespaceToClassnameSetMap = new Dictionary<string, HashSet<string>>();
 
 
@@ -83,8 +86,8 @@ namespace TransformClient
                     ProcessDocumentVB(doc, namespaceSet, namespaceToClassnameSetMap);
                 }
             }
-            HashSet<String> newdllSet = mappingConnector.GetAllNewDllPaths(sdkId);
-            HashSet<String> olddllSet = mappingConnector.GetAllOldDllPaths(sdkId);
+            HashSet<String> newdllSet = asMappingConnector.GetAllNewDllPaths(sdkId);
+            HashSet<String> olddllSet = asMappingConnector.GetAllOldDllPaths(sdkId);
             // Don't remove the line below, cblupo
             transformXml(proj.FilePath, newdllSet, olddllSet, Path.GetExtension(proj.FilePath), sdkId);
             Console.WriteLine("Project file edited to use new references");
@@ -152,9 +155,9 @@ namespace TransformClient
 
         private void addNewDllReferences(string xmlElementHintPathName, string xmlElementReferenceName, XNamespace ns, XDocument xdoc, string newRelativeOutputPath)
         {
-            mappingConnector.GetAllNewDllPaths(sdkId);
+            asMappingConnector.GetAllNewDllPaths(sdkId);
 
-            var elements = mappingConnector.GetAllNewDllPathsWithFullName(sdkId);
+            var elements = asMappingConnector.GetAllNewDllPathsWithFullName(sdkId);
 
             foreach (var element in elements)
             {

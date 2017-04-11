@@ -43,6 +43,14 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeAnalysis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeAnalysis.Common.1.0.0\lib\net45\Microsoft.CodeAnalysis.dll</HintPath>
       <Private>True</Private>
@@ -77,6 +85,7 @@
       <HintPath>..\packages\System.Collections.Immutable.1.1.36\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Composition.AttributedModel, Version=1.0.27.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Composition.1.0.27\lib\portable-net45+win8+wp8+wpa81\System.Composition.AttributedModel.dll</HintPath>
       <Private>True</Private>
@@ -116,6 +125,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -123,13 +133,9 @@
       <Project>{1c52df0c-67fd-4a54-9160-732ff0a5143f}</Project>
       <Name>CreateMappings</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DBConnector\DBConnector.csproj">
-      <Project>{fdf3cc16-26a0-47ce-a129-4a06f829db12}</Project>
-      <Name>DBConnector</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EFConnector\EFConnector.csproj">
-      <Project>{bed0724c-6dc8-4337-8ad1-3bbee84f8edd}</Project>
-      <Name>EFConnector</Name>
+    <ProjectReference Include="..\EFSQLConnector\EFSQLConnector.csproj">
+      <Project>{f0eefbe4-328e-4cb9-a99e-9205f6a84e5a}</Project>
+      <Name>EFSQLConnector</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

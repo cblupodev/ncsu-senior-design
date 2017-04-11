@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DBConnector;
+using EFSQLConnector;
 
 namespace CreateMappings
 {
@@ -12,7 +12,7 @@ namespace CreateMappings
     public class ReadProject
     {
 
-        public static string CustomAttributeName = "ModelIdentifierAttribute";
+        public static string CustomAttributeName = "ModelIdentifier";
         public static int sdkId;
 
         // param 0 = folder for old sdk
@@ -28,24 +28,18 @@ namespace CreateMappings
         {
             // key = model identifier
             // value = mapping
-            // temporarily hold the old sdk partial mappings
-            List<GenericMapping> oldMappings = new List<GenericMapping>();
-            // temporarily hold the new sdk partial mappings
-            List<GenericMapping> newMappings = new List<GenericMapping>();
 
             SDKSQLConnector.GetInstance().SaveSDK(sdkName, newFolderPath);
             sdkId = SDKSQLConnector.GetInstance().getByName(sdkName).id;
-            readFolderDllFiles(oldFolderPath, oldMappings, true);
-            SDKMappingSQLConnector.GetInstance().SaveSDKMappings(oldMappings, sdkId);
-            readFolderDllFiles(newFolderPath, newMappings, false);
-            SDKMappingSQLConnector.GetInstance().SaveSDKMappings(newMappings, sdkId);
+            readFolderDllFiles(oldFolderPath, true);
+            readFolderDllFiles(newFolderPath, false);
 
             Console.WriteLine("Mappings were saved to database");
         }
 
         // itereate over all the dll files in a folder
         // for each file ,find the custom attributes
-        public void readFolderDllFiles(string folderPath, List<GenericMapping> mapList, bool isOld) {
+        public void readFolderDllFiles(string folderPath, bool isOld) {
 
             ReadFile rf = new ReadFile();
             FileHelper.verifyFolderExists(folderPath);
@@ -53,7 +47,7 @@ namespace CreateMappings
 
             foreach (string dll in dllFiles)
             {
-                rf.findCustomAttributes(dll, mapList, isOld);
+                rf.findCustomAttributes(dll, isOld);
             }
         }
 

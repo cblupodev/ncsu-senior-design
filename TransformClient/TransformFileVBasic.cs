@@ -11,7 +11,7 @@ using System.IO;
 using System.Diagnostics;
 using System;
 using static Microsoft.CodeAnalysis.VisualBasic.SyntaxFactory;
-using DBConnector;
+using EFSQLConnector;
 using Microsoft.CodeAnalysis.Editing;
 
 namespace TransformClient
