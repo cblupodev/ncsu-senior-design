@@ -1,3 +1,3 @@
-model_identifier	old_namespace	old_classname	new_namespace	new_classname	old_assembly_path	new_assembly_path
-00000000-0000-4000-8000-000000000001	SDK	Sample1	SDK	Sample1	bin1/SDK.dll	bin2/SDK.dll
-00000000-0000-4000-8000-000000000002	SDK	Sample2	SDK	Change2	bin1/SecondProject.dll	bin2/SecondProject.dll
+model_identifier	old_namespace	old_classname	new_namespace	new_classname	old_assembly_path	new_assembly_path	assembly_name
+00000000-0000-4000-8000-000000000001	SDK	Sample1	SDK	Sample1	bin1/SDK.dll	bin2/SDK.dll	SDK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=null
+00000000-0000-4000-8000-000000000002	SDK	Sample2	SDK	Change2	bin1/SecondProject.dll	bin2/SecondProject.dll	SecondProject, Version=1.1.0.0, Culture=neutral, PublicKeyToken=null
