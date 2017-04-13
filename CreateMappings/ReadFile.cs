@@ -58,11 +58,10 @@ namespace CreateMappings
                         }
                         else
                         {
-                            namespace_map nsMap = SDKMappingSQLConnector.GetInstance().GetOldNSForSDKMapping(sdkId, modelIdentifier);
-                            NSMappingSQLConnector.GetInstance().UpdateNSMapping(nsMap, type.Namespace);
-                            assembly_map asMap = SDKMappingSQLConnector.GetInstance().GetOldAssemblyForSDKMapping(sdkId, modelIdentifier);
-                            AssemblyMappingSQLConnector.GetInstance().UpdateAssemblyMapping(asMap, dllPath, assemFullName);
-                            SDKMappingSQLConnector.GetInstance().SaveNewSDKMapping(sdkId, modelIdentifier, type.Name);
+                            sdk_map2 sdkMap = SDKMappingSQLConnector.GetInstance().GetSDKMappingByIdentifiers(sdkId, modelIdentifier);
+                            NSMappingSQLConnector.GetInstance().UpdateOrCreateNSMapping(sdkMap.namespace_map, type.Namespace);
+                            AssemblyMappingSQLConnector.GetInstance().UpdateAssemblyMapping(sdkMap.assembly_map, dllPath, assemFullName);
+                            SDKMappingSQLConnector.GetInstance().UpdateSDKMapping(sdkMap, type.Name);
                         }
                     }
                 }

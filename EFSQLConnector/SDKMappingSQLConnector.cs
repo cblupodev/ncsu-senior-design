@@ -42,7 +42,7 @@ namespace EFSQLConnector
             }
         }
 
-        private sdk_map2 GetSDKMappingByIdentifiers(int sdkId, string modelIdentifier)
+        public sdk_map2 GetSDKMappingByIdentifiers(int sdkId, string modelIdentifier)
         {
             Expression<Func<sdk_map2, bool>> whereClause = m => m.model_identifier == modelIdentifier && m.sdk_id == sdkId;
             return GetByWhereClause(whereClause);
@@ -75,23 +75,16 @@ namespace EFSQLConnector
             return sdkMap.assembly_map;
         }
 
-        public void SaveNewSDKMapping(int sdkId, string modelIdentifier, string name)
+        public void UpdateSDKMapping(sdk_map2 sdkMap, string name)
         {
-            var query = from sm in dbConnection.sdk_map2
-                        where sm.model_identifier == modelIdentifier && sm.sdk_id == sdkId
-                        select sm;
-            if (query.Any())
+            sdkMap.new_classname = name;
+            try
             {
-                sdk_map2 sdkMap = query.First();
-                sdkMap.new_classname = name;
-                try
-                {
-                    dbConnection.SaveChanges();
-                }
-                catch (Exception)
-                {
-                    //Do nothing
-                }
+                dbConnection.SaveChanges();
+            }
+            catch (Exception)
+            {
+                //Do nothing
             }
         }
 

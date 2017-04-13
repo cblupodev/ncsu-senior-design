@@ -49,9 +49,26 @@ namespace EFSQLConnector
             }
         }
 
-        public void UpdateNSMapping(namespace_map nsMap, string newNS)
+        public void UpdateOrCreateNSMapping(namespace_map nsMap, string newNS)
         {
-            nsMap.new_namespace = newNS;
+            var query = from nm in dbConnection.namespace_map
+                        where nm.sdk_id == nsMap.sdk_id && nm.old_namespace == nsMap.old_namespace
+                        select nm;
+            var tempNsMap = query.First();
+            if (tempNsMap.new_namespace != null && tempNsMap.new_namespace != newNS)
+            {
+                namespace_map splitNsMap = new namespace_map
+                {
+                    sdk_id = nsMap.sdk_id,
+                    old_namespace = tempNsMap.old_namespace,
+                    new_namespace = newNS
+                };
+                dbConnection.namespace_map.Add(splitNsMap);
+            }
+            else
+            {
+                nsMap.new_namespace = newNS;
+            }
             try
             {
                 dbConnection.SaveChanges();
