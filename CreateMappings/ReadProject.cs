@@ -12,7 +12,7 @@ namespace CreateMappings
     public class ReadProject
     {
 
-        public static string CustomAttributeName = "ModelIdentifier";
+        public static string CustomAttributeName = "ModelIdentifierAttribute";
         public static int sdkId;
 
         // param 0 = folder for old sdk
