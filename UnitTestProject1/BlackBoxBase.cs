@@ -1,4 +1,4 @@
-﻿using DBConnector;
+﻿using EFSQLConnector;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.MSBuild;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -222,7 +222,7 @@ namespace UnitTest.BlackBox
             CompileSolution(Path.Combine(TestFolder, "newSDK", "SDK.sln"));
         }
             
-        List<Mapping> expectedMappings;
+        List<sdk_map2> expectedMappings;
 
         public virtual void LoadExpectedMappings()
         {
@@ -233,6 +233,7 @@ namespace UnitTest.BlackBox
             int new_classname_id = -1;
             int old_assembly_path_id = -1;
             int new_assembly_path_id = -1;
+            int assembly_name_id = -1;
             if (!File.Exists(Path.Combine(TestFolder, "expectedSql.txt")))
             {
                 Assert.Fail("expectedSql.txt does not exist");
@@ -243,7 +244,7 @@ namespace UnitTest.BlackBox
                 Assert.Fail("expectedSql.txt is empty");
             }
             var lineOne = lines[0].Split('\t');
-            Assert.AreEqual(7, lineOne.Length, "Impropper number of headers");
+            Assert.AreEqual(8, lineOne.Length, "Impropper number of headers");
             for (var i = 0; i < lineOne.Length; i++)
             {
                 switch (lineOne[i])
@@ -269,20 +270,32 @@ namespace UnitTest.BlackBox
                     case "new_assembly_path":
                         new_assembly_path_id = i;
                         break;
+                    case "assembly_name":
+                        assembly_name_id = i;
+                        break;
                     default:
                         Assert.Fail("invalid header " + lineOne[i]);
                         break;
                 }
             }
-            expectedMappings = new List<Mapping>();
+            expectedMappings = new List<sdk_map2>();
             for (var i = 1; i < lines.Length; i++)
             {
                 var curLine = lines[i].Split('\t');
                 Assert.AreEqual(lineOne.Length, curLine.Length, "wrong number of entries on line " + i);
-                expectedMappings.Add(new Mapping(curLine[old_namespace_id], curLine[new_namespace_id],
-                    curLine[model_identifier_id], curLine[old_classname_id], curLine[new_classname_id],
-                    Path.GetFullPath(Path.Combine(TestFolder, curLine[old_assembly_path_id])),
-                    Path.GetFullPath(Path.Combine(TestFolder, curLine[new_assembly_path_id])) ));
+                var namespaceMap = new namespace_map();
+                namespaceMap.new_namespace = curLine[new_namespace_id];
+                namespaceMap.old_namespace = curLine[old_namespace_id];
+                var assemblyMap = new assembly_map();
+                assemblyMap.name = curLine[assembly_name_id];
+                assemblyMap.new_path = curLine[new_assembly_path_id];
+                assemblyMap.old_path = curLine[old_assembly_path_id];
+                var sdkMap = new sdk_map2();
+                sdkMap.namespace_map = namespaceMap;
+                sdkMap.assembly_map = assemblyMap;
+                sdkMap.new_classname = curLine[new_classname_id];
+                sdkMap.old_classname = curLine[old_classname_id];
+                expectedMappings.Add(sdkMap);
             }
         }
 
@@ -291,7 +304,7 @@ namespace UnitTest.BlackBox
             LoadExpectedMappings();
             SDKSQLConnector.GetInstance().SaveSDK(sdkNameId, Path.GetFullPath(Path.Combine(TestFolder, "bin2")));
             var sdkId = SDKSQLConnector.GetInstance().getByName(sdkNameId).id;
-            SDKMappingSQLConnector.GetInstance().SaveSDKMappings(expectedMappings, sdkId);
+            SDKMappingSQLConnector.GetInstance().SaveFullSDKMap(sdkId, expectedMappings);
         }
         
         // MappingTest
@@ -356,21 +369,22 @@ namespace UnitTest.BlackBox
             var sdkId = SDKSQLConnector.GetInstance().getByName(sdkNameId).id;
             Assert.AreEqual(Path.GetFullPath(Path.Combine(TestFolder,"bin2")), SDKSQLConnector.GetInstance().getOutputPathById(sdkId),
                 "Wrong output path");
-            var actualMappings = SDKMappingSQLConnector.GetInstance().GetAllSDKMapsBySDKId(sdkId);
+            var actualMappings = SDKMappingSQLConnector.GetInstance().GetAllBySdkId(sdkId);
             Assert.AreEqual(expectedMappings.Count, actualMappings.Count, "Wrong number of generated mappings");
             foreach (var expect in expectedMappings)
             {
                 var hasMapping = false;
                 foreach (var actual in actualMappings)
                 {
-                    if ( expect.ModelIdentifierGUID == actual.ModelIdentifierGUID)
+                    if ( expect.model_identifier == actual.model_identifier)
                     {
-                        if (CheckMappingValue(expect.NewClassName, actual.NewClassName) &&
-                            CheckMappingValue(expect.NewDllPath, actual.NewDllPath) &&
-                            CheckMappingValue(expect.NewNamespace, actual.NewNamespace) &&
-                            CheckMappingValue(expect.OldClassName, actual.OldClassName) &&
-                            CheckMappingValue(expect.OldDllPath, actual.OldDllPath) &&
-                            CheckMappingValue(expect.OldNamespace, actual.OldNamespace) )
+                        if (CheckMappingValue(expect.new_classname, actual.new_classname) &&
+                            CheckMappingValue(expect.assembly_map.new_path, actual.assembly_map.new_path) &&
+                            CheckMappingValue(expect.namespace_map.new_namespace, actual.namespace_map.new_namespace) &&
+                            CheckMappingValue(expect.old_classname, actual.old_classname) &&
+                            CheckMappingValue(expect.assembly_map.old_path, actual.assembly_map.old_path) &&
+                            CheckMappingValue(expect.namespace_map.old_namespace, actual.namespace_map.old_namespace) &&
+                            CheckMappingValue(expect.assembly_map.name, actual.assembly_map.name) )
                         {
                             hasMapping = true;
                         }
@@ -379,7 +393,7 @@ namespace UnitTest.BlackBox
                 }
                 if ( ! hasMapping/*actualMappings.Contains(expect)*/ )
                 {
-                    Assert.Fail("Missing actual mapping for " + expect.ModelIdentifierGUID);
+                    Assert.Fail("Missing actual mapping for " + expect.model_identifier);
                 }
             }
         }

@@ -48,6 +48,30 @@ namespace EFSQLConnector
             return GetByWhereClause(whereClause);
         }
 
+        public void SaveFullSDKMap(int sdkId, List<sdk_map2> map)
+        {
+            foreach ( var item in map )
+            {
+                var sdkMap = new sdk_map2
+                {
+                    model_identifier = item.model_identifier,
+                    old_classname = item.old_classname,
+                    sdk_id = sdkId,
+                    namespace_map = item.namespace_map,
+                    assembly_map = item.assembly_map
+                };
+                dbConnection.sdk_map2.Add(sdkMap);
+            }
+            try
+            {
+                dbConnection.SaveChanges();
+            }
+            catch (Exception)
+            {
+                //Do nothing
+            }
+        }
+
         private sdk_map2 GetByWhereClause(Expression<Func<sdk_map2, bool>> whereClause)
         {
             var res = dbConnection.sdk_map2.Where(whereClause);
@@ -61,6 +85,11 @@ namespace EFSQLConnector
                 //Do nothing
             }
             return null;
+        }
+
+        public List<sdk_map2> GetAllBySdkId(int sdkId)
+        {
+            return dbConnection.sdk_map2.Where(s => s.sdk_id == sdkId).ToList();
         }
 
         public namespace_map GetOldNSForSDKMapping(int sdkId, string modelIdentifier)

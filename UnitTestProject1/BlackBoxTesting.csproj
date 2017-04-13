@@ -131,6 +131,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -142,9 +143,9 @@
       <Project>{1c52df0c-67fd-4a54-9160-732ff0a5143f}</Project>
       <Name>CreateMappings</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DBConnector\DBConnector.csproj">
-      <Project>{FDF3CC16-26A0-47CE-A129-4A06F829DB12}</Project>
-      <Name>DBConnector</Name>
+    <ProjectReference Include="..\EFSQLConnector\EFSQLConnector.csproj">
+      <Project>{f0eefbe4-328e-4cb9-a99e-9205f6a84e5a}</Project>
+      <Name>EFSQLConnector</Name>
     </ProjectReference>
     <ProjectReference Include="..\TransformClient\TransformClient.csproj">
       <Project>{7375d960-5ee1-4d1b-b668-7b2093e02b7a}</Project>
