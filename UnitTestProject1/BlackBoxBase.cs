@@ -16,6 +16,7 @@ namespace UnitTest.BlackBox
     [DeploymentItem("Microsoft.CodeAnalysis.CSharp.Workspaces.dll")]
     [DeploymentItem("Microsoft.CodeAnalysis.VisualBasic.dll")]
     [DeploymentItem("Microsoft.CodeAnalysis.VisualBasic.Workspaces.dll")]
+    [DeploymentItem("EntityFramework.SqlServer.dll")]
     public class BlackBoxBase
     {
         // this must be deployed using the attribute
