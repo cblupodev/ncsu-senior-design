@@ -39,22 +39,33 @@ namespace TransformClient
                 // create copies of the project so don't have to overwrite the original files
                 string projectParentFolder = new FileInfo(filePath).DirectoryName;
                 string transformed_folder = projectParentFolder + "_transformed";
-                Directory.CreateDirectory(transformed_folder);
+                CopyDirectory(projectParentFolder, transformed_folder);
 
-                // Create all of the directories
-                foreach (string dirPath in Directory.GetDirectories(projectParentFolder, "*",
-                    SearchOption.AllDirectories))
-                    Directory.CreateDirectory(dirPath.Replace(projectParentFolder, transformed_folder));
-
-                // Copy all the files & Replaces any files with the same name
-                foreach (string newPath in Directory.GetFiles(projectParentFolder, "*.*",
-                    SearchOption.AllDirectories))
-                    File.Copy(newPath, newPath.Replace(projectParentFolder, transformed_folder), true);
-
-                ProcessProject(MSBuildWorkspace.Create().OpenProjectAsync(transformed_folder + "\\" + Path.GetFileName(filePath)).Result, args[1]);
+                ProcessProject(MSBuildWorkspace.Create().OpenProjectAsync(filePath).Result, args[1], projectParentFolder, transformed_folder);
             }
 
 
+        }
+
+        // taken from http://stackoverflow.com/questions/1066674/how-do-i-copy-a-folder-and-all-subfolders-and-files-in-net/1066811#1066811
+        private static void CopyDirectory(string sourcePath, string destPath)
+        {
+            if (!Directory.Exists(destPath))
+            {
+                Directory.CreateDirectory(destPath);
+            }
+
+            foreach (string file in Directory.GetFiles(sourcePath))
+            {
+                string dest = Path.Combine(destPath, Path.GetFileName(file));
+                File.Copy(file, dest);
+            }
+
+            foreach (string folder in Directory.GetDirectories(sourcePath))
+            {
+                string dest = Path.Combine(destPath, Path.GetFileName(folder));
+                CopyDirectory(folder, dest);
+            }
         }
 
         void ProcessSolution(Solution soln)
@@ -65,7 +76,7 @@ namespace TransformClient
             }
         }
 
-        void ProcessProject(Project proj, string sdkid)
+        void ProcessProject(Project proj, string sdkid, string currentParent, string newParent)
         {
             HashSet<String> namespaceSet =  mappingConnector.GetAllNamespaces(sdkId);
             Dictionary<String, HashSet<String>> namespaceToClassnameSetMap = new Dictionary<string, HashSet<string>>();
@@ -75,22 +86,22 @@ namespace TransformClient
             {
                 if (isDocCSharp(doc))
                 {
-                    ProcessDocumentCSharp(doc, namespaceSet, namespaceToClassnameSetMap);
+                    ProcessDocumentCSharp(doc, namespaceSet, namespaceToClassnameSetMap, currentParent, newParent);
                 }
 
                 if (isDocVB(doc))
                 {
-                    ProcessDocumentVB(doc, namespaceSet, namespaceToClassnameSetMap);
+                    ProcessDocumentVB(doc, namespaceSet, namespaceToClassnameSetMap, currentParent, newParent);
                 }
             }
             HashSet<String> newdllSet = mappingConnector.GetAllNewDllPaths(sdkId);
             HashSet<String> olddllSet = mappingConnector.GetAllOldDllPaths(sdkId);
             // Don't remove the line below, cblupo
-            transformXml(proj.FilePath, newdllSet, olddllSet, Path.GetExtension(proj.FilePath), sdkId);
+            transformXml(proj.FilePath, newdllSet, olddllSet, Path.GetExtension(proj.FilePath), sdkId, currentParent, newParent);
             Console.WriteLine("Project file edited to use new references");
         }
 
-        private void ProcessDocumentVB(Document doc, HashSet<String> namespaceSet, Dictionary<String, HashSet<String>> namespaceToClassnameSetMap)
+        private void ProcessDocumentVB(Document doc, HashSet<String> namespaceSet, Dictionary<String, HashSet<String>> namespaceToClassnameSetMap, string currentParent, string newParent)
         {
             var semanticModel = doc.GetSemanticModelAsync().Result;
             var syntaxTree = doc.GetSyntaxTreeAsync().Result;
@@ -101,7 +112,7 @@ namespace TransformClient
             TransformFileVBasic ft = new TransformFileVBasic(documentEditor);
 
             syntaxTree = ft.replaceSyntax();
-            File.WriteAllText(doc.FilePath, syntaxTree.GetText().ToString());
+            File.WriteAllText(doc.FilePath.Replace(currentParent, newParent), syntaxTree.GetText().ToString());
             Console.WriteLine("Transformed   " + doc.FilePath);
         }
 
@@ -115,7 +126,7 @@ namespace TransformClient
             return Path.GetExtension(doc.FilePath).Equals(".cs");
         }
 
-        void ProcessDocumentCSharp(Document doc, HashSet<String> namespaceSet, Dictionary<String, HashSet<String>> namespaceToClassnameSetMap)
+        void ProcessDocumentCSharp(Document doc, HashSet<String> namespaceSet, Dictionary<String, HashSet<String>> namespaceToClassnameSetMap, string currentParent, string newParent)
         {
             var semanticModel = doc.GetSemanticModelAsync().Result;
             var syntaxTree = doc.GetSyntaxTreeAsync().Result;
@@ -126,11 +137,11 @@ namespace TransformClient
             TransformFileCSharp ft = new TransformFileCSharp(documentEditor);
 
             syntaxTree = ft.replaceSyntax();
-            File.WriteAllText(doc.FilePath, syntaxTree.GetText().ToString());
+            File.WriteAllText(doc.FilePath.Replace(currentParent, newParent), syntaxTree.GetText().ToString());
             Console.WriteLine("Transformed   " + doc.FilePath);
         }
 
-        public void transformXml(string csprojFilePath, HashSet<String> newdllSet, HashSet<String> olddllSet, string projectFileExtension, int sdkid)
+        public void transformXml(string csprojFilePath, HashSet<String> newdllSet, HashSet<String> olddllSet, string projectFileExtension, int sdkid, string currentParent, string newParent)
         {
             string xmlElementOutputPathName = "OutputPath";
             string xmlElementReferenceName = "Reference";
@@ -147,7 +158,7 @@ namespace TransformClient
             addNewDllReferences(xmlElementHintPathName, xmlElementReferenceName, ns, xdoc, newRelativeOutputPath);
 
             // save the xml
-            xdoc.Save(csprojFilePath);
+            xdoc.Save(csprojFilePath.Replace(currentParent, newParent));
         }
 
         private void addNewDllReferences(string xmlElementHintPathName, string xmlElementReferenceName, XNamespace ns, XDocument xdoc, string newRelativeOutputPath)
