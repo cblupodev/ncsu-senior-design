@@ -334,6 +334,23 @@ namespace UnitTest.BlackBox
 #endif
         }
 
+        private bool CheckMappingValue(string expect, string actual)
+        {
+            if ( expect == "'?'")
+            {
+                return true;
+            }
+            else if ( expect == "'null'")
+            {
+                return actual == null;
+            }
+            else
+            {
+                return actual == expect;
+            }
+            
+        }
+
         public virtual void VerifyMapping()
         {
             var sdkId = SDKSQLConnector.GetInstance().getByName(sdkNameId).id;
@@ -348,12 +365,12 @@ namespace UnitTest.BlackBox
                 {
                     if ( expect.ModelIdentifierGUID == actual.ModelIdentifierGUID)
                     {
-                        if ( expect.NewClassName == actual.NewClassName &&
-                            expect.NewDllPath == actual.NewDllPath &&
-                            expect.NewNamespace == actual.NewNamespace &&
-                            expect.OldClassName == actual.OldClassName &&
-                            expect.OldDllPath == actual.OldDllPath &&
-                            expect.OldNamespace == actual.OldNamespace)
+                        if (CheckMappingValue(expect.NewClassName, actual.NewClassName) &&
+                            CheckMappingValue(expect.NewDllPath, actual.NewDllPath) &&
+                            CheckMappingValue(expect.NewNamespace, actual.NewNamespace) &&
+                            CheckMappingValue(expect.OldClassName, actual.OldClassName) &&
+                            CheckMappingValue(expect.OldDllPath, actual.OldDllPath) &&
+                            CheckMappingValue(expect.OldNamespace, actual.OldNamespace) )
                         {
                             hasMapping = true;
                         }
@@ -441,7 +458,8 @@ namespace UnitTest.BlackBox
                     Assert.Fail("No file containing expected output.");
                 }
             }
-            VerifyProject(projectUnderTest, expectedPath);
+            VerifyProject(Path.Combine(Directory.GetParent(projectUnderTest).FullName + "_transformed",
+                Path.GetFileName(projectUnderTest)), expectedPath);
         }
         
         //EndToEndTest
