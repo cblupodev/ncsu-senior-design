@@ -289,13 +289,14 @@ namespace UnitTest.BlackBox
                 namespaceMap.old_namespace = curLine[old_namespace_id];
                 var assemblyMap = new assembly_map();
                 assemblyMap.name = curLine[assembly_name_id];
-                assemblyMap.new_path = curLine[new_assembly_path_id];
-                assemblyMap.old_path = curLine[old_assembly_path_id];
+                assemblyMap.new_path = Path.GetFullPath(Path.Combine(TestFolder, curLine[new_assembly_path_id]));
+                assemblyMap.old_path = Path.GetFullPath(Path.Combine(TestFolder, curLine[old_assembly_path_id]));
                 var sdkMap = new sdk_map2();
                 sdkMap.namespace_map = namespaceMap;
                 sdkMap.assembly_map = assemblyMap;
                 sdkMap.new_classname = curLine[new_classname_id];
                 sdkMap.old_classname = curLine[old_classname_id];
+                sdkMap.model_identifier = curLine[model_identifier_id];
                 expectedMappings.Add(sdkMap);
             }
         }
