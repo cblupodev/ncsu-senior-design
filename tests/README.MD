@@ -19,6 +19,9 @@ Root namespace changes between versions.
 ###casting
 The client code casts to a class in the SDK.
 
+###classDelete
+A class in the old SDK no longer exists in the new SDK.
+
 ###classInClass
 The SDK has a class defined inside of a class.
 
@@ -57,6 +60,15 @@ The client uses Dictionary<Sample1, Sample1>.
 
 ###namespaceInNamespace
 The SDK has a namespace directive inside of a namespace directive, creating an implicit nesting.
+
+###namespaceMerge
+Classes that were in different namespaces in the old SDK, are in the same namespace in the new SDK.
+
+###namespaceSplit
+Classes that were in the same namespace in the old SDK, are in different namespaces in the new SDK.
+
+###namespaceSplitMerge
+A class moves namespaces between SDK versions.
 
 ###newConflicts
 Client code has class name matching a class name in the new SDK.

@@ -389,6 +389,60 @@ namespace UnitTest.BlackBox
     }
 
     [TestClass]
+    public class ClassDeleteTests : BlackBoxBase
+    {
+        [TestMethod]
+        [DeploymentItem("tests/classDelete", "MappingClassDelete")]
+        public void TestMappingClassDelete()
+        {
+            TestFolder = "MappingClassDelete";
+            RunMappingTest();
+        }
+        [TestMethod]
+        [DeploymentItem("tests/classDelete", "PreTransformCSClassDelete")]
+        public void TestPreTransformCSClassDelete()
+        {
+            TestFolder = "PreTransformCSClassDelete";
+            RunPreTransformCSTest();
+        }
+        [TestMethod]
+        [DeploymentItem("tests/classDelete", "PostTransformCSClassDelete")]
+        public void TestPostTransformCSClassDelete()
+        {
+            TestFolder = "PostTransformCSClassDelete";
+            RunPostTransformCSTest();
+        }
+        [TestMethod]
+        [DeploymentItem("tests/classDelete", "PreTransformVBClassDelete")]
+        public void TestPreTransformVBClassDelete()
+        {
+            TestFolder = "PreTransformVBClassDelete";
+            RunPreTransformVBTest();
+        }
+        [TestMethod]
+        [DeploymentItem("tests/classDelete", "PostTransformVBClassDelete")]
+        public void TestPostTransformVBClassDelete()
+        {
+            TestFolder = "PostTransformVBClassDelete";
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        [DeploymentItem("tests/classDelete", "EndToEndCSClassDelete")]
+        public void TestEndToEndCSClassDelete()
+        {
+            TestFolder = "EndToEndCSClassDelete";
+            RunEndToEndCSTest();
+        }
+        [TestMethod]
+        [DeploymentItem("tests/classDelete", "EndToEndVBClassDelete")]
+        public void TestEndToEndVBClassDelete()
+        {
+            TestFolder = "EndToEndVBClassDelete";
+            RunEndToEndVBTest();
+        }
+    }
+
+    [TestClass]
     public class ClassInClassTests : BlackBoxBase
     {
         [TestMethod]
@@ -1098,6 +1152,168 @@ namespace UnitTest.BlackBox
     }
 
     [TestClass]
+    public class NamespaceMergeTests : BlackBoxBase
+    {
+        [TestMethod]
+        [DeploymentItem("tests/namespaceMerge", "MappingNamespaceMerge")]
+        public void TestMappingNamespaceMerge()
+        {
+            TestFolder = "MappingNamespaceMerge";
+            RunMappingTest();
+        }
+        [TestMethod]
+        [DeploymentItem("tests/namespaceMerge", "PreTransformCSNamespaceMerge")]
+        public void TestPreTransformCSNamespaceMerge()
+        {
+            TestFolder = "PreTransformCSNamespaceMerge";
+            RunPreTransformCSTest();
+        }
+        [TestMethod]
+        [DeploymentItem("tests/namespaceMerge", "PostTransformCSNamespaceMerge")]
+        public void TestPostTransformCSNamespaceMerge()
+        {
+            TestFolder = "PostTransformCSNamespaceMerge";
+            RunPostTransformCSTest();
+        }
+        [TestMethod]
+        [DeploymentItem("tests/namespaceMerge", "PreTransformVBNamespaceMerge")]
+        public void TestPreTransformVBNamespaceMerge()
+        {
+            TestFolder = "PreTransformVBNamespaceMerge";
+            RunPreTransformVBTest();
+        }
+        [TestMethod]
+        [DeploymentItem("tests/namespaceMerge", "PostTransformVBNamespaceMerge")]
+        public void TestPostTransformVBNamespaceMerge()
+        {
+            TestFolder = "PostTransformVBNamespaceMerge";
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        [DeploymentItem("tests/namespaceMerge", "EndToEndCSNamespaceMerge")]
+        public void TestEndToEndCSNamespaceMerge()
+        {
+            TestFolder = "EndToEndCSNamespaceMerge";
+            RunEndToEndCSTest();
+        }
+        [TestMethod]
+        [DeploymentItem("tests/namespaceMerge", "EndToEndVBNamespaceMerge")]
+        public void TestEndToEndVBNamespaceMerge()
+        {
+            TestFolder = "EndToEndVBNamespaceMerge";
+            RunEndToEndVBTest();
+        }
+    }
+
+    [TestClass]
+    public class NamespaceSplitTests : BlackBoxBase
+    {
+        [TestMethod]
+        [DeploymentItem("tests/namespaceSplit", "MappingNamespaceSplit")]
+        public void TestMappingNamespaceSplit()
+        {
+            TestFolder = "MappingNamespaceSplit";
+            RunMappingTest();
+        }
+        [TestMethod]
+        [DeploymentItem("tests/namespaceSplit", "PreTransformCSNamespaceSplit")]
+        public void TestPreTransformCSNamespaceSplit()
+        {
+            TestFolder = "PreTransformCSNamespaceSplit";
+            RunPreTransformCSTest();
+        }
+        [TestMethod]
+        [DeploymentItem("tests/namespaceSplit", "PostTransformCSNamespaceSplit")]
+        public void TestPostTransformCSNamespaceSplit()
+        {
+            TestFolder = "PostTransformCSNamespaceSplit";
+            RunPostTransformCSTest();
+        }
+        [TestMethod]
+        [DeploymentItem("tests/namespaceSplit", "PreTransformVBNamespaceSplit")]
+        public void TestPreTransformVBNamespaceSplit()
+        {
+            TestFolder = "PreTransformVBNamespaceSplit";
+            RunPreTransformVBTest();
+        }
+        [TestMethod]
+        [DeploymentItem("tests/namespaceSplit", "PostTransformVBNamespaceSplit")]
+        public void TestPostTransformVBNamespaceSplit()
+        {
+            TestFolder = "PostTransformVBNamespaceSplit";
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        [DeploymentItem("tests/namespaceSplit", "EndToEndCSNamespaceSplit")]
+        public void TestEndToEndCSNamespaceSplit()
+        {
+            TestFolder = "EndToEndCSNamespaceSplit";
+            RunEndToEndCSTest();
+        }
+        [TestMethod]
+        [DeploymentItem("tests/namespaceSplit", "EndToEndVBNamespaceSplit")]
+        public void TestEndToEndVBNamespaceSplit()
+        {
+            TestFolder = "EndToEndVBNamespaceSplit";
+            RunEndToEndVBTest();
+        }
+    }
+
+    [TestClass]
+    public class NamespaceSplitMergeTests : BlackBoxBase
+    {
+        [TestMethod]
+        [DeploymentItem("tests/namespaceSplitMerge", "MappingNamespaceSplitMerge")]
+        public void TestMappingNamespaceSplitMerge()
+        {
+            TestFolder = "MappingNamespaceSplitMerge";
+            RunMappingTest();
+        }
+        [TestMethod]
+        [DeploymentItem("tests/namespaceSplitMerge", "PreTransformCSNamespaceSplitMerge")]
+        public void TestPreTransformCSNamespaceSplitMerge()
+        {
+            TestFolder = "PreTransformCSNamespaceSplitMerge";
+            RunPreTransformCSTest();
+        }
+        [TestMethod]
+        [DeploymentItem("tests/namespaceSplitMerge", "PostTransformCSNamespaceSplitMerge")]
+        public void TestPostTransformCSNamespaceSplitMerge()
+        {
+            TestFolder = "PostTransformCSNamespaceSplitMerge";
+            RunPostTransformCSTest();
+        }
+        [TestMethod]
+        [DeploymentItem("tests/namespaceSplitMerge", "PreTransformVBNamespaceSplitMerge")]
+        public void TestPreTransformVBNamespaceSplitMerge()
+        {
+            TestFolder = "PreTransformVBNamespaceSplitMerge";
+            RunPreTransformVBTest();
+        }
+        [TestMethod]
+        [DeploymentItem("tests/namespaceSplitMerge", "PostTransformVBNamespaceSplitMerge")]
+        public void TestPostTransformVBNamespaceSplitMerge()
+        {
+            TestFolder = "PostTransformVBNamespaceSplitMerge";
+            RunPostTransformVBTest();
+        }
+        [TestMethod]
+        [DeploymentItem("tests/namespaceSplitMerge", "EndToEndCSNamespaceSplitMerge")]
+        public void TestEndToEndCSNamespaceSplitMerge()
+        {
+            TestFolder = "EndToEndCSNamespaceSplitMerge";
+            RunEndToEndCSTest();
+        }
+        [TestMethod]
+        [DeploymentItem("tests/namespaceSplitMerge", "EndToEndVBNamespaceSplitMerge")]
+        public void TestEndToEndVBNamespaceSplitMerge()
+        {
+            TestFolder = "EndToEndVBNamespaceSplitMerge";
+            RunEndToEndVBTest();
+        }
+    }
+
+    [TestClass]
     public class NewConflictsTests : BlackBoxBase
     {
         [TestMethod]
@@ -1528,6 +1744,5 @@ namespace UnitTest.BlackBox
             RunEndToEndVBTest();
         }
     }
-
 
 }
