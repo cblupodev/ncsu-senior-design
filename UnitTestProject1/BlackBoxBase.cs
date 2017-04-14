@@ -459,9 +459,6 @@ namespace UnitTest.BlackBox
             translateClient.StartInfo.Arguments = "\"" + projectUnderTest + "\" \"" + sdkNameId + "\"";
             translateClient.StartInfo.UseShellExecute = false;
             translateClient.StartInfo.RedirectStandardOutput = true;
-            translateClient.Start();
-            translateClient.StartInfo.UseShellExecute = false;
-            translateClient.StartInfo.RedirectStandardOutput = true;
             translateClient.StartInfo.RedirectStandardError = true;
             translateClient.Start();
             Trace.WriteLine("------------ Started translate client with arguments: " + translateClient.StartInfo.Arguments);
