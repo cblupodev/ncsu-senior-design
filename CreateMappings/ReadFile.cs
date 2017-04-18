@@ -59,9 +59,12 @@ namespace CreateMappings
                         else
                         {
                             sdk_map2 sdkMap = SDKMappingSQLConnector.GetInstance().GetSDKMappingByIdentifiers(sdkId, modelIdentifier);
-                            NSMappingSQLConnector.GetInstance().UpdateOrCreateNSMapping(sdkMap.namespace_map, sdkMap, type.Namespace);
-                            AssemblyMappingSQLConnector.GetInstance().UpdateAssemblyMapping(sdkMap.assembly_map, dllPath, assemFullName);
-                            SDKMappingSQLConnector.GetInstance().UpdateSDKMapping(sdkMap, type.Name);
+                            if (sdkMap != null)
+                            {
+                                NSMappingSQLConnector.GetInstance().UpdateOrCreateNSMapping(sdkMap.namespace_map, sdkMap, type.Namespace);
+                                AssemblyMappingSQLConnector.GetInstance().UpdateAssemblyMapping(sdkMap.assembly_map, dllPath, assemFullName);
+                                SDKMappingSQLConnector.GetInstance().UpdateSDKMapping(sdkMap, type.Name);
+                            }
                         }
                     }
                 }

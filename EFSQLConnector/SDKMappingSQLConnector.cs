@@ -117,18 +117,6 @@ namespace EFSQLConnector
             }
         }
 
-        public Dictionary<String, String> GetOldToNewNamespaceMap(int sdkId)
-        {
-            var query = (from sm in dbConnection.sdk_map2
-                         where sm.sdk_id == sdkId
-                         select new
-                         {
-                             col1 = sm.namespace_map.old_namespace,
-                             col2 = sm.namespace_map.new_namespace
-                         }).Distinct().ToDictionary(sm => sm.col1, sm => sm.col2, StringComparer.OrdinalIgnoreCase);
-            return query;
-        }
-
         public Dictionary<String, Dictionary<String, String>> GetNamespaceToClassnameMapMap(int sdkId)
         {
             Dictionary<String, Dictionary<String, String>> namespaceToClassNameSetMap = new Dictionary<String, Dictionary<String, String>>();
@@ -152,5 +140,17 @@ namespace EFSQLConnector
             return query;
         }
 
+        public sdk_map2 GetSDKMapFromClassAndNamespace(int sdkId, string nsString, string className)
+        {
+            var query = (from sm in dbConnection.sdk_map2
+                         join nm in dbConnection.namespace_map on sm.namespace_map_id equals nm.id
+                         where nm.old_namespace == nsString && sm.old_classname == className && nm.sdk_id == sdkId && sm.sdk_id == sdkId
+                         select sm);
+            if (query.Any())
+            {
+                return query.First();
+            }
+            return null;
+        }
     }
 }

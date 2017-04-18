@@ -80,12 +80,13 @@ namespace EFSQLConnector
         public Dictionary<String, String> GetAllNewDllPathsWithFullName(int sdkId)
         {
             var query = (from am in dbConnection.assembly_map
-                         where am.sdk_id == sdkId
+                         where am.sdk_id == sdkId && am.new_path != null
                          select new
                          {
                              new_assembly_path = am.new_path,
                              new_assembly_full_name = am.name
-                         }).Distinct().ToDictionary(am => am.new_assembly_path, am => am.new_assembly_full_name, StringComparer.OrdinalIgnoreCase);
+                         })
+                         .Distinct().ToDictionary(am => am.new_assembly_path, am => am.new_assembly_full_name, StringComparer.OrdinalIgnoreCase);
             return query;
         }
     }

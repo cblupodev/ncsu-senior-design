@@ -67,7 +67,7 @@ namespace TransformClient
 
         private void replaceUsingStatements()
         {
-            Dictionary<String, String> nsMap = SDKMappingSQLConnector.GetInstance().GetOldToNewNamespaceMap(TransformProject.sdkId);
+            Dictionary<String, String> nsMap = NSMappingSQLConnector.GetInstance().GetOldToNewNamespaceMap(TransformProject.sdkId);
             IEnumerable<ImportsStatementSyntax> usingDirectiveNodes = tree.GetRoot().DescendantNodes().OfType<ImportsStatementSyntax>();
             foreach (ImportsStatementSyntax oldUsingDirectiveNode in usingDirectiveNodes) // iterate over all qualified names in the file
             {
@@ -87,7 +87,7 @@ namespace TransformClient
 
         private void replaceQualifiedNames()
         {
-            Dictionary<String, String> nsMap = SDKMappingSQLConnector.GetInstance().GetOldToNewNamespaceMap(TransformProject.sdkId);
+            Dictionary<String, String> nsMap = NSMappingSQLConnector.GetInstance().GetOldToNewNamespaceMap(TransformProject.sdkId);
             Dictionary<String, Dictionary<String, String>> csMap = SDKMappingSQLConnector.GetInstance().GetNamespaceToClassnameMapMap(TransformProject.sdkId);
             IEnumerable<QualifiedNameSyntax> qualifiedNames = tree.GetRoot().DescendantNodes().OfType<QualifiedNameSyntax>();
             foreach (QualifiedNameSyntax oldQualifiedNameNode in qualifiedNames) // iterate over all qualified names in the file
@@ -99,7 +99,6 @@ namespace TransformClient
                     string className = qualifiedSymbolInfo.Symbol.Name.ToString();
                     if (nsMap.ContainsKey(nsString) && csMap[nsString].ContainsKey(className))
                     {
-
                         string newNamespace = nsMap[nsString];
                         string newClassName = csMap[nsString][className];
                         QualifiedNameSyntax newQualifiedNameNode = QualifiedName(IdentifierName(newNamespace), IdentifierName(newClassName)).WithTriviaFrom(oldQualifiedNameNode);

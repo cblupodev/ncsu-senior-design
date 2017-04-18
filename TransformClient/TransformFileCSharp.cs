@@ -68,26 +68,36 @@ namespace TransformClient
 
         private void replaceUsingStatements()
         {
-            Dictionary<String, String> nsMap = SDKMappingSQLConnector.GetInstance().GetOldToNewNamespaceMap(TransformProject.sdkId);
             IEnumerable<UsingDirectiveSyntax> usingDirectiveNodes = tree.GetRoot().DescendantNodes().OfType<UsingDirectiveSyntax>();
             foreach (UsingDirectiveSyntax oldUsingDirectiveNode in usingDirectiveNodes) // iterate over all qualified names in the file
             {
                 var usingDirectiveSymbolInfo = semanticModel.GetSymbolInfo(oldUsingDirectiveNode);
                 var oldNamespace = oldUsingDirectiveNode.Name.GetText().ToString();
-                if (nsMap.ContainsKey(oldNamespace))
+                List<namespace_map> namespaces = NSMappingSQLConnector.GetInstance().GetNamespaceMapsFromOldNamespace(TransformProject.sdkId, oldNamespace);
+                if (namespaces != null)
                 {
-                    var newNamespace = nsMap[oldNamespace];
-                    NameSyntax newIdentifierNode = IdentifierName(newNamespace);
-                    var newUsingDirectiveNode = oldUsingDirectiveNode.WithName(newIdentifierNode);
-                    documentEditor.ReplaceNode(oldUsingDirectiveNode, newUsingDirectiveNode);
+                    UsingDirectiveSyntax previousUsingDirectiveNode = oldUsingDirectiveNode;
+                    int i = 1;
+                    foreach (namespace_map nsMap in namespaces)
+                    {
+                        var newNamespace = nsMap.new_namespace;
+                        NameSyntax newIdentifierNode = IdentifierName(newNamespace);
+                        var newUsingDirectiveNode = oldUsingDirectiveNode.WithName(newIdentifierNode);
+                        if (i == namespaces.Count)
+                        {
+                            documentEditor.ReplaceNode(oldUsingDirectiveNode, newUsingDirectiveNode);
+                        } else
+                        {
+                            documentEditor.InsertAfter(oldUsingDirectiveNode, newUsingDirectiveNode);
+                        }
+                        i++;
+                    }
                 }
             }
         }
 
         private void replaceQualifiedNames()
         {
-            Dictionary<String, String> nsMap = SDKMappingSQLConnector.GetInstance().GetOldToNewNamespaceMap(TransformProject.sdkId);
-            Dictionary<String, Dictionary<String, String>> csMap = SDKMappingSQLConnector.GetInstance().GetNamespaceToClassnameMapMap(TransformProject.sdkId);
             IEnumerable<QualifiedNameSyntax> qualifiedNames = tree.GetRoot().DescendantNodes().OfType<QualifiedNameSyntax>();
             foreach (QualifiedNameSyntax oldQualifiedNameNode in qualifiedNames) // iterate over all qualified names in the file
             {
@@ -98,11 +108,11 @@ namespace TransformClient
                     if (qualifiedSymbolInfo.Symbol != null)
                     {
                         string className = qualifiedSymbolInfo.Symbol.Name.ToString();
-                        if (nsMap.ContainsKey(nsString) && csMap[nsString].ContainsKey(className))
+                        sdk_map2 sdkMap = SDKMappingSQLConnector.GetInstance().GetSDKMapFromClassAndNamespace(TransformProject.sdkId, nsString, className);
+                        if (sdkMap != null)
                         {
-
-                            string newNamespace = nsMap[nsString];
-                            string newClassName = csMap[nsString][className];
+                            string newNamespace = sdkMap.namespace_map.new_namespace;
+                            string newClassName = sdkMap.new_classname;
                             QualifiedNameSyntax newQualifiedNameNode = QualifiedName(IdentifierName(newNamespace), IdentifierName(newClassName)).WithTriviaFrom(oldQualifiedNameNode);
                             documentEditor.ReplaceNode(oldQualifiedNameNode, newQualifiedNameNode);
 
@@ -114,7 +124,6 @@ namespace TransformClient
 
         private void replaceIdentifierNames()
         {
-            Dictionary<String, Dictionary<String, String>> map = SDKMappingSQLConnector.GetInstance().GetNamespaceToClassnameMapMap(TransformProject.sdkId);
             // https://duckduckgo.com/?q=nested+selection+linq&ia=qa
             IEnumerable<IdentifierNameSyntax> identifierNames = tree.GetRoot().DescendantNodes().OfType<IdentifierNameSyntax>();
             foreach (IdentifierNameSyntax oldNameNode in identifierNames) // iterate over all identifier names in the file
@@ -126,17 +135,15 @@ namespace TransformClient
                     if ((nodeTypeInfo.Type != null || oldNameNode.Parent is ObjectCreationExpressionSyntax) && semanticObjCreation.Symbol != null)
                     {
                         var oldNamespace = semanticObjCreation.Symbol.ContainingNamespace.Name;
-                        if (map.ContainsKey(oldNamespace))
+                        String oldClassname = semanticObjCreation.Symbol.Name.ToString();
+                        sdk_map2 sdkMap = SDKMappingSQLConnector.GetInstance().GetSDKMapFromClassAndNamespace(TransformProject.sdkId, oldNamespace, oldClassname);
+                        if (sdkMap != null)
                         {
-                            String oldClassname = semanticObjCreation.Symbol.Name.ToString();
-                            if (map[oldNamespace].ContainsKey(oldClassname))
-                            {
-                                String newClassname = map[oldNamespace][oldClassname];
-                                SyntaxToken oldNameToken = oldNameNode.DescendantTokens().First();
-                                SyntaxToken name = Identifier(newClassname).WithTriviaFrom(oldNameToken);
-                                IdentifierNameSyntax newNameNode = oldNameNode.WithIdentifier(name);
-                                documentEditor.ReplaceNode(oldNameNode, newNameNode);
-                            }
+                            String newClassname = sdkMap.new_classname;
+                            SyntaxToken oldNameToken = oldNameNode.DescendantTokens().First();
+                            SyntaxToken name = Identifier(newClassname).WithTriviaFrom(oldNameToken);
+                            IdentifierNameSyntax newNameNode = oldNameNode.WithIdentifier(name);
+                            documentEditor.ReplaceNode(oldNameNode, newNameNode);
                         }
                     }
                 }

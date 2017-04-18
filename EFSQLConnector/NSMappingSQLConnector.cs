@@ -75,10 +75,6 @@ namespace EFSQLConnector
                     nsMap.new_namespace = newNS;
                 }
             }
-            else
-            {
-                nsMap.new_namespace = newNS;
-            }
             try
             {
                 dbConnection.SaveChanges();
@@ -93,6 +89,30 @@ namespace EFSQLConnector
             var query = (from nm in dbConnection.namespace_map where nm.sdk_id == sdkId select nm.old_namespace).Distinct();
             HashSet<String> namespaceSet = new HashSet<String>(query);
             return namespaceSet;
+        }
+
+        public List<namespace_map> GetNamespaceMapsFromOldNamespace(int sdkId, string oldNamespace)
+        {
+            var query = (from nm in dbConnection.namespace_map
+                         where nm.old_namespace == oldNamespace && nm.sdk_id == sdkId
+                         select nm);
+            if (query.Any())
+            {
+                return query.ToList();
+            }
+            return null;
+        }
+
+        public Dictionary<String, String> GetOldToNewNamespaceMap(int sdkId)
+        {
+            var query = (from nm in dbConnection.namespace_map
+                         where nm.sdk_id == sdkId
+                         select new
+                         {
+                             col1 = nm.old_namespace,
+                             col2 = nm.new_namespace
+                         }).Distinct().ToDictionary(sm => sm.col1, sm => sm.col2, StringComparer.OrdinalIgnoreCase);
+            return query;
         }
 
     }
