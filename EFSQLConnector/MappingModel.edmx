@@ -45,7 +45,9 @@
           <Property Name="output_path" Type="varchar(max)" />
         </EntityType>
         <Association Name="FK__assembly___sdk_i__59FA5E80">
-          <End Role="sdk2" Type="Self.sdk2" Multiplicity="1" />
+          <End Role="sdk2" Type="Self.sdk2" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="assembly_map" Type="Self.assembly_map" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="sdk2">
@@ -57,7 +59,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__namespace__sdk_i__5CD6CB2B">
-          <End Role="sdk2" Type="Self.sdk2" Multiplicity="1" />
+          <End Role="sdk2" Type="Self.sdk2" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="namespace_map" Type="Self.namespace_map" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="sdk2">
@@ -93,7 +97,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__sdk_map2__sdk_id__5FB337D6">
-          <End Role="sdk2" Type="Self.sdk2" Multiplicity="1" />
+          <End Role="sdk2" Type="Self.sdk2" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="sdk_map2" Type="Self.sdk_map2" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="sdk2">

@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\Josh\Source\Repos\2017SpringTeam25\EFSQLConnector\MappingModel.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\Nathan\Desktop\Classes\CSC 492\gitStuff\2017SpringTeam25\EFSQLConnector\MappingModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
