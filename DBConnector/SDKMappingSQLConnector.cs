@@ -242,8 +242,10 @@ namespace DBConnector
                          {
                              col1 = sm.old_namespace,
                              col2 = sm.new_namespace
-                         }).Distinct().ToDictionary(sm => sm.col1, sm => sm.col2, StringComparer.OrdinalIgnoreCase);
-            return query;
+                         }).Distinct();
+                         
+            
+            return query.ToDictionary(sm => sm.col1, sm => sm.col2, StringComparer.OrdinalIgnoreCase);
         }
 
         public Dictionary<String, Dictionary<String, String>> GetNamespaceToClassnameMapMap(int sdkId)
