@@ -18,7 +18,7 @@ namespace CreateMappings
 
             FileHelper.verifyFileExists(dllPath);
             var dom = AppDomain.CreateDomain("test");
-            var loadClass = (LoadingClass)dom.CreateInstanceAndUnwrap(typeof(LoadingClass).Assembly.FullName, typeof(LoadingClass).FullName);
+            var loadClass = (LoadingClass)dom.CreateInstanceFromAndUnwrap(typeof(LoadingClass).Assembly.Location, typeof(LoadingClass).FullName);
             try
             {
                 loadClass.DoStuff(dllPath, isOld, ReadProject.sdkId);
