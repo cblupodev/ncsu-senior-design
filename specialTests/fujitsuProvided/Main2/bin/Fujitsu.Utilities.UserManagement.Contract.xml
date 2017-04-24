@@ -1,0 +1,2261 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Fujitsu.Utilities.UserManagement.Contract</name>
+    </assembly>
+    <members>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.IUserManagement">
+            <summary>
+            Contract for synchronous UserManagement service
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.IUserManagement.Initialize(Fujitsu.Infrastructure.Contract.ExecutionEnvironment.NetworkIdentifier)">
+            <summary>
+            Initializes the EE
+            </summary>
+            <param name="networkIdentifier">/// Network identifier</param>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.IUserManagement.ExecuteReadOperation(Fujitsu.Utilities.UserManagement.Contract.Operations.Read.UserManagementReadOperation)">
+            <summary>
+            Executes Data retrieval operations (By Key, By Criteria)
+            </summary>
+            <param name="userManagementReadOperation">/// Read operation derived from UserManagementReadOperation</param>
+            <returns>/// Requested data according to operation</returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.IUserManagement.ExecuteUpdateOperation(Fujitsu.Utilities.UserManagement.Contract.Operations.Update.UserManagementUpdateOperation)">
+            <summary>
+            Executes Data Modifying operations (Create, Update, Delete for Worker and OperatorGroup; Password related)
+            </summary>
+            <param name="userManagementUpdateOperation">/// Update operation derived from UserManagementUpdateOperation</param>
+            <returns>/// Update result containing Errors list</returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.IUserManagementAsyncUpdate">
+            <summary>
+            Interface for asyncronous Data Modifying operations (Create, Update, Delete for Worker and OperatorGroup; Password related)
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.IUserManagementAsyncUpdate.ExecuteAsyncUpdateOperation(Fujitsu.Utilities.UserManagement.Contract.Operations.Update.UserManagementUpdateOperation)">
+            <summary>
+            Executes Data Modifying operations (Create, Update, Delete for Worker and OperatorGroup; Password related)
+            </summary>
+            <param name="userManagementUpdateOperation">/// Update operation derived from UserManagementUpdateOperation</param>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.IUserManagementWithCertificateSecurity">
+            <summary>
+            Contract for synchronous UserManagement service with certificate security
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.IUserManagementWithCertificateSecurity.Initialize(Fujitsu.Infrastructure.Contract.ExecutionEnvironment.NetworkIdentifier)">
+            <summary>
+            Initializes the EE
+            </summary>
+            <param name="networkIdentifier">/// Network identifier</param>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.IUserManagementWithCertificateSecurity.ExecuteReadOperation(Fujitsu.Utilities.UserManagement.Contract.Operations.Read.UserManagementReadOperation)">
+            <summary>
+            Executes Data retrieval operations (By Key, By Criteria)
+            </summary>
+            <param name="userManagementReadOperation">/// Read operation derived from UserManagementReadOperation</param>
+            <returns>/// Requested data according to operation</returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.IUserManagementWithCertificateSecurity.ExecuteUpdateOperation(Fujitsu.Utilities.UserManagement.Contract.Operations.Update.UserManagementUpdateOperation)">
+            <summary>
+            Executes Data Modifying operations (Create, Update, Delete for Worker and OperatorGroup; Password related)
+            </summary>
+            <param name="userManagementUpdateOperation">/// Update operation derived from UserManagementUpdateOperation</param>
+            <returns>/// Update result containing Errors list</returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.AddressType">
+            <summary>
+            TBD
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.AddressType.AddressType1">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.AddressType.Description">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.AddressType.PartyAddresses">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.AddressType.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Address">
+            <summary>
+            TBD
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Address.AddressID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Address.AddressLine1">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Address.AddressLine2">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Address.AddressLine3">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Address.AddressLine4">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Address.City">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Address.ISOTerritoryID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Address.PostalCode">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Address.PostalCodeExtension">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Address.ISOCountryID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Address.PartyAddresses">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Address.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.EmailAddress">
+            <summary>
+            TBD
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.EmailAddress.EmailAddressID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.EmailAddress.LocalPart">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.EmailAddress.DomainPart">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.EmailAddress.PartyEmails">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.EmailAddress.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.EmailType">
+            <summary>
+            TBD
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.EmailType.EmailType1">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.EmailType.Description">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.EmailType.PartyEmails">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.EmailType.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Language">
+            <summary>
+            TBD
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Language.LanguageID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Language.LanguageName">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Language.ParentLanguageID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Language.People">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Language.ReasonCodeDescriptions">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Language.SellingLocations">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Language.Workers">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Language.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetOperatorGroupByIdOperation">
+            <summary>
+            GetOperatorGroupByIdOperation for User Management serviceContains operation parameter
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetOperatorGroupByIdOperation.OperatorGroupID">
+            <summary>
+            Gets or sets the operator group identifier.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetOperatorGroupByIdOperation.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetOperatorGroupByIdOperationResult">
+            <summary>
+            GetOperatorGroupByIdOperationResult for GetOperatorGroupByIdOperation
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetOperatorGroupByIdOperationResult.OperatorGroup">
+            <summary>
+            Returned OperatorGroup
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetOperatorGroupByIdOperationResult.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetOperatorGroupSecurityPointsOperation">
+            <summary>
+            GetOperatorGroupSecurityPointsOperation for User Management serviceContains operation parameter
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetOperatorGroupSecurityPointsOperation.OperatorGroupId">
+            <summary>
+            OperatorGroup id for operation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetOperatorGroupSecurityPointsOperation.ConfigPoint">
+            <summary>
+            ConfigPoint for operation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetOperatorGroupSecurityPointsOperation.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetOperatorGroupSecurityPointsOperationResult">
+            <summary>
+            GetOperatorGroupSecurityPointsOperationResult for GetOperatorGroupSecurityPointsOperation
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetOperatorGroupSecurityPointsOperationResult.SecurityPointIds">
+            <summary>
+            Gets or sets the security point ids.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetOperatorGroupSecurityPointsOperationResult.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.CheckIfPasswordIsExpiredOperation">
+            <summary>
+            Checks if password is expired for specified worker
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.CheckIfPasswordIsExpiredOperation.WorkerId">
+            <summary>
+            Worker id for operation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.CheckIfPasswordIsExpiredOperation.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.CheckIfPasswordIsExpiredOperationResult">
+            <summary>
+            Result of performing the CheckIfPasswordIsExpired operation
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.CheckIfPasswordIsExpiredOperationResult.IsExpired">
+            <summary>
+            True if password is expired, otherwise false.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.CheckIfPasswordIsExpiredOperationResult.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetOperatorGroupsOperation">
+            <summary>
+            GetOperatorGroupsOperation for User Management serviceContains operation parameter
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetOperatorGroupsOperation.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetOperatorGroupsOperationResult">
+            <summary>
+            GetOperatorGroupsOperationResult for GetOperatorGroupsOperation
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetOperatorGroupsOperationResult.OperatorGroups">
+            <summary>
+            Returned OperatorGroup
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetOperatorGroupsOperationResult.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetPasswordChangeRequiredOperation">
+            <summary>
+            GetPasswordChangeRequiredOperation for User Management serviceContains operation parameter
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetPasswordChangeRequiredOperation.WorkerId">
+            <summary>
+            Worker id for operation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetPasswordChangeRequiredOperation.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetPasswordChangeRequiredOperationResult">
+            <summary>
+            GetPasswordChangeRequiredOperationResult for GetPasswordChangeRequiredOperation
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetPasswordChangeRequiredOperationResult.IsRequired">
+            <summary>
+            Whether password change is required
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetPasswordChangeRequiredOperationResult.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetWorkerByIdOperation">
+            <summary>
+            UserManagementReadOperation for User Management serviceContains operation parameter
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetWorkerByIdOperation.WorkerId">
+            <summary>
+            Worker id for operation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetWorkerByIdOperation.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetWorkerByIdOperationResult">
+            <summary>
+            GetWorkerByIdOperationResult for GetWorkerByIdOperation
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetWorkerByIdOperationResult.Worker">
+            <summary>
+            Returned worker detail
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetWorkerByIdOperationResult.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetWorkerByOperatorIdOperation">
+            <summary>
+            GetWorkerByOperatorIdOperation for User Management serviceContains operation parameter
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetWorkerByOperatorIdOperation.ConfigPoint">
+            <summary>
+            ConfigPoint for operation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetWorkerByOperatorIdOperation.OperatorId">
+            <summary>
+            Operator id for operation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetWorkerByOperatorIdOperation.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetWorkerByOperatorIdOperationResult">
+            <summary>
+            GetWorkerByOperatorIdOperationResult for GetWorkerByOperatorIdOperation
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetWorkerByOperatorIdOperationResult.Worker">
+            <summary>
+            Returned worker detail
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetWorkerByOperatorIdOperationResult.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetWorkersByCriteriaOperation">
+            <summary>
+            GetWorkersByCriteriaOperation for User Management serviceContains operation parametersNote: it is not clear which parameters should contain the criteria - requirements were not received. Delete that comment when requirements for criteria will be received and implemented.
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetWorkersByCriteriaOperation.WorkerHireDateFrom">
+            <summary>
+            Worker's hire date from
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetWorkersByCriteriaOperation.WorkerHireDateTo">
+            <summary>
+            Worker's hire date to
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetWorkersByCriteriaOperation.OperatorGroupId">
+            <summary>
+            Operator group id
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetWorkersByCriteriaOperation.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetWorkersByCriteriaOperationResult">
+            <summary>
+            GetWorkersByCriteriaOperationResult for GetWorkersByCriteriaOperation
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetWorkersByCriteriaOperationResult.Workers">
+            <summary>
+            Returned worker
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.GetWorkersByCriteriaOperationResult.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.UserManagementReadOperation">
+            <summary>
+            Base class for UserManagement ReadOperation
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.UserManagementReadOperation.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.UserManagementReadOperationResult">
+            <summary>
+            Base class for UserManagement ReadOperationResult
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.UserManagementReadOperationResult.Errors">
+            <summary>
+            Errors list
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Read.UserManagementReadOperationResult.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.AddSecurityPointsToOperatorGroupOperation">
+            <summary>
+            AddSecurityPointsToOperatorGroup for User Management serviceContains operation parameter
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.AddSecurityPointsToOperatorGroupOperation.OperatorGroupId">
+            <summary>
+            OperatorGroup id for operation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.AddSecurityPointsToOperatorGroupOperation.ConfigPoint">
+            <summary>
+            ConfigPoint for operation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.AddSecurityPointsToOperatorGroupOperation.SecurityPointIDs">
+            <summary>
+            ConfigPoint for operation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.AddSecurityPointsToOperatorGroupOperation.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.AddSecurityPointsToOperatorGroupOperationResult">
+            <summary>
+            AddSecurityPointsToOperatorGroupOperationResult for AddSecurityPointsToOperatorGroupOperation
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.AddSecurityPointsToOperatorGroupOperationResult.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.AsyncPasswordReplicationOperation">
+            <summary>
+            AsyncPasswordReplicationOperation for User Management serviceContains operation parametersNOTE!: only to be used by StoreCENTER
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.AsyncPasswordReplicationOperation.PasswordEncrypted">
+            <summary>
+            Password
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.AsyncPasswordReplicationOperation.PasswordCreationTime">
+            <summary>
+            Password Creation Time (need this to guarantee al DBs have same value)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.AsyncPasswordReplicationOperation.WorkerId">
+            <summary>
+            Worker id for operation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.AsyncPasswordReplicationOperation.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.DeleteSecurityPointsFromOperatorGroupOperation">
+            <summary>
+            DeleteSecurityPointsToOperatorGroup for User Management serviceContains operation parameter
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.DeleteSecurityPointsFromOperatorGroupOperation.OperatorGroupId">
+            <summary>
+            OperatorGroup id for operation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.DeleteSecurityPointsFromOperatorGroupOperation.ConfigPoint">
+            <summary>
+            ConfigPoint for operation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.DeleteSecurityPointsFromOperatorGroupOperation.SecurityPointIDs">
+            <summary>
+            ConfigPoint for operation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.DeleteSecurityPointsFromOperatorGroupOperation.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.DeleteSecurityPointsFromOperatorGroupOperationResult">
+            <summary>
+            DeleteSecurityPointsFromOperatorGroupOperationResult for DeleteSecurityPointsFromOperatorGroupOperation
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.DeleteSecurityPointsFromOperatorGroupOperationResult.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.PasswordCreateOperation">
+            <summary>
+            PasswordCreateOperation for User Management service
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.PasswordCreateOperation.WorkerID">
+            <summary>
+            Worker ID
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.PasswordCreateOperation.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.PasswordReplicationOperation">
+            <summary>
+            PasswordReplicationOperation for User Management serviceContains operation parameter
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.PasswordReplicationOperation.WorkerIds">
+            <summary>
+            Worker id for operation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.PasswordReplicationOperation.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.PasswordReplicationOperationResult">
+            <summary>
+            PasswordReplicationOperation for User Management serviceContains operation parameter
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.PasswordReplicationOperationResult.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.AsyncPasswordChangeOperation">
+            <summary>
+            AsyncPasswordChangeOperation for User Management serviceContains operation parametersNOTE!: not to be used by StoreCENTER
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.AsyncPasswordChangeOperation.WorkerId">
+            <summary>
+            Worker id for operation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.AsyncPasswordChangeOperation.PasswordCreationTime">
+            <summary>
+            Password Creation Time (need this to guarantee al DBs have same value)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.AsyncPasswordChangeOperation.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.AsyncPasswordResetOperation">
+            <summary>
+            AsyncPasswordResetOperation for User Management serviceContains operation parametersNOTE!: not to be used by StoreCENTER
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.AsyncPasswordResetOperation.NewPassword">
+            <summary>
+            New Password
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.AsyncPasswordResetOperation.PasswordCreationTime">
+            <summary>
+            Password Creation Time (need this to guarantee al DBs have same value)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.AsyncPasswordResetOperation.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.CreateOperatorGroupOperation">
+            <summary>
+            CreateOperatorGroupOperation for User Management serviceContains operation parameter
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.CreateOperatorGroupOperation.OperatorGroup">
+            <summary>
+            OperatorGroup data for operation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.CreateOperatorGroupOperation.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.CreateOperatorGroupOperationResult">
+            <summary>
+            CreateOperatorGroupOperationResult for CreateOperatorGroupOperation
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.CreateOperatorGroupOperationResult.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.CreateWorkerOperation">
+            <summary>
+            CreateWorkerOperation for User Management serviceContains operation parameter
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.CreateWorkerOperation.Worker">
+            <summary>
+            Worker data for operation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.CreateWorkerOperation.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.CreateWorkerOperationResult">
+            <summary>
+            CreateWorkerOperationResult for CreateWorkerOperation
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.CreateWorkerOperationResult.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.DeleteOperatorGroupOperation">
+            <summary>
+            DeleteOperatorGroupOperation for User Management serviceContains operation parameter
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.DeleteOperatorGroupOperation.OperatorGroupId">
+            <summary>
+            OperatorGroup id for operation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.DeleteOperatorGroupOperation.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.DeleteOperatorGroupOperationResult">
+            <summary>
+            DeleteOperatorGroupOperationResult for DeleteOperatorGroupOperation
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.DeleteOperatorGroupOperationResult.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.DeleteWorkerOperation">
+            <summary>
+            DeleteWorkerOperation for User Management serviceContains operation parameter
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.DeleteWorkerOperation.WorkerId">
+            <summary>
+            Worker id for operation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.DeleteWorkerOperation.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.DeleteWorkerOperationResult">
+            <summary>
+            DeleteWorkerOperationResult for DeleteWorkerOperation
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.DeleteWorkerOperationResult.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.PasswordChangeOperation">
+            <summary>
+            PasswordChangeOperation for User Management serviceContains operation parameter
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.PasswordChangeOperation.NewPasswordEncrypted">
+            <summary>
+            New password
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.PasswordChangeOperation.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.PasswordChangeOperationResult">
+            <summary>
+            PasswordChangeOperationResult for PasswordChangeOperation
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.PasswordChangeOperationResult.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.PasswordResetOperation">
+            <summary>
+            PasswordResetOperation for User Management serviceContains operation parameter
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.PasswordResetOperation.WorkerId">
+            <summary>
+            Worker id for operation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.PasswordResetOperation.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.PasswordResetOperationResult">
+            <summary>
+            PasswordResetOperationResult for PasswordResetOperation
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.PasswordResetOperationResult.GeneratedPassword">
+            <summary>
+            Generated Password
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.PasswordResetOperationResult.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.UnlockWorkerOperation">
+            <summary>
+            UnlockWorkerOperation for User Management serviceContains operation parameter
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.UnlockWorkerOperation.WorkerId">
+            <summary>
+            Worker id for operation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.UnlockWorkerOperation.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.UnlockWorkerOperationResult">
+            <summary>
+            UnlockWorkerOperationResult for UnlockWorkerOperation
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.UnlockWorkerOperationResult.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.UpdateOperationError">
+            <summary>
+            UpdateOperationError description
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.UpdateOperationError.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.UpdateOperatorGroupOperation">
+            <summary>
+            CreateOperatorGroupOperation for User Management serviceContains operation parameter
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.UpdateOperatorGroupOperation.OperatorGroup">
+            <summary>
+            OperatorGroup data for operation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.UpdateOperatorGroupOperation.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.UpdateOperatorGroupOperationResult">
+            <summary>
+            UpdateOperatorGroupOperationResult for CreateOperatorGroupOperation
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.UpdateOperatorGroupOperationResult.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.UpdateWorkerOperation">
+            <summary>
+            UpdateWorkerOperation for User Management serviceContains operation parameter
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.UpdateWorkerOperation.Worker">
+            <summary>
+            Worker data for operation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.UpdateWorkerOperation.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.UpdateWorkerOperationResult">
+            <summary>
+            UpdateWorkerOperationResult for UpdateWorkerOperation
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.UpdateWorkerOperationResult.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.UserManagementOperatorGroupUpdateOperation">
+            <summary>
+            Base class for UserManagement OperatorGroupUpdateOperation
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.UserManagementOperatorGroupUpdateOperation.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.UserManagementSecurityUpdateOperation">
+            <summary>
+            Base class for UserManagement SecurityUpdateOperation
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.UserManagementSecurityUpdateOperation.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.UserManagementUpdateOperation">
+            <summary>
+            Base class for UserManagement UpdateOperation
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.UserManagementUpdateOperation.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.UserManagementUpdateOperationResult">
+            <summary>
+            Base class for UserManagement UserManagementUpdateOperationResult
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.UserManagementUpdateOperationResult.Errors">
+            <summary>
+            Errors list
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.UserManagementUpdateOperationResult.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.UserManagementWorkerUpdateOperation">
+            <summary>
+            Base class for UserManagement WorkerUpdateOperation
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Operations.Update.UserManagementWorkerUpdateOperation.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.PartyAddress">
+            <summary>
+            TBD
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PartyAddress.PartyID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PartyAddress.AddressID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PartyAddress.AddressType">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PartyAddress.Party">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PartyAddress.Address">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PartyAddress.AddressType1">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.PartyAddress.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.PartyEmail">
+            <summary>
+            TBD
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PartyEmail.PartyID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PartyEmail.EMailAddressID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PartyEmail.EmailType">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PartyEmail.Party">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PartyEmail.EmailAddress">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PartyEmail.EmailType1">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.PartyEmail.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.PartyTelephone">
+            <summary>
+            TBD
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PartyTelephone.PartyID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PartyTelephone.TelephoneID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PartyTelephone.TelephoneType">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PartyTelephone.Party">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PartyTelephone.Telephone">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PartyTelephone.TelephoneType1">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.PartyTelephone.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Party">
+            <summary>
+            TBD
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Party.PartyID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Party.PartyType">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Party.PartyAddresses">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Party.PartyEmails">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Party.PartyTelephones">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Party.Person">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Party.SellingLocations">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Party.Workers">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Party.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.WorkerBase">
+            <summary>
+            TBD
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.WorkerBase.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.PasswordValidation.IPasswordValidator">
+            <summary>
+                Interface for validation password status (e.g. expired or not, password change required)
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.PasswordValidation.IPasswordValidator.Validate(Fujitsu.Contract.Authentication.PasswordInfo)">
+            <summary>
+                Validates a password of specified worker (e.g. expired or not, password change required)
+            </summary>
+            <param name="latestPasswordInfo">Latest password info</param>
+            <returns>Password validation result</returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.PasswordValidation.PasswordValidationResult">
+            <summary>
+                Password Validation Result
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PasswordValidation.PasswordValidationResult.Errors">
+            <summary>
+                Password validation errors
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.KnownTypesProvider">
+            <summary>
+                Known types for User Management services to be able to serialize/deserialize
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.KnownTypesProvider.GetKnownTypes(System.Reflection.ICustomAttributeProvider)">
+            <summary>
+                Gets list of Known types for User Management services to be able to serialize/deserialize
+            </summary>
+            <param name="provider">Not used</param>
+            <returns>List of known types</returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.PasswordValidationError">
+            <summary>
+            Container for validation errors related to password validation
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.PasswordValidationError.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Password">
+            <summary>
+            TBD
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Password.WorkerID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Password.CreationDate">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Password.PasswordValue">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Password.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.PersonAddress">
+            <summary>
+            TBD
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PersonAddress.AddressID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PersonAddress.AddressType">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PersonAddress.AddressLine1">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PersonAddress.AddressLine2">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PersonAddress.AddressLine3">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PersonAddress.AddressLine4">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PersonAddress.City">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PersonAddress.ISOTerritoryID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PersonAddress.PostalCode">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PersonAddress.PostalCodeExtension">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PersonAddress.ISOCountryID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.PersonAddress.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.PersonEmail">
+            <summary>
+            TBD
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PersonEmail.EmailAddressID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PersonEmail.EmailType">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PersonEmail.DomainPart">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PersonEmail.LocalPart">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.PersonEmail.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.PersonTelephone">
+            <summary>
+            TBD
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PersonTelephone.TelephoneID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PersonTelephone.TelephoneType">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PersonTelephone.ITTCountryCode">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PersonTelephone.AreaCode">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PersonTelephone.LocalNumber">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PersonTelephone.ExtensionNumber">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PersonTelephone.PhoneNumberComplete">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.PersonTelephone.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Person">
+            <summary>
+            TBD
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Person.PartyID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Person.LanguageID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Person.Salutation">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Person.FirstName">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Person.MiddleNames">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Person.LastName">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Person.Suffix">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Person.GenderType">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Person.BirthYear">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Person.BirthMonth">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Person.BirthDay">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Person.SortingName">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Person.MailingName">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Person.OfficialName">
+            <summary>
+            Official name
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Person.SocialSecurityNumber">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Person.PersonAddresses">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Person.PersonEmails">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Person.PersonTelephones">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Person.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.ReadOperationError">
+            <summary>
+            ReadOperationError description
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.ReadOperationError.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.ReasonCodeDescription">
+            <summary>
+            TBD
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.ReasonCodeDescription.ReasonCodeID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.ReasonCodeDescription.LanguageID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.ReasonCodeDescription.Description">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.ReasonCodeDescription.Language">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.ReasonCodeDescription.ReasonCode">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.ReasonCodeDescription.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.ReasonCodeGroupList">
+            <summary>
+            TBD
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.ReasonCodeGroupList.ReasonCodeGroupID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.ReasonCodeGroupList.ReasonCodeID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.ReasonCodeGroupList.ReasonCode">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.ReasonCodeGroupList.ReasonCodeGroup">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.ReasonCodeGroupList.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.ReasonCodeGroup">
+            <summary>
+            TBD
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.ReasonCodeGroup.ReasonCodeGroupID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.ReasonCodeGroup.Description">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.ReasonCodeGroup.Enabled">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.ReasonCodeGroup.ReasonCodeGroupLists">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.ReasonCodeGroup.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.ReasonCode">
+            <summary>
+            TBD
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.ReasonCode.ReasonCodeID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.ReasonCode.Description">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.ReasonCode.ReasonCodeValue">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.ReasonCode.ReasonCodeDescriptions">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.ReasonCode.ReasonCodeGroupLists">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.ReasonCode.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.SellingLocation">
+            <summary>
+            TBD
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.SellingLocation.SellingLocationID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.SellingLocation.LocationCode">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.SellingLocation.Description">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.SellingLocation.ConfigPoint">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.SellingLocation.PartyID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.SellingLocation.TaxID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.SellingLocation.CurrencyCode">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.SellingLocation.TaxRegionID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.SellingLocation.DefaultLanguageID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.SellingLocation.StartOfWeek">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.SellingLocation.Language">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.SellingLocation.Party">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.SellingLocation.WorkerOperatorSellLocations">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.SellingLocation.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.TelephoneType">
+            <summary>
+            TBD
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.TelephoneType.TelephoneType1">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.TelephoneType.Description">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.TelephoneType.PartyTelephones">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.TelephoneType.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.Telephone">
+            <summary>
+            TBD
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Telephone.TelephoneID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Telephone.ITTCountryCode">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Telephone.AreaCode">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Telephone.LocalNumber">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Telephone.ExtensionNumber">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Telephone.PhoneNumberComplete">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.Telephone.PartyTelephones">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.Telephone.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.ErrorBase">
+            <summary>
+            Base class for User Management Error
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.ErrorBase.ErrorCode">
+            <summary>
+            Error Code
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.ErrorBase.Description">
+            <summary>
+            Error description
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.ErrorBase.ExceptionMessage">
+            <summary>
+            Exception message
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.ErrorBase.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.WorkerEx">
+            <summary>
+            TBD
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.WorkerEx.WorkerID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.WorkerEx.HireDate">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.WorkerEx.TerminationDate">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.WorkerEx.DefaultLanguageID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.WorkerEx.Person">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.WorkerEx.WorkerOperators">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.WorkerEx.WorkerOperatorSellLocations">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.WorkerEx.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.WorkerIdWithStatus">
+            <summary>
+            Encapsulates the identifier of worker and it's statu
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.WorkerIdWithStatus.Id">
+            <summary>
+            Worker identifier
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.WorkerIdWithStatus.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.WorkerOperatorGroup">
+            <summary>
+            TBD
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.WorkerOperatorGroup.ConfigPoint">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.WorkerOperatorGroup.WorkerID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.WorkerOperatorGroup.OperatorGroupID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.WorkerOperatorGroup.OperatorGroup">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.WorkerOperatorGroup.WorkerOperator">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.WorkerOperatorGroup.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.WorkerOperatorSellLocation">
+            <summary>
+            TBD
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.WorkerOperatorSellLocation.SellingLocationID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.WorkerOperatorSellLocation.DefaultTenderContainerID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.WorkerOperatorSellLocation.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.WorkerOperator">
+            <summary>
+            TBD
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.WorkerOperator.ConfigPoint">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.WorkerOperator.WorkerID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.WorkerOperator.OperatorID">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.WorkerOperator.DisplayName">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.WorkerOperator.OperatorGroupIDs">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.WorkerOperator.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.WorkerStatusInfo">
+            <summary>
+            Worker status info
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.WorkerStatusInfo.#ctor">
+            <summary>
+            TBD
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

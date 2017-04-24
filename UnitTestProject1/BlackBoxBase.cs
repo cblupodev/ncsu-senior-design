@@ -52,7 +52,7 @@ namespace UnitTest.BlackBox
             VerifyMapping();
         }
 
-        string projectUnderTest;
+        protected string projectUnderTest;
 
         public virtual void RunPreTransformCSTest()
         {
@@ -102,8 +102,8 @@ namespace UnitTest.BlackBox
             VerifyPostTransformTest();
         }
 
-        static string pathToCreateMappings = null;
-        static string pathToTransformClient = null;
+        static protected string pathToCreateMappings = null;
+        static protected string pathToTransformClient = null;
 
         static BlackBoxBase()
         {

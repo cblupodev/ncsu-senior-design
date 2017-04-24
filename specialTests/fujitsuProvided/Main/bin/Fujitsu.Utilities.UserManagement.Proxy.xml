@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Fujitsu.Utilities.UserManagement.Proxy</name>
+    </assembly>
+    <members>
+        <member name="T:Fujitsu.Utilities.UserManagement.Proxy.UserManagementProxy">
+            <summary>
+            Proxy for Synchronous Service that updates User Data (for StoreCENTER)
+            Read Operations are executed immediately and result is returned to caller
+            Update Operations are only validated and passed to UserManagementAsyncUpdateService which does actual updates. Validation errors are returned to caller
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Proxy.UserManagementProxy.#ctor">
+            <summary>
+            Default constructor uses router.
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Proxy.UserManagementProxy.#ctor(System.String)">
+            <summary>
+            Override default constructor which will default to using the router. 
+            </summary>
+            <param name="remoteHostAddress">Provide alternate URI for User Management Service.</param>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Proxy.UserManagementProxy.Initialize(Fujitsu.Infrastructure.Contract.ExecutionEnvironment.NetworkIdentifier)">
+            <summary>
+            Initializes the EE
+            </summary>
+            <param name="networkIdentifier">Network identifier</param>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Proxy.UserManagementProxy.ExecuteReadOperation(Fujitsu.Utilities.UserManagement.Contract.UserManagementReadOperation)">
+            <summary>
+            Executes desired Read Operation
+            Read Operations are executed immediately and result is returned to caller
+            Actual operation execution is Dispatched to concrete operation handler method according to operation type
+            </summary>
+            <param name="userManagementReadOperation">UserManagementReadOperation</param>
+            <returns>UserManagementReadOperationResult</returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Proxy.UserManagementProxy.ExecuteUpdateOperation(Fujitsu.Utilities.UserManagement.Contract.UserManagementUpdateOperation)">
+            <summary>
+            Executes desired Update Operation
+            Operation execution is Dispatched to concrete operation handler method according to operation type
+            Update Operations are only validated and passed to UserManagementAsyncUpdateService which does actual updates. Validation errors are returned to caller
+            </summary>
+            <param name="userManagementUpdateOperation">UserManagementUpdateOperation</param>
+            <returns>UserManagementReadOperationResult</returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Proxy.UserManagementAsyncUpdateProxy">
+            <summary>
+            Proxy for User Management Asynchronous Update Service
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Proxy.UserManagementAsyncUpdateProxy.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Proxy.UserManagementAsyncUpdateProxy.ExecuteAsyncUpdateOperation(Fujitsu.Utilities.UserManagement.Contract.UserManagementUpdateOperation)">
+            <summary>
+            Executes Asynchronous Update Operation
+            </summary>
+            <param name="userManagementUpdateOperation">User Management Update Operation</param>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Proxy.UserManagementProxyWithCertificateSecurity">
+            <summary>
+            Proxy for Synchronous Service that updates User Data. The proxy uses certificate security.
+            Read Operations are executed immediately and result is returned to caller
+            Update Operations are only validated and passed to UserManagementAsyncUpdateService which does actual updates. Validation errors are returned to caller
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Proxy.UserManagementProxyWithCertificateSecurity.#ctor">
+            <summary>
+            Default constructor uses router.
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Proxy.UserManagementProxyWithCertificateSecurity.#ctor(System.String)">
+            <summary>
+            Override default constructor which will default to using the router. 
+            </summary>
+            <param name="remoteHostAddress">Provide alternate URI for User Management Service.</param>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Proxy.UserManagementProxyWithCertificateSecurity.Initialize(Fujitsu.Infrastructure.Contract.ExecutionEnvironment.NetworkIdentifier)">
+            <summary>
+            Initializes the EE
+            </summary>
+            <param name="networkIdentifier">Network identifier</param>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Proxy.UserManagementProxyWithCertificateSecurity.ExecuteReadOperation(Fujitsu.Utilities.UserManagement.Contract.UserManagementReadOperation)">
+            <summary>
+            Executes desired Read Operation
+            Read Operations are executed immediately and result is returned to caller
+            Actual operation execution is Dispatched to concrete operation handler method according to operation type
+            </summary>
+            <param name="userManagementReadOperation">UserManagementReadOperation</param>
+            <returns>UserManagementReadOperationResult</returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Proxy.UserManagementProxyWithCertificateSecurity.ExecuteUpdateOperation(Fujitsu.Utilities.UserManagement.Contract.UserManagementUpdateOperation)">
+            <summary>
+            Executes desired Update Operation
+            Operation execution is Dispatched to concrete operation handler method according to operation type
+            Update Operations are only validated and passed to UserManagementAsyncUpdateService which does actual updates. Validation errors are returned to caller
+            </summary>
+            <param name="userManagementUpdateOperation">UserManagementUpdateOperation</param>
+            <returns>UserManagementReadOperationResult</returns>
+        </member>
+    </members>
+</doc>

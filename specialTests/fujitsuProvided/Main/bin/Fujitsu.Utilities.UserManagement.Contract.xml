@@ -1,0 +1,829 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Fujitsu.Utilities.UserManagement.Contract</name>
+    </assembly>
+    <members>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.IUserManagement">
+            <summary>
+            Contract for synchronous UserManagement service
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.IUserManagement.ExecuteReadOperation(Fujitsu.Utilities.UserManagement.Contract.UserManagementReadOperation)">
+            <summary>
+            Executes Data retrieval operations (By Key, By Criteria)
+            </summary>
+            <param name="userManagementReadOperation">/// Read operation derived from UserManagementReadOperation</param>
+            <returns>/// Requested data according to operation</returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.IUserManagement.ExecuteUpdateOperation(Fujitsu.Utilities.UserManagement.Contract.UserManagementUpdateOperation)">
+            <summary>
+            Executes Data Modifying operations (Create, Update, Delete for Worker and OperatorGroup; Password related)
+            </summary>
+            <param name="userManagementUpdateOperation">/// Update operation derived from UserManagementUpdateOperation</param>
+            <returns>/// Update result containing Errors list</returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.IUserManagement.Initialize(Fujitsu.Infrastructure.Contract.ExecutionEnvironment.NetworkIdentifier)">
+            <summary>
+            Initializes the EE
+            </summary>
+            <param name="networkIdentifier">/// Network identifier</param>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.IUserManagementAsyncUpdate">
+            <summary>
+            Interface for asyncronous Data Modifying operations (Create, Update, Delete for Worker and OperatorGroup; Password related)
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.IUserManagementAsyncUpdate.ExecuteAsyncUpdateOperation(Fujitsu.Utilities.UserManagement.Contract.UserManagementUpdateOperation)">
+            <summary>
+            Executes Data Modifying operations (Create, Update, Delete for Worker and OperatorGroup; Password related)
+            </summary>
+            <param name="userManagementUpdateOperation">/// Update operation derived from UserManagementUpdateOperation</param>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.IUserManagementWithCertificateSecurity">
+            <summary>
+            Contract for synchronous UserManagement service with certificate security
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.IUserManagementWithCertificateSecurity.ExecuteReadOperation(Fujitsu.Utilities.UserManagement.Contract.UserManagementReadOperation)">
+            <summary>
+            Executes Data retrieval operations (By Key, By Criteria)
+            </summary>
+            <param name="userManagementReadOperation">/// Read operation derived from UserManagementReadOperation</param>
+            <returns>/// Requested data according to operation</returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.IUserManagementWithCertificateSecurity.ExecuteUpdateOperation(Fujitsu.Utilities.UserManagement.Contract.UserManagementUpdateOperation)">
+            <summary>
+            Executes Data Modifying operations (Create, Update, Delete for Worker and OperatorGroup; Password related)
+            </summary>
+            <param name="userManagementUpdateOperation">/// Update operation derived from UserManagementUpdateOperation</param>
+            <returns>/// Update result containing Errors list</returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.IUserManagementWithCertificateSecurity.Initialize(Fujitsu.Infrastructure.Contract.ExecutionEnvironment.NetworkIdentifier)">
+            <summary>
+            Initializes the EE
+            </summary>
+            <param name="networkIdentifier">/// Network identifier</param>
+            <returns></returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.GetOperatorGroupByIdOperation">
+            <summary>
+            GetOperatorGroupByIdOperation for User Management service
+            Contains operation parameters
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.GetOperatorGroupByIdOperation.OperatorGroupID">
+            <summary>
+            Gets or sets the operator group identifier.
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.GetOperatorGroupByIdOperationResult">
+            <summary>
+            GetOperatorGroupByIdOperationResult for GetOperatorGroupByIdOperation
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.GetOperatorGroupByIdOperationResult.OperatorGroup">
+            <summary>
+            Returned OperatorGroup
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.GetOperatorGroupSecurityPointsOperation">
+            <summary>
+            GetOperatorGroupSecurityPointsOperation for User Management service
+            Contains operation parameters
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.GetOperatorGroupSecurityPointsOperation.OperatorGroupId">
+            <summary>
+            OperatorGroup id for operation
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.GetOperatorGroupSecurityPointsOperation.ConfigPoint">
+            <summary>
+            ConfigPoint for operation
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.GetOperatorGroupSecurityPointsOperationResult">
+            <summary>
+            GetOperatorGroupSecurityPointsOperationResult for GetOperatorGroupSecurityPointsOperation
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.GetOperatorGroupSecurityPointsOperationResult.SecurityPointIds">
+            <summary>
+            Gets or sets the security point ids.
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.AddSecurityPointsToOperatorGroupOperation">
+            <summary>
+            AddSecurityPointsToOperatorGroup for User Management service
+            Contains operation parameters
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.AddSecurityPointsToOperatorGroupOperation.OperatorGroupId">
+            <summary>
+            OperatorGroup id for operation
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.AddSecurityPointsToOperatorGroupOperation.ConfigPoint">
+            <summary>
+            ConfigPoint for operation
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.AddSecurityPointsToOperatorGroupOperation.SecurityPointIDs">
+            <summary>
+            ConfigPoint for operation
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.AddSecurityPointsToOperatorGroupOperationResult">
+            <summary>
+            AddSecurityPointsToOperatorGroupOperationResult for AddSecurityPointsToOperatorGroupOperation
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.AsyncPasswordReplicationOperation">
+            <summary>
+            AsyncPasswordReplicationOperation for User Management service
+            Contains operation parameters
+            NOTE!: only to be used by StoreCENTER
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.AsyncPasswordReplicationOperation.PasswordEncrypted">
+            <summary>
+            Password
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.AsyncPasswordReplicationOperation.PasswordCreationTime">
+            <summary>
+            Password Creation Time (need this to guarantee al DBs have same value)
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.AsyncPasswordReplicationOperation.WorkerId">
+            <summary>
+            Worker id for operation
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.DeleteSecurityPointsFromOperatorGroupOperation">
+            <summary>
+            DeleteSecurityPointsToOperatorGroup for User Management service
+            Contains operation parameters
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.DeleteSecurityPointsFromOperatorGroupOperation.OperatorGroupId">
+            <summary>
+            OperatorGroup id for operation
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.DeleteSecurityPointsFromOperatorGroupOperation.ConfigPoint">
+            <summary>
+            ConfigPoint for operation
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.DeleteSecurityPointsFromOperatorGroupOperation.SecurityPointIDs">
+            <summary>
+            ConfigPoint for operation
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.DeleteSecurityPointsFromOperatorGroupOperationResult">
+            <summary>
+            DeleteSecurityPointsFromOperatorGroupOperationResult for DeleteSecurityPointsFromOperatorGroupOperation
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.PasswordCreateOperation">
+            <summary>
+            PasswordCreateOperation for User Management service
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PasswordCreateOperation.WorkerID">
+            <summary>
+            Worker ID
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.PasswordReplicationOperation">
+            <summary>
+            PasswordReplicationOperation for User Management service
+            Contains operation parameters
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PasswordReplicationOperation.WorkerIds">
+            <summary>
+            Worker id for operation
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.PasswordReplicationOperationResult">
+            <summary>
+            PasswordReplicationOperation for User Management service
+            Contains operation parameters
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.IPasswordValidator">
+            <summary>
+            Interface for validation password status (e.g. expired or not, password change required)
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.IPasswordValidator.Validate(Fujitsu.Utilities.Security.DataAccess.Contract.PasswordInfo)">
+            <summary>
+            Validates a password of specified worker (e.g. expired or not, password change required)
+            </summary>
+            <param name="latestPasswordInfo">Latest password info</param>
+            <returns>Password validation result</returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.CheckIfPasswordIsExpiredOperation">
+            <summary>
+            Checks if password is expired for specified worker
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.CheckIfPasswordIsExpiredOperation.WorkerId">
+            <summary>
+            Worker id for operation
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.CheckIfPasswordIsExpiredOperationResult">
+            <summary>
+            Result of performing the CheckIfPasswordIsExpired operation
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.CheckIfPasswordIsExpiredOperationResult.IsExpired">
+            <summary>
+            True if password is expired, otherwise false.
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.AsyncPasswordChangeOperation">
+            <summary>
+            AsyncPasswordChangeOperation for User Management service
+            Contains operation parameters
+            NOTE!: not to be used by StoreCENTER
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.AsyncPasswordChangeOperation.PasswordCreationTime">
+            <summary>
+            Password Creation Time (need this to guarantee al DBs have same value)
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.AsyncPasswordChangeOperation.WorkerId">
+            <summary>
+            Worker id for operation
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.AsyncPasswordResetOperation">
+            <summary>
+            AsyncPasswordResetOperation for User Management service
+            Contains operation parameters
+            NOTE!: not to be used by StoreCENTER
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.AsyncPasswordResetOperation.NewPassword">
+            <summary>
+            New Password
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.AsyncPasswordResetOperation.PasswordCreationTime">
+            <summary>
+            Password Creation Time (need this to guarantee al DBs have same value)
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.CreateOperatorGroupOperation">
+            <summary>
+            CreateOperatorGroupOperation for User Management service
+            Contains operation parameters
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.CreateOperatorGroupOperation.OperatorGroup">
+            <summary>
+            OperatorGroup data for operation
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.CreateOperatorGroupOperationResult">
+            <summary>
+            CreateOperatorGroupOperationResult for CreateOperatorGroupOperation
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.CreateWorkerOperation">
+            <summary>
+            CreateWorkerOperation for User Management service
+            Contains operation parameters
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.CreateWorkerOperation.Worker">
+            <summary>
+            Worker data for operation
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.CreateWorkerOperationResult">
+            <summary>
+            CreateWorkerOperationResult for CreateWorkerOperation
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.DeleteOperatorGroupOperation">
+            <summary>
+            DeleteOperatorGroupOperation for User Management service
+            Contains operation parameters
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.DeleteOperatorGroupOperation.OperatorGroupId">
+            <summary>
+            OperatorGroup id for operation
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.DeleteOperatorGroupOperationResult">
+            <summary>
+            DeleteOperatorGroupOperationResult for DeleteOperatorGroupOperation
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.DeleteWorkerOperation">
+            <summary>
+            DeleteWorkerOperation for User Management service
+            Contains operation parameters
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.DeleteWorkerOperation.WorkerId">
+            <summary>
+            Worker id for operation
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.DeleteWorkerOperationResult">
+            <summary>
+            DeleteWorkerOperationResult for DeleteWorkerOperation
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.GetOperatorGroupsOperation">
+            <summary>
+            GetOperatorGroupsOperation for User Management service
+            Contains operation parameters
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.GetOperatorGroupsOperationResult">
+            <summary>
+            GetOperatorGroupsOperationResult for GetOperatorGroupsOperation
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.GetOperatorGroupsOperationResult.OperatorGroups">
+            <summary>
+            Returned OperatorGroups
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.GetPasswordChangeRequiredOperation">
+            <summary>
+            GetPasswordChangeRequiredOperation for User Management service
+            Contains operation parameters
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.GetPasswordChangeRequiredOperation.WorkerId">
+            <summary>
+            Worker id for operation
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.GetPasswordChangeRequiredOperationResult">
+            <summary>
+            GetPasswordChangeRequiredOperationResult for GetPasswordChangeRequiredOperation
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.GetPasswordChangeRequiredOperationResult.IsRequired">
+            <summary>
+            Whether password change is required
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.GetWorkerByIdOperation">
+            <summary>
+            UserManagementReadOperation for User Management service
+            Contains operation parameters
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.GetWorkerByIdOperation.WorkerId">
+            <summary>
+            Worker id for operation
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.GetWorkerByIdOperationResult">
+            <summary>
+            GetWorkerByIdOperationResult for GetWorkerByIdOperation
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.GetWorkerByIdOperationResult.Worker">
+            <summary>
+            Returned worker details
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.GetWorkerByOperatorIdOperation">
+            <summary>
+            GetWorkerByOperatorIdOperation for User Management service
+            Contains operation parameters
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.GetWorkerByOperatorIdOperation.ConfigPoint">
+            <summary>
+            ConfigPoint for operation
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.GetWorkerByOperatorIdOperation.OperatorId">
+            <summary>
+            Operator id for operation
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.GetWorkerByOperatorIdOperationResult">
+            <summary>
+            GetWorkerByOperatorIdOperationResult for GetWorkerByOperatorIdOperation
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.GetWorkerByOperatorIdOperationResult.Worker">
+            <summary>
+            Returned worker details
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.GetWorkersByCriteriaOperation">
+            <summary>
+            GetWorkersByCriteriaOperation for User Management service
+            Contains operation parameters
+            Note: it is not clear which parameters should contain the criteria - requirements were not received. Delete that comment when requirements for criteria will be received and implemented.
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.GetWorkersByCriteriaOperation.WorkerHireDateFrom">
+            <summary>
+            Worker's hire date from
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.GetWorkersByCriteriaOperation.WorkerHireDateTo">
+            <summary>
+            Worker's hire date to
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.GetWorkersByCriteriaOperation.OperatorGroupId">
+            <summary>
+            Operator group id
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.GetWorkersByCriteriaOperationResult">
+            <summary>
+            GetWorkersByCriteriaOperationResult for GetWorkersByCriteriaOperation
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.GetWorkersByCriteriaOperationResult.Workers">
+            <summary>
+            Returned workers
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.KnownTypesProvider">
+            <summary>
+            Known types for User Management services to be able to serialize/deserialize
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Contract.KnownTypesProvider.GetKnownTypes(System.Reflection.ICustomAttributeProvider)">
+            <summary>
+            Gets list of Known types for User Management services to be able to serialize/deserialize
+            </summary>
+            <param name="provider">Not used</param>
+            <returns>List of known types</returns>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.PasswordChangeOperation">
+            <summary>
+            PasswordChangeOperation for User Management service
+            Contains operation parameters
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PasswordChangeOperation.NewPasswordEncrypted">
+            <summary>
+            New password
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.PasswordChangeOperationResult">
+            <summary>
+            PasswordChangeOperationResult for PasswordChangeOperation
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.PasswordResetOperation">
+            <summary>
+            PasswordResetOperation for User Management service
+            Contains operation parameters
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PasswordResetOperation.WorkerId">
+            <summary>
+            Worker id for operation
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.PasswordResetOperationResult">
+            <summary>
+            PasswordResetOperationResult for PasswordResetOperation
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PasswordResetOperationResult.GeneratedPassword">
+            <summary>
+            Generated Password
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.PasswordValidationError">
+            <summary>
+            Container for validation errors related to password validation
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PasswordValidationError.System#Runtime#Serialization#IExtensibleDataObject#ExtensionData">
+            <summary>
+            used for extensibility
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.PasswordValidationResult">
+            <summary>
+            Password Validation Result
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.PasswordValidationResult.Errors">
+            <summary>
+            Password validation errors
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.ReadOperationError">
+            <summary>
+            ReadOperationError description
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.UnlockWorkerOperation">
+            <summary>
+            UnlockWorkerOperation for User Management service
+            Contains operation parameters
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.UnlockWorkerOperation.WorkerId">
+            <summary>
+            Worker id for operation
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.UnlockWorkerOperationResult">
+            <summary>
+            UnlockWorkerOperationResult for UnlockWorkerOperation
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.UpdateOperationError">
+            <summary>
+            UpdateOperationError description
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.UpdateOperatorGroupOperation">
+            <summary>
+            CreateOperatorGroupOperation for User Management service
+            Contains operation parameters
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.UpdateOperatorGroupOperation.OperatorGroup">
+            <summary>
+            OperatorGroup data for operation
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.UpdateOperatorGroupOperationResult">
+            <summary>
+            UpdateOperatorGroupOperationResult for CreateOperatorGroupOperation
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.UpdateWorkerOperation">
+            <summary>
+            UpdateWorkerOperation for User Management service
+            Contains operation parameters
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.UpdateWorkerOperation.Worker">
+            <summary>
+            Worker data for operation
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.UpdateWorkerOperationResult">
+            <summary>
+            UpdateWorkerOperationResult for UpdateWorkerOperation
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.UserManagementOperatorGroupUpdateOperation">
+            <summary>
+            Base class for UserManagement OperatorGroupUpdateOperations
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.UserManagementReadOperation">
+            <summary>
+            Base class for UserManagement ReadOperations
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.UserManagementReadOperation.System#Runtime#Serialization#IExtensibleDataObject#ExtensionData">
+            <summary>
+            Used for extensibility
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.UserManagementReadOperationResult">
+            <summary>
+            Base class for UserManagement ReadOperationResults
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.UserManagementReadOperationResult.Errors">
+            <summary>
+            Errors list
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.UserManagementReadOperationResult.System#Runtime#Serialization#IExtensibleDataObject#ExtensionData">
+            <summary>
+            Used for extensibility
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.UserManagementSecurityUpdateOperation">
+            <summary>
+            Base class for UserManagement SecurityUpdateOperations
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.UserManagementUpdateOperation">
+            <summary>
+            Base class for UserManagement UpdateOperations
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.UserManagementUpdateOperation.System#Runtime#Serialization#IExtensibleDataObject#ExtensionData">
+            <summary>
+            Used for extensibility
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.UserManagementUpdateOperationResult">
+            <summary>
+            Base class for UserManagement UserManagementUpdateOperationResult
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.UserManagementUpdateOperationResult.Errors">
+            <summary>
+            Errors list
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.UserManagementUpdateOperationResult.System#Runtime#Serialization#IExtensibleDataObject#ExtensionData">
+            <summary>
+            Used for extensibility
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.UserManagementWorkerUpdateOperation">
+            <summary>
+            Base class for UserManagement WorkerUpdateOperations
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Contract.ErrorBase">
+            <summary>
+            Base class for User Management Errors
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.ErrorBase.ErrorCode">
+            <summary>
+            Error Code
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.ErrorBase.Description">
+            <summary>
+            Error description
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.ErrorBase.ExceptionMessage">
+            <summary>
+            Exception message
+            </summary>
+        </member>
+        <member name="P:Fujitsu.Utilities.UserManagement.Contract.ErrorBase.System#Runtime#Serialization#IExtensibleDataObject#ExtensionData">
+            <summary>
+            Used for extensibility
+            </summary>
+        </member>
+        <member name="T:Fujitsu.Utilities.UserManagement.Engine.IUserManagementEngine">
+            <summary>
+            Contract for Engine that updates User Data
+            </summary>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Engine.IUserManagementEngine.AddSecurityPointsToOperatorGroup(Fujitsu.Utilities.UserManagement.Contract.AddSecurityPointsToOperatorGroupOperation)">
+            <summary>
+            Add security points to operator group operation. Update Operations are only validated and passed to UserManagementAsyncUpdateService which does actual updates. Validation errors are returned to caller.
+            </summary>
+            <param name="operation">/// Operation's data.</param>
+            <returns>/// Result with validation errors.</returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Engine.IUserManagementEngine.ChangePassword(System.String,Fujitsu.Utilities.UserManagement.Contract.PasswordChangeOperation)">
+            <summary>
+            Executes PasswordChangeOperation Update Operations are only validated and passed to UserManagementAsyncUpdateService which does actual updates. Validation errors are returned to caller
+            </summary>
+            <param name="workerId">/// Worker Id that is passed explicitely as Engine doesn't have access to ClaimsPrincipal's Name Claim</param>
+            <param name="passwordChangeOperation">/// PasswordChangeOperation</param>
+            <returns>/// PasswordChangeOperationResult</returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Engine.IUserManagementEngine.CheckPasswordExpired(Fujitsu.Utilities.UserManagement.Contract.CheckIfPasswordIsExpiredOperation)">
+            <summary>
+            Checks if password is expired
+            </summary>
+            <param name="operation">/// CheckIfPasswordIsExpiredOperation</param>
+            <returns>/// Result of performed operation</returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Engine.IUserManagementEngine.CreateOperatorGroup(Fujitsu.Utilities.UserManagement.Contract.CreateOperatorGroupOperation)">
+            <summary>
+            Executes CreateOperatorGroupOperation Update Operations are only validated and passed to UserManagementAsyncUpdateService which does actual updates. Validation errors are returned to caller
+            </summary>
+            <param name="operation">/// CreateOperatorGroupOperation</param>
+            <returns>/// CreateOperatorGroupOperationResult</returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Engine.IUserManagementEngine.CreateWorker(Fujitsu.Utilities.UserManagement.Contract.CreateWorkerOperation)">
+            <summary>
+            Executes CreateWorkerOperation Update Operations are only validated and passed to UserManagementAsyncUpdateService which does actual updates. Validation errors are returned to caller
+            </summary>
+            <param name="operation">/// CreateWorkerOperation</param>
+            <returns>/// CreateWorkerOperationResult</returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Engine.IUserManagementEngine.DeleteOperatorGroup(Fujitsu.Utilities.UserManagement.Contract.DeleteOperatorGroupOperation)">
+            <summary>
+            Delete operator group operation. Update Operations are only validated and passed to UserManagementAsyncUpdateService which does actual updates. Validation errors are returned to caller.
+            </summary>
+            <param name="operation">/// Operation's data.</param>
+            <returns>/// Result with validation errors.</returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Engine.IUserManagementEngine.DeleteSecurityPointsFromOperatorGroup(Fujitsu.Utilities.UserManagement.Contract.DeleteSecurityPointsFromOperatorGroupOperation)">
+            <summary>
+            Delete security points from operator group operation. Update Operations are only validated and passed to UserManagementAsyncUpdateService which does actual updates. Validation errors are returned to caller.
+            </summary>
+            <param name="operation">/// Operation's data.</param>
+            <returns>/// Result with validation errors.</returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Engine.IUserManagementEngine.DeleteWorker(Fujitsu.Utilities.UserManagement.Contract.DeleteWorkerOperation)">
+            <summary>
+            Delete worker operation. Update Operations are only validated and passed to UserManagementAsyncUpdateService which does actual updates. Validation errors are returned to caller.
+            </summary>
+            <param name="operation">/// Operation's data.</param>
+            <returns>/// Result with validation errors.</returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Engine.IUserManagementEngine.GetOperatorGroupById(Fujitsu.Utilities.UserManagement.Contract.GetOperatorGroupByIdOperation)">
+            <summary>
+            Gets operator group by Id.
+            </summary>
+            <param name="operation">/// Operation's data.</param>
+            <returns>/// Result with operator group.</returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Engine.IUserManagementEngine.GetOperatorGroups(Fujitsu.Utilities.UserManagement.Contract.GetOperatorGroupsOperation)">
+            <summary>
+            Gets all operator groups.
+            </summary>
+            <param name="operation">/// Operation's data.</param>
+            <returns>/// Result with operator groups.</returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Engine.IUserManagementEngine.GetOperatorGroupSecurityPoints(Fujitsu.Utilities.UserManagement.Contract.GetOperatorGroupSecurityPointsOperation)">
+            <summary>
+            Gets operator group by Id.
+            </summary>
+            <param name="operation">/// Operation's data.</param>
+            <returns>/// Result with operator group.</returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Engine.IUserManagementEngine.GetPasswordChangeRequired(Fujitsu.Utilities.UserManagement.Contract.GetPasswordChangeRequiredOperation)">
+            <summary>
+            Purpose of this operation is to check if PasswordChange is still Required Polling this method we figure out that PasswordChange completed and we can sign in using new password
+            </summary>
+            <param name="operation">/// GetPasswordChangeRequiredOperation</param>
+            <returns>/// Whether password already changed or not</returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Engine.IUserManagementEngine.GetWorkerById(Fujitsu.Utilities.UserManagement.Contract.GetWorkerByIdOperation)">
+            <summary>
+            Gets worker by id.
+            </summary>
+            <param name="operation">/// Operation's data with specified worker id.</param>
+            <returns>/// Result with worker data.</returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Engine.IUserManagementEngine.GetWorkerByOperatorId(Fujitsu.Utilities.UserManagement.Contract.GetWorkerByOperatorIdOperation)">
+            <summary>
+            Gets worker by operator id.
+            </summary>
+            <param name="operation">/// Operation's data with specified operator id.</param>
+            <returns>/// Result with worker data.</returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Engine.IUserManagementEngine.GetWorkersByCriteria(Fujitsu.Utilities.UserManagement.Contract.GetWorkersByCriteriaOperation)">
+            <summary>
+            Gets workers by criteria.
+            </summary>
+            <param name="operation">/// Operation's data with specified criteria.</param>
+            <returns>/// Result with workers data.</returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Engine.IUserManagementEngine.PasswordReplication(Fujitsu.Utilities.UserManagement.Contract.PasswordReplicationOperation)">
+            <summary>
+            Executes PasswordReplicationOperation Update Operations are only validated and passed to UserManagementAsyncUpdateService which does actual updates. Validation errors are returned to caller
+            </summary>
+            <param name="passwordReplicationOperation">/// PasswordReplicationOperation</param>
+            <returns>/// PasswordReplicationOperationResult</returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Engine.IUserManagementEngine.ResetPassword(Fujitsu.Utilities.UserManagement.Contract.PasswordResetOperation)">
+            <summary>
+            Executes PasswordResetOperation Update Operations are only validated and passed to UserManagementAsyncUpdateService which does actual updates. Validation errors are returned to caller
+            </summary>
+            <param name="passwordResetOperation">/// PasswordResetOperation</param>
+            <returns>/// PasswordResetOperationResult</returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Engine.IUserManagementEngine.UnlockWorker(Fujitsu.Utilities.UserManagement.Contract.UnlockWorkerOperation)">
+            <summary>
+            Executes UnlockWorkerOperation Update Operations are only validated and passed to UserManagementAsyncUpdateService which does actual updates. Validation errors are returned to caller
+            </summary>
+            <param name="unlockOperation">/// UnlockWorkerOperation</param>
+            <returns>/// UnlockWorkerOperationResult</returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Engine.IUserManagementEngine.UpdateOperatorGroup(Fujitsu.Utilities.UserManagement.Contract.UpdateOperatorGroupOperation)">
+            <summary>
+            Executes UpdateOperatorGroupOperation Update Operations are only validated and passed to UserManagementAsyncUpdateService which does actual updates. Validation errors are returned to caller
+            </summary>
+            <param name="operation">/// UpdateOperatorGroupOperation</param>
+            <returns>/// UpdateOperatorGroupOperationResult</returns>
+        </member>
+        <member name="M:Fujitsu.Utilities.UserManagement.Engine.IUserManagementEngine.UpdateWorker(Fujitsu.Utilities.UserManagement.Contract.UpdateWorkerOperation)">
+            <summary>
+            Executes UpdateWorkerOperation Update Operations are only validated and passed to UserManagementAsyncUpdateService which does actual updates. Validation errors are returned to caller
+            </summary>
+            <param name="operation">/// UpdateWorkerOperation</param>
+            <returns>/// UpdateWorkerOperationResult</returns>
+        </member>
+    </members>
+</doc>

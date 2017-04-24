@@ -139,6 +139,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="BlackBoxBase.cs" />
+    <Compile Include="BlackBoxSpecialTests.cs" />
     <Compile Include="BlackBoxTests.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -186,7 +187,8 @@
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /Y /S "$(SolutionDir)tests" "$(TargetDir)tests\"</PostBuildEvent>
+    <PostBuildEvent>xcopy /Y /S "$(SolutionDir)tests" "$(TargetDir)tests\"
+xcopy /Y /S "$(SolutionDir)specialTests" "$(TargetDir)specialTests\"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
