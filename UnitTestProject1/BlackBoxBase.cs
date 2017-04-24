@@ -452,7 +452,7 @@ namespace UnitTest.BlackBox
         public virtual void ProcessPostTransformTest()
         {
 #if DEBUGABLE_EXECUTION
-            NamespaceRefactorer.TransformProject.Main(new[] { projectUnderTest, sdkNameId });
+            TransformClient.TransformProject.Main(new[] { projectUnderTest, sdkNameId });
 #else
             var translateClient = new Process();
             translateClient.StartInfo.FileName = pathToTransformClient;
