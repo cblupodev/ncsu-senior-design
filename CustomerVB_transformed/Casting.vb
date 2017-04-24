@@ -5,9 +5,9 @@ Imports System.Text
 Imports System.Threading.Tasks
 
 Namespace Customer
-	Class Casting
-		Inherits oldNamespace.OldClass
-	End Class
+    Class Casting
+        Inherits oldNamespace.OldClass
+    End Class
 End Namespace
 
 '=======================================================

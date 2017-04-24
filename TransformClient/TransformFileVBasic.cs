@@ -67,7 +67,6 @@ namespace TransformClient
 
         private void replaceUsingStatements()
         {
-            Dictionary<String, String> nsMap = NSMappingSQLConnector.GetInstance().GetOldToNewNamespaceMap(TransformProject.sdkId);
             IEnumerable<ImportsStatementSyntax> usingDirectiveNodes = tree.GetRoot().DescendantNodes().OfType<ImportsStatementSyntax>();
             foreach (ImportsStatementSyntax oldUsingDirectiveNode in usingDirectiveNodes) // iterate over all qualified names in the file
             {
@@ -75,20 +74,32 @@ namespace TransformClient
                 SimpleImportsClauseSyntax oldUsingDirectiveSimpleNode = oldUsingDirectiveNode.DescendantNodes().OfType<SimpleImportsClauseSyntax>().First();
                 var usingDirectiveSymbolInfo = semanticModel.GetSymbolInfo(oldUsingDirectiveNode);
                 var oldNamespace = oldUsingDirectiveSimpleNode.Name.GetText().ToString();
-                if (nsMap.ContainsKey(oldNamespace))
+                List<namespace_map> namespaces = NSMappingSQLConnector.GetInstance().GetNamespaceMapsFromOldNamespace(TransformProject.sdkId, oldNamespace);
+                if (namespaces != null)
                 {
-                    var newNamespace = nsMap[oldNamespace];
-                    NameSyntax newIdentifierNode = IdentifierName(newNamespace);
-                    var newUsingDirectiveNode = oldUsingDirectiveSimpleNode.WithName(newIdentifierNode);
-                    documentEditor.ReplaceNode(oldUsingDirectiveNode, newUsingDirectiveNode);
+                    ImportsStatementSyntax previousUsingDirectiveNode = oldUsingDirectiveNode;
+                    int i = 1;
+                    foreach (namespace_map nsMap in namespaces)
+                    {
+                        var newNamespace = nsMap.new_namespace;
+                        NameSyntax newIdentifierNode = IdentifierName(newNamespace);
+                        var newUsingDirectiveNode = oldUsingDirectiveSimpleNode.WithName(newIdentifierNode);
+                        if (i == namespaces.Count)
+                        {
+                            documentEditor.ReplaceNode(oldUsingDirectiveNode, newUsingDirectiveNode);
+                        }
+                        else
+                        {
+                            documentEditor.InsertAfter(oldUsingDirectiveNode, newUsingDirectiveNode);
+                        }
+                        i++;
+                    }
                 }
             }
         }
 
         private void replaceQualifiedNames()
         {
-            Dictionary<String, String> nsMap = NSMappingSQLConnector.GetInstance().GetOldToNewNamespaceMap(TransformProject.sdkId);
-            Dictionary<String, Dictionary<String, String>> csMap = SDKMappingSQLConnector.GetInstance().GetNamespaceToClassnameMapMap(TransformProject.sdkId);
             IEnumerable<QualifiedNameSyntax> qualifiedNames = tree.GetRoot().DescendantNodes().OfType<QualifiedNameSyntax>();
             foreach (QualifiedNameSyntax oldQualifiedNameNode in qualifiedNames) // iterate over all qualified names in the file
             {
@@ -96,14 +107,17 @@ namespace TransformClient
                 {
                     var qualifiedSymbolInfo = semanticModel.GetSymbolInfo(oldQualifiedNameNode);
                     string nsString = oldQualifiedNameNode.Left.WithoutTrivia().GetText().ToString();
-                    string className = qualifiedSymbolInfo.Symbol.Name.ToString();
-                    if (nsMap.ContainsKey(nsString) && csMap[nsString].ContainsKey(className))
+                    if (qualifiedSymbolInfo.Symbol != null)
                     {
-                        string newNamespace = nsMap[nsString];
-                        string newClassName = csMap[nsString][className];
-                        QualifiedNameSyntax newQualifiedNameNode = QualifiedName(IdentifierName(newNamespace), IdentifierName(newClassName)).WithTriviaFrom(oldQualifiedNameNode);
-                        documentEditor.ReplaceNode(oldQualifiedNameNode, newQualifiedNameNode);
-
+                        string className = qualifiedSymbolInfo.Symbol.Name.ToString();
+                        sdk_map2 sdkMap = SDKMappingSQLConnector.GetInstance().GetSDKMapFromClassAndNamespace(TransformProject.sdkId, nsString, className);
+                        if (sdkMap != null)
+                        {
+                            string newNamespace = sdkMap.namespace_map.new_namespace;
+                            string newClassName = sdkMap.new_classname;
+                            QualifiedNameSyntax newQualifiedNameNode = QualifiedName(IdentifierName(newNamespace), IdentifierName(newClassName)).WithTriviaFrom(oldQualifiedNameNode);
+                            documentEditor.ReplaceNode(oldQualifiedNameNode, newQualifiedNameNode);
+                        }
                     }
                 }
             }
@@ -111,7 +125,6 @@ namespace TransformClient
 
         private void replaceIdentifierNames()
         {
-            Dictionary<String, Dictionary<String, String>> map = SDKMappingSQLConnector.GetInstance().GetNamespaceToClassnameMapMap(TransformProject.sdkId);
             // https://duckduckgo.com/?q=nested+selection+linq&ia=qa
             IEnumerable<IdentifierNameSyntax> identifierNames = tree.GetRoot().DescendantNodes().OfType<IdentifierNameSyntax>();
             foreach (IdentifierNameSyntax oldNameNode in identifierNames) // iterate over all identifier names in the file
@@ -120,20 +133,19 @@ namespace TransformClient
                 {
                     var semanticObjCreation = semanticModel.GetSymbolInfo(oldNameNode);
                     var nodeTypeInfo = semanticModel.GetTypeInfo(oldNameNode);
-                    if (nodeTypeInfo.Type != null || oldNameNode.Parent is ObjectCreationExpressionSyntax)
+                    if ((nodeTypeInfo.Type != null || oldNameNode.Parent is ObjectCreationExpressionSyntax) && semanticObjCreation.Symbol != null)
                     {
                         var oldNamespace = semanticObjCreation.Symbol.ContainingNamespace.Name;
-                        if (map.ContainsKey(oldNamespace))
+                        String oldClassname = semanticObjCreation.Symbol.Name.ToString();
+                        sdk_map2 sdkMap = SDKMappingSQLConnector.GetInstance().GetSDKMapFromClassAndNamespace(TransformProject.sdkId, oldNamespace, oldClassname);
+                        if (sdkMap != null)
                         {
-                            String oldClassname = semanticObjCreation.Symbol.Name.ToString();
-                            if (map[oldNamespace].ContainsKey(oldClassname))
-                            {
-                                String newClassname = map[oldNamespace][oldClassname];
-                                SyntaxToken oldNameToken = oldNameNode.DescendantTokens().First();
-                                SyntaxToken name = Identifier(newClassname).WithTriviaFrom(oldNameToken);
-                                IdentifierNameSyntax newNameNode = oldNameNode.WithIdentifier(name);
-                                documentEditor.ReplaceNode(oldNameNode, newNameNode);
-                            }
+                            String newClassname = sdkMap.new_classname;
+                            SyntaxToken oldNameToken = oldNameNode.DescendantTokens().First();
+                            SyntaxToken name = Identifier(newClassname).WithTriviaFrom(oldNameToken);
+                            IdentifierNameSyntax newNameNode = oldNameNode.WithIdentifier(name);
+                            documentEditor.ReplaceNode(oldNameNode, newNameNode);
+
                         }
                     }
                 }
