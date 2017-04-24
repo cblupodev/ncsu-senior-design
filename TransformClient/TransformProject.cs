@@ -50,7 +50,6 @@ namespace TransformClient
 
         }
 
-        // taken from http://stackoverflow.com/questions/1066674/how-do-i-copy-a-folder-and-all-subfolders-and-files-in-net/1066811#1066811
         private static void CopyDirectory(string sourcePath, string destPath)
         {
             if (!Directory.Exists(destPath))
