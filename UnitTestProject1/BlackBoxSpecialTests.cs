@@ -30,8 +30,20 @@ namespace UnitTest.BlackBox
         public override void RunMapping()
         {
 #if DEBUGABLE_EXECUTION
-            CreateMappings.ReadProject.Main(new[] { Path.Combine(TestFolder, "Main", "bin"),
-                Path.Combine(TestFolder, "Main2", "bin"), SdkNameId });
+            var originalOut = Console.Out;
+            var originalErr = Console.Error;
+            try
+            {
+                Console.SetOut(new TraceTextWriter(originalOut, "Out: "));
+                Console.SetError(new TraceTextWriter(originalErr, "Err: "));
+                CreateMappings.ReadProject.Main(new[] { Path.Combine(TestFolder, "Main", "bin"),
+                    Path.Combine(TestFolder, "Main2", "bin"), SdkNameId });
+            }
+            finally
+            {
+                Console.SetOut(originalOut);
+                Console.SetError(originalErr);
+            }
 #else
             var createMapping = new Process();
             createMapping.StartInfo.FileName = pathToCreateMappings;
