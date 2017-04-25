@@ -50,8 +50,22 @@ namespace TransformClient
 
         }
 
+        public static void RecursiveDeleteDirectory(DirectoryInfo baseDir)
+        {
+            if (!baseDir.Exists)
+                return;
+
+            foreach (var dir in baseDir.EnumerateDirectories())
+            {
+                RecursiveDeleteDirectory(dir);
+            }
+            baseDir.Delete(true);
+        }
+
         private static void CopyDirectory(string sourcePath, string destPath)
         {
+            RecursiveDeleteDirectory(new DirectoryInfo(destPath));
+
             if (!Directory.Exists(destPath))
             {
                 Directory.CreateDirectory(destPath);
