@@ -28,6 +28,7 @@ namespace CreateMappings
                 Console.WriteLine(e.Message);
                 Environment.Exit(1);
             }
+            AppDomain.Unload(dom);
             // TODO either figure out how to modify the mapList from DoStuff, or interact with the database dirrectly from DoStuff
             // TODO rename classes to something better
         }
