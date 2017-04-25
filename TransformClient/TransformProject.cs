@@ -198,12 +198,13 @@ namespace TransformClient
                              // that checks if the reference is part of the old sdk
                              // if the reference is not part of the old sdk then don't include it in the selection output
                              // because if it is included in the output then it will get removed
-                             where olddllSet.Contains(Path.GetFullPath(oldOutputPath + Path.GetFileName(reference.Descendants(ns + xmlElementHintPathName).First().Value)))                          
+                             // where olddllSet.Contains(Path.GetFullPath(oldOutputPath + Path.GetFileName(reference.Descendants(ns + xmlElementHintPathName).First().Value)))                          
                              select reference;
             try
             {
                 foreach (var reference in references)
                 {
+                    olddllSet.Contains(Path.GetFullPath(oldOutputPath + Path.GetFileName(reference.Descendants(ns + xmlElementHintPathName).First().Value)));
                     reference.Remove();
                 }
             }
