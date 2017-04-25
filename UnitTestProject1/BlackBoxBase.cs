@@ -344,8 +344,20 @@ namespace UnitTest.BlackBox
         public virtual void RunMapping()
         {
 #if DEBUGABLE_EXECUTION
-            CreateMappings.ReadProject.Main(new[] { Path.Combine(TestFolder, "bin1"),
-                Path.Combine(TestFolder, "bin2"), sdkNameId });
+            var originalOut = Console.Out;
+            var originalErr = Console.Error;
+            try
+            {
+                Console.SetOut(new TraceTextWriter(originalOut, "Out: "));
+                Console.SetError(new TraceTextWriter(originalErr, "Err: "));
+                CreateMappings.ReadProject.Main(new[] { Path.Combine(TestFolder, "bin1"),
+                    Path.Combine(TestFolder, "bin2"), sdkNameId });
+            }
+            finally
+            {
+                Console.SetOut(originalOut);
+                Console.SetError(originalErr);
+            }
 #else
             var createMapping = new Process();
             createMapping.StartInfo.FileName = pathToCreateMappings;
@@ -452,7 +464,19 @@ namespace UnitTest.BlackBox
         public virtual void ProcessPostTransformTest()
         {
 #if DEBUGABLE_EXECUTION
-            TransformClient.TransformProject.Main(new[] { projectUnderTest, sdkNameId });
+            var originalOut = Console.Out;
+            var originalErr = Console.Error;
+            try
+            {
+                Console.SetOut(new TraceTextWriter(originalOut, "Out: "));
+                Console.SetError(new TraceTextWriter(originalErr, "Err: "));
+                TransformClient.TransformProject.Main(new[] { projectUnderTest, sdkNameId });
+            }
+            finally
+            {
+                Console.SetOut(originalOut);
+                Console.SetError(originalErr);
+            }
 #else
             var translateClient = new Process();
             translateClient.StartInfo.FileName = pathToTransformClient;
@@ -502,6 +526,35 @@ namespace UnitTest.BlackBox
             ResetDatabase();
         }
 
+    }
+    
+    class TraceTextWriter : TextWriter
+    {
+        private TextWriter original;
+        private string linePrefix;
+        public TraceTextWriter(TextWriter original, string linePrefix)
+        {
+            this.original = original;
+            this.linePrefix = linePrefix;
+        }
+        public override Encoding Encoding
+        {
+            get
+            {
+                return original.Encoding;
+            }
+        }
+
+        public override void Write(char value)
+        {
+            original.Write(value);
+            Trace.Write(value);
+            if ( value == "\n".Last() )
+            {
+                original.Write(linePrefix);
+                Trace.Write(linePrefix);
+            }
+        }
     }
 }
 
