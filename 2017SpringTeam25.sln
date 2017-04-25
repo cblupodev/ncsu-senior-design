@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FujitsuSDKNew", "FujitsuSDK
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WorkingSample", "WorkingSample", "{0F79F59B-0BAF-47D1-A2C5-CEDD9D41160A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackBoxTesting", "UnitTestProject1\BlackBoxTesting.csproj", "{92C6F12A-DE3E-4D59-A952-4D22753139E2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing", "UnitTestProject1\Testing.csproj", "{92C6F12A-DE3E-4D59-A952-4D22753139E2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBConnector", "DBConnector\DBConnector.csproj", "{FDF3CC16-26A0-47CE-A129-4A06F829DB12}"
 EndProject
@@ -97,8 +97,8 @@ Global
 		{92C6F12A-DE3E-4D59-A952-4D22753139E2}.CreateMappingsRun2|x64.Build.0 = CreateMappingsRun2|Any CPU
 		{92C6F12A-DE3E-4D59-A952-4D22753139E2}.CreateMappingsRun2|x86.ActiveCfg = CreateMappingsRun2|Any CPU
 		{92C6F12A-DE3E-4D59-A952-4D22753139E2}.CreateMappingsRun2|x86.Build.0 = CreateMappingsRun2|Any CPU
-		{92C6F12A-DE3E-4D59-A952-4D22753139E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{92C6F12A-DE3E-4D59-A952-4D22753139E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92C6F12A-DE3E-4D59-A952-4D22753139E2}.Debug|Any CPU.ActiveCfg = DebugExecutables|Any CPU
+		{92C6F12A-DE3E-4D59-A952-4D22753139E2}.Debug|Any CPU.Build.0 = DebugExecutables|Any CPU
 		{92C6F12A-DE3E-4D59-A952-4D22753139E2}.Debug|ARM.ActiveCfg = Debug|Any CPU
 		{92C6F12A-DE3E-4D59-A952-4D22753139E2}.Debug|ARM.Build.0 = Debug|Any CPU
 		{92C6F12A-DE3E-4D59-A952-4D22753139E2}.Debug|x64.ActiveCfg = Debug|Any CPU
