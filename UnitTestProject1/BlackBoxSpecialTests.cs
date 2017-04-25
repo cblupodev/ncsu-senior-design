@@ -72,7 +72,7 @@ namespace UnitTest.BlackBox
         }
         [TestMethod]
         [DeploymentItem("specialTests/fujitsuProvided", "PreTransformFujitsuSupplied")]
-        public void TestPreTransformFujitsuSupplied()
+        public void TestBlackBoxPreTransformFujitsuSupplied()
         {
             TestFolder = "PreTransformFujitsuSupplied";
             projectUnderTest = Path.Combine(TestFolder, "two_up", "one_up", "ConversionTest", "ConversionTest.csproj");
@@ -80,7 +80,7 @@ namespace UnitTest.BlackBox
         }
         [TestMethod]
         [DeploymentItem("specialTests/fujitsuProvided", "EndToEndFujitsuSupplied")]
-        public void TestEndToEndFujitsuSupplied()
+        public void TestBlackBoxEndToEndFujitsuSupplied()
         {
             TestFolder = "EndToEndFujitsuSupplied";
             projectUnderTest = Path.Combine(TestFolder, "two_up", "one_up", "ConversionTest", "ConversionTest.csproj");

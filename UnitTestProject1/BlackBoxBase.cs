@@ -581,7 +581,7 @@ namespace UnitTest.BlackBox
 //  do
 //    echo "        [TestMethod]"
 //    echo "        [DeploymentItem(\"tests/$d\", \"${test}${d^}\")]"
-//    echo "        public void Test${test}${d^}()"
+//    echo "        public void TestBlackBox${test}${d^}()"
 //    echo "        {"
 //    echo "            TestFolder = \"${test}${d^}\";"
 //    echo "            Run${test}Test();"
