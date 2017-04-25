@@ -59,41 +59,39 @@ namespace TransformClient
         // oldSDKUsings is a list of the old sdk using statements
         public SyntaxTree replaceSyntax()
         {
-            replaceUsingStatements();
+            replaceImportStatements();
             replaceQualifiedNames();
             replaceIdentifierNames();
             return documentEditor.GetChangedRoot().SyntaxTree;
         }
 
-        private void replaceUsingStatements()
+        private void replaceImportStatements()
         {
-            IEnumerable<ImportsStatementSyntax> usingDirectiveNodes = tree.GetRoot().DescendantNodes().OfType<ImportsStatementSyntax>();
-            foreach (ImportsStatementSyntax oldUsingDirectiveNode in usingDirectiveNodes) // iterate over all qualified names in the file
+            HashSet<string> alreadyAddedImportsStatements = new HashSet<string>();
+            IEnumerable<ImportsStatementSyntax> importsStatementNodes = tree.GetRoot().DescendantNodes().OfType<ImportsStatementSyntax>();
+            foreach (ImportsStatementSyntax oldImportsStatementNode in importsStatementNodes) // iterate over all qualified names in the file
             {
                 // todo could be problems if this import statement isn't simple, however even if an alias is used in the import it's still simple
-                SimpleImportsClauseSyntax oldUsingDirectiveSimpleNode = oldUsingDirectiveNode.DescendantNodes().OfType<SimpleImportsClauseSyntax>().First();
-                var usingDirectiveSymbolInfo = semanticModel.GetSymbolInfo(oldUsingDirectiveNode);
-                var oldNamespace = oldUsingDirectiveSimpleNode.Name.GetText().ToString();
+                SimpleImportsClauseSyntax oldSimpleImportsNode = oldImportsStatementNode.DescendantNodes().OfType<SimpleImportsClauseSyntax>().First();
+                var oldNamespace = oldSimpleImportsNode.WithoutTrivia().Name.GetText().ToString();
                 List<namespace_map> namespaces = NSMappingSQLConnector.GetInstance().GetNamespaceMapsFromOldNamespace(TransformProject.sdkId, oldNamespace);
                 if (namespaces != null)
                 {
-                    ImportsStatementSyntax previousUsingDirectiveNode = oldUsingDirectiveNode;
-                    int i = 1;
                     foreach (namespace_map nsMap in namespaces)
                     {
                         var newNamespace = nsMap.new_namespace;
-                        NameSyntax newIdentifierNode = IdentifierName(newNamespace);
-                        var newUsingDirectiveNode = oldUsingDirectiveSimpleNode.WithName(newIdentifierNode);
-                        if (i == namespaces.Count)
+                        if (!alreadyAddedImportsStatements.Contains(newNamespace))
                         {
-                            documentEditor.ReplaceNode(oldUsingDirectiveNode, newUsingDirectiveNode);
+                            alreadyAddedImportsStatements.Add(newNamespace);
+                            NameSyntax newIdentifierNode = IdentifierName(newNamespace);
+                            var newSimpleImportsNode = oldSimpleImportsNode.WithName(newIdentifierNode);
+                            SeparatedSyntaxList<ImportsClauseSyntax> simpleImportsList = new SeparatedSyntaxList<ImportsClauseSyntax>().Add(newSimpleImportsNode);
+                            ImportsStatementSyntax newImportsStatementNode = ImportsStatement(simpleImportsList).WithTriviaFrom(oldImportsStatementNode);
+                            newImportsStatementNode = newImportsStatementNode.WithImportsKeyword(oldImportsStatementNode.ImportsKeyword);
+                            documentEditor.InsertAfter(oldImportsStatementNode, newImportsStatementNode);
                         }
-                        else
-                        {
-                            documentEditor.InsertAfter(oldUsingDirectiveNode, newUsingDirectiveNode);
-                        }
-                        i++;
                     }
+                    documentEditor.RemoveNode(oldImportsStatementNode);
                 }
             }
         }
@@ -145,7 +143,6 @@ namespace TransformClient
                             SyntaxToken name = Identifier(newClassname).WithTriviaFrom(oldNameToken);
                             IdentifierNameSyntax newNameNode = oldNameNode.WithIdentifier(name);
                             documentEditor.ReplaceNode(oldNameNode, newNameNode);
-
                         }
                     }
                 }

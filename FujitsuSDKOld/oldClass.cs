@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace oldNamespace
 {
-    [ModelIdentifier("87875")]
+    [ModelIdentifierAttribute("87875")]
     public class OldClass
     {
     }

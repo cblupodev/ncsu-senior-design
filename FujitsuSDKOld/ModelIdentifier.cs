@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 [AttributeUsage(AttributeTargets.All)]
-public class ModelIdentifier : Attribute
+public class ModelIdentifierAttribute : Attribute
 {
     // Private fields.
     private string name;
 
     // This constructor defines two required parameters: name
 
-    public ModelIdentifier(string name)
+    public ModelIdentifierAttribute(string name)
     {
         this.name = name;
     }

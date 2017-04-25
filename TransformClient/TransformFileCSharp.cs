@@ -68,30 +68,26 @@ namespace TransformClient
 
         private void replaceUsingStatements()
         {
+            HashSet<string> alreadyAddedUsingStatements = new HashSet<string>();
             IEnumerable<UsingDirectiveSyntax> usingDirectiveNodes = tree.GetRoot().DescendantNodes().OfType<UsingDirectiveSyntax>();
             foreach (UsingDirectiveSyntax oldUsingDirectiveNode in usingDirectiveNodes) // iterate over all qualified names in the file
             {
-                var usingDirectiveSymbolInfo = semanticModel.GetSymbolInfo(oldUsingDirectiveNode);
                 var oldNamespace = oldUsingDirectiveNode.Name.GetText().ToString();
                 List<namespace_map> namespaces = NSMappingSQLConnector.GetInstance().GetNamespaceMapsFromOldNamespace(TransformProject.sdkId, oldNamespace);
                 if (namespaces != null)
                 {
-                    UsingDirectiveSyntax previousUsingDirectiveNode = oldUsingDirectiveNode;
-                    int i = 1;
                     foreach (namespace_map nsMap in namespaces)
                     {
                         var newNamespace = nsMap.new_namespace;
-                        NameSyntax newIdentifierNode = IdentifierName(newNamespace);
-                        var newUsingDirectiveNode = oldUsingDirectiveNode.WithName(newIdentifierNode);
-                        if (i == namespaces.Count)
+                        if (!alreadyAddedUsingStatements.Contains(newNamespace))
                         {
-                            documentEditor.ReplaceNode(oldUsingDirectiveNode, newUsingDirectiveNode);
-                        } else
-                        {
+                            alreadyAddedUsingStatements.Add(newNamespace);
+                            NameSyntax newIdentifierNode = IdentifierName(newNamespace);
+                            var newUsingDirectiveNode = oldUsingDirectiveNode.WithName(newIdentifierNode);
                             documentEditor.InsertAfter(oldUsingDirectiveNode, newUsingDirectiveNode);
                         }
-                        i++;
                     }
+                    documentEditor.RemoveNode(oldUsingDirectiveNode);
                 }
             }
         }
@@ -115,7 +111,6 @@ namespace TransformClient
                             string newClassName = sdkMap.new_classname;
                             QualifiedNameSyntax newQualifiedNameNode = QualifiedName(IdentifierName(newNamespace), IdentifierName(newClassName)).WithTriviaFrom(oldQualifiedNameNode);
                             documentEditor.ReplaceNode(oldQualifiedNameNode, newQualifiedNameNode);
-
                         }
                     }
                 }
