@@ -19,7 +19,6 @@ namespace CreateMappings
 
         public static void verifyFolderExists(string folderPath)
         {
-            Console.WriteLine(folderPath);
             if (!Directory.Exists(folderPath))
             {
                 Console.WriteLine("this directory doesn't exist   "+folderPath);
