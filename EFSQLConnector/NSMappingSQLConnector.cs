@@ -103,17 +103,5 @@ namespace EFSQLConnector
             return null;
         }
 
-        public Dictionary<String, String> GetOldToNewNamespaceMap(int sdkId)
-        {
-            var query = (from nm in dbConnection.namespace_map
-                         where nm.sdk_id == sdkId
-                         select new
-                         {
-                             col1 = nm.old_namespace,
-                             col2 = nm.new_namespace
-                         }).Distinct().ToDictionary(sm => sm.col1, sm => sm.col2, StringComparer.OrdinalIgnoreCase);
-            return query;
-        }
-
     }
 }
