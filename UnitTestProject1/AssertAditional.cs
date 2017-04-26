@@ -73,7 +73,7 @@ namespace UnitTest.WhiteBox
             actualText = actualText.Substring(2);
             Assert.AreEqual(expectedText, actualText, message);
         }
-        public static void SDKMapEqual(sdk_map2 expected, sdk_map2 actual, string message)
+        public static void SDKMapEquals(sdk_map2 expected, sdk_map2 actual, string message)
         {
             Assert.IsNotNull(actual, message);
             var expectedText = "";
@@ -168,11 +168,11 @@ namespace UnitTest.WhiteBox
             fail:
             Assert.Fail("Expected Dictionary:<" + expectedText + ">. Actual Dictionary:<" + actualText + ">. " + message);
         }
-        public static void ListUniqueAndEqualsById<T>(List<T> expcted, List<T> actual, Converter<T,object> getId, string message)
+        public static void ListEquals<T>(List<T> expcted, List<T> actual, Func<T,T,bool> equals, string message)
         {
             Assert.IsNotNull(actual, message);
             Assert.AreEqual(expcted.Count, actual.Count, message);
-            Assert.IsTrue(expcted.ConvertAll(getId).All(actual.ConvertAll(getId).Contains), message);
+            Assert.IsTrue(expcted.All(x=>actual.Any(y=>equals(x,y))), message);
         }
         public static string ToSafeString(object value)
         {

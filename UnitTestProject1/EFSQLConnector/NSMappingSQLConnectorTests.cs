@@ -68,10 +68,12 @@ namespace UnitTest.WhiteBox.EFSQLConnector
 
             var targetSdkMap = new sdk_map2
             {
-                id = -1
+                namespace_map_id = mapA.id,
+                namespace_map = mapA
             };
 
             instance.UpdateOrCreateNSMapping(mapA, targetSdkMap, "spaceNew");
+            mapA = targetSdkMap.namespace_map;
             var expectNewA = new namespace_map
             {
                 old_namespace = "space",
@@ -81,6 +83,7 @@ namespace UnitTest.WhiteBox.EFSQLConnector
             AssertAditional.NamespaceMapEquals(expectNewA, mapA, "issue on update");
             
             instance.UpdateOrCreateNSMapping(mapB, targetSdkMap, "spaceNew2");
+            mapB = targetSdkMap.namespace_map;
             var expectNewB = new namespace_map
             {
                 old_namespace = "space",
@@ -88,8 +91,7 @@ namespace UnitTest.WhiteBox.EFSQLConnector
                 new_namespace = "spaceNew2"
             };
             AssertAditional.NamespaceMapEquals(expectNewB, mapB, "issue on splitting");
-            AssertAditional.SDKMapEqual(new sdk_map2 { namespace_map = mapB, namespace_map_id = mapB.id },
-                targetSdkMap, "issue on splitting");
+            Assert.AreNotEqual(0, mapB.id, "map probably isn't in the database");
             AssertAditional.NamespaceMapEquals(expectNewA, mapA, "impropper modification of A");
         }
 
@@ -117,38 +119,38 @@ namespace UnitTest.WhiteBox.EFSQLConnector
         [TestMethod()]
         public void TestNSMappingSQLConnectorGetNamespaceMapsFromOldNamespace()
         {
-            Converter<namespace_map,object> getId = x => x.id;
-            AssertAditional.ListUniqueAndEqualsById(new List<namespace_map> { },
-                instance.GetNamespaceMapsFromOldNamespace(id, "space"), getId, "initial value");
+            Func<namespace_map,namespace_map,bool> equals = (a,b) => a.id == b.id;
+            AssertAditional.ListEquals(new List<namespace_map> { },
+                instance.GetNamespaceMapsFromOldNamespace(id, "space"), equals, "initial value");
 
             var mapA = instance.GetOrCreateOldNSMap(id, "space");
-            AssertAditional.ListUniqueAndEqualsById(new List<namespace_map> { mapA },
-                instance.GetNamespaceMapsFromOldNamespace(id, "space"), getId, "null new value");
-            AssertAditional.ListUniqueAndEqualsById(new List<namespace_map> {  },
-                instance.GetNamespaceMapsFromOldNamespace(id, "space2"), getId, "null new value different space");
+            AssertAditional.ListEquals(new List<namespace_map> { mapA },
+                instance.GetNamespaceMapsFromOldNamespace(id, "space"), equals, "null new value");
+            AssertAditional.ListEquals(new List<namespace_map> {  },
+                instance.GetNamespaceMapsFromOldNamespace(id, "space2"), equals, "null new value different space");
 
             var targetSdkMap = new sdk_map2();
 
             var mapB = instance.GetOrCreateOldNSMap(id, "space");
             var mapC = instance.GetOrCreateOldNSMap(id, "space");
             instance.UpdateOrCreateNSMapping(mapB, targetSdkMap, "spaceNew");
-            AssertAditional.ListUniqueAndEqualsById(new List<namespace_map> { mapA, mapB },
-                instance.GetNamespaceMapsFromOldNamespace(id, "space"), getId, "add value");
-            AssertAditional.ListUniqueAndEqualsById(new List<namespace_map> { },
-                instance.GetNamespaceMapsFromOldNamespace(id, "space2"), getId, "add value different space");
+            AssertAditional.ListEquals(new List<namespace_map> { mapA, mapB },
+                instance.GetNamespaceMapsFromOldNamespace(id, "space"), equals, "add value");
+            AssertAditional.ListEquals(new List<namespace_map> { },
+                instance.GetNamespaceMapsFromOldNamespace(id, "space2"), equals, "add value different space");
 
             instance.UpdateOrCreateNSMapping(mapC, targetSdkMap, "spaceNew2");
-            AssertAditional.ListUniqueAndEqualsById(new List<namespace_map> { mapA, mapB, mapC },
-                instance.GetNamespaceMapsFromOldNamespace(id, "space"), getId, "split value");
-            AssertAditional.ListUniqueAndEqualsById(new List<namespace_map> { },
-                instance.GetNamespaceMapsFromOldNamespace(id, "space2"), getId, "split value different space");
+            AssertAditional.ListEquals(new List<namespace_map> { mapA, mapB, mapC },
+                instance.GetNamespaceMapsFromOldNamespace(id, "space"), equals, "split value");
+            AssertAditional.ListEquals(new List<namespace_map> { },
+                instance.GetNamespaceMapsFromOldNamespace(id, "space2"), equals, "split value different space");
 
             var mapD = instance.GetOrCreateOldNSMap(id, "space2");
             instance.UpdateOrCreateNSMapping(mapD, targetSdkMap, "space");
-            AssertAditional.ListUniqueAndEqualsById(new List<namespace_map> { mapD },
-                instance.GetNamespaceMapsFromOldNamespace(id, "space2"), getId, "add value to different space");
-            AssertAditional.ListUniqueAndEqualsById(new List<namespace_map> { mapA, mapB, mapC },
-                instance.GetNamespaceMapsFromOldNamespace(id, "space"), getId, "original space should be umodified");
+            AssertAditional.ListEquals(new List<namespace_map> { mapD },
+                instance.GetNamespaceMapsFromOldNamespace(id, "space2"), equals, "add value to different space");
+            AssertAditional.ListEquals(new List<namespace_map> { mapA, mapB, mapC },
+                instance.GetNamespaceMapsFromOldNamespace(id, "space"), equals, "original space should be umodified");
 
         }
     }
