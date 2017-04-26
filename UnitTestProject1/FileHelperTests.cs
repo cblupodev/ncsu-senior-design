@@ -10,7 +10,7 @@ namespace UnitTest.WhiteBox
 {
     [TestClass]
     [DeploymentItem("specialTests/FileHelper", "FileHelper")]
-    public class FileHelperTest
+    public class FileHelperTests
     {
         private TextLogger logger;
         [TestInitialize]
