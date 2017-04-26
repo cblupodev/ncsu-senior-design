@@ -92,18 +92,6 @@ namespace EFSQLConnector
             return dbConnection.sdk_map2.Where(s => s.sdk_id == sdkId).ToList();
         }
 
-        public namespace_map GetOldNSForSDKMapping(int sdkId, string modelIdentifier)
-        {
-            sdk_map2 sdkMap = GetSDKMappingByIdentifiers(sdkId, modelIdentifier);
-            return sdkMap.namespace_map;
-        }
-
-        public assembly_map GetOldAssemblyForSDKMapping(int sdkId, string modelIdentifier)
-        {
-            sdk_map2 sdkMap = GetSDKMappingByIdentifiers(sdkId, modelIdentifier);
-            return sdkMap.assembly_map;
-        }
-
         public void UpdateSDKMapping(sdk_map2 sdkMap, string name)
         {
             sdkMap.new_classname = name;
@@ -115,29 +103,6 @@ namespace EFSQLConnector
             {
                 //Do nothing
             }
-        }
-
-        public Dictionary<String, Dictionary<String, String>> GetNamespaceToClassnameMapMap(int sdkId)
-        {
-            Dictionary<String, Dictionary<String, String>> namespaceToClassNameSetMap = new Dictionary<String, Dictionary<String, String>>();
-            var query = (from sm in dbConnection.sdk_map2 where sm.sdk_id == sdkId select sm.namespace_map.old_namespace).Distinct();
-            foreach (var ns in query)
-            {
-                namespaceToClassNameSetMap.Add(ns, GetClassnameMap(ns, sdkId));
-            }
-            return namespaceToClassNameSetMap;
-        }
-
-        private Dictionary<String, String> GetClassnameMap(string ns, int sdkId)
-        {
-            var query = (from sm in dbConnection.sdk_map2
-                         where sm.namespace_map.old_namespace == ns && sm.sdk_id == sdkId
-                         select new
-                         {
-                             col1 = sm.old_classname,
-                             col2 = sm.new_classname
-                         }).ToDictionary(sm => sm.col1, sm => sm.col2, StringComparer.OrdinalIgnoreCase);
-            return query;
         }
 
         public sdk_map2 GetSDKMapFromClassAndNamespace(int sdkId, string nsString, string className)
