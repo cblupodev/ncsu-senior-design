@@ -575,7 +575,7 @@ namespace UnitTest.BlackBox
 //  d=$(basename "${f}")
 //  echo ""
 //  echo "    [TestClass]"
-//  echo "    public class ${d^}Tests : BlackBoxBase"
+//  echo "    public class BlackBox${d^}Tests : BlackBoxBase"
 //  echo "    {"
 //  for test in Mapping PreTransformCS PostTransformCS PreTransformVB PostTransformVB EndToEndCS EndToEndVB
 //  do

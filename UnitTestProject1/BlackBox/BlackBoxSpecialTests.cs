@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace UnitTest.BlackBox
 {
     [TestClass]
-    public class FujitsuSuppliedTests : BlackBoxBase
+    public class BlackBoxFujitsuSuppliedTests : BlackBoxBase
     {
         private void VerifyProjectNoExecute(string projectPath)
         {

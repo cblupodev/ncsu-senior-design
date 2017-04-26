@@ -11,7 +11,7 @@ namespace UnitTest.BlackBox
 {
 
     [TestClass]
-    public class AliasTests : BlackBoxBase
+    public class BlackBoxAliasTests : BlackBoxBase
     {
         [TestMethod]
         [DeploymentItem("tests/alias", "MappingAlias")]
@@ -65,7 +65,7 @@ namespace UnitTest.BlackBox
     }
 
     [TestClass]
-    public class AssemblyChangeTests : BlackBoxBase
+    public class BlackBoxAssemblyChangeTests : BlackBoxBase
     {
         [TestMethod]
         [DeploymentItem("tests/assemblyChange", "MappingAssemblyChange")]
@@ -119,7 +119,7 @@ namespace UnitTest.BlackBox
     }
 
     [TestClass]
-    public class AssemblyMergeTests : BlackBoxBase
+    public class BlackBoxAssemblyMergeTests : BlackBoxBase
     {
         [TestMethod]
         [DeploymentItem("tests/assemblyMerge", "MappingAssemblyMerge")]
@@ -173,7 +173,7 @@ namespace UnitTest.BlackBox
     }
 
     [TestClass]
-    public class AssemblySplitTests : BlackBoxBase
+    public class BlackBoxAssemblySplitTests : BlackBoxBase
     {
         [TestMethod]
         [DeploymentItem("tests/assemblySplit", "MappingAssemblySplit")]
@@ -227,7 +227,7 @@ namespace UnitTest.BlackBox
     }
 
     [TestClass]
-    public class BasicTests : BlackBoxBase
+    public class BlackBoxBasicTests : BlackBoxBase
     {
         [TestMethod]
         [DeploymentItem("tests/basic", "MappingBasic")]
@@ -281,7 +281,7 @@ namespace UnitTest.BlackBox
     }
 
     [TestClass]
-    public class BasicNamespaceTests : BlackBoxBase
+    public class BlackBoxBasicNamespaceTests : BlackBoxBase
     {
         [TestMethod]
         [DeploymentItem("tests/basicNamespace", "MappingBasicNamespace")]
@@ -335,7 +335,7 @@ namespace UnitTest.BlackBox
     }
 
     [TestClass]
-    public class CastingTests : BlackBoxBase
+    public class BlackBoxCastingTests : BlackBoxBase
     {
         [TestMethod]
         [DeploymentItem("tests/casting", "MappingCasting")]
@@ -389,7 +389,7 @@ namespace UnitTest.BlackBox
     }
 
     [TestClass]
-    public class ClassDeleteTests : BlackBoxBase
+    public class BlackBoxClassDeleteTests : BlackBoxBase
     {
         [TestMethod]
         [DeploymentItem("tests/classDelete", "MappingClassDelete")]
@@ -443,7 +443,7 @@ namespace UnitTest.BlackBox
     }
 
     [TestClass]
-    public class ClassInClassTests : BlackBoxBase
+    public class BlackBoxClassInClassTests : BlackBoxBase
     {
         [TestMethod]
         [DeploymentItem("tests/classInClass", "MappingClassInClass")]
@@ -497,7 +497,7 @@ namespace UnitTest.BlackBox
     }
 
     [TestClass]
-    public class EmptyDLLTests : BlackBoxBase
+    public class BlackBoxEmptyDLLTests : BlackBoxBase
     {
         [TestMethod]
         [DeploymentItem("tests/emptyDLL", "MappingEmptyDLL")]
@@ -551,7 +551,7 @@ namespace UnitTest.BlackBox
     }
 
     [TestClass]
-    public class ExtendsSDKClassTests : BlackBoxBase
+    public class BlackBoxExtendsSDKClassTests : BlackBoxBase
     {
         [TestMethod]
         [DeploymentItem("tests/extendsSDKClass", "MappingExtendsSDKClass")]
@@ -605,7 +605,7 @@ namespace UnitTest.BlackBox
     }
 
     [TestClass]
-    public class ExtraLibraryTests : BlackBoxBase
+    public class BlackBoxExtraLibraryTests : BlackBoxBase
     {
         public override void CompileLibraries()
         {
@@ -666,7 +666,7 @@ namespace UnitTest.BlackBox
     }
 
     [TestClass]
-    public class FullyQualifiedTests : BlackBoxBase
+    public class BlackBoxFullyQualifiedTests : BlackBoxBase
     {
         [TestMethod]
         [DeploymentItem("tests/fullyQualified", "MappingFullyQualified")]
@@ -720,7 +720,7 @@ namespace UnitTest.BlackBox
     }
 
     [TestClass]
-    public class FullyQualifiedModelIdentifierTests : BlackBoxBase
+    public class BlackBoxFullyQualifiedModelIdentifierTests : BlackBoxBase
     {
         [TestMethod]
         [DeploymentItem("tests/fullyQualifiedModelIdentifier", "MappingFullyQualifiedModelIdentifier")]
@@ -774,7 +774,7 @@ namespace UnitTest.BlackBox
     }
 
     [TestClass]
-    public class GenericsTests : BlackBoxBase
+    public class BlackBoxGenericsTests : BlackBoxBase
     {
         [TestMethod]
         [DeploymentItem("tests/generics", "MappingGenerics")]
@@ -828,7 +828,7 @@ namespace UnitTest.BlackBox
     }
 
     [TestClass]
-    public class InstantiatesSDKClassTests : BlackBoxBase
+    public class BlackBoxInstantiatesSDKClassTests : BlackBoxBase
     {
         [TestMethod]
         [DeploymentItem("tests/instantiatesSDKClass", "MappingInstantiatesSDKClass")]
@@ -882,7 +882,7 @@ namespace UnitTest.BlackBox
     }
 
     [TestClass]
-    public class MethodCallOnParameterTests : BlackBoxBase
+    public class BlackBoxMethodCallOnParameterTests : BlackBoxBase
     {
         [TestMethod]
         [DeploymentItem("tests/methodCallOnParameter", "MappingMethodCallOnParameter")]
@@ -936,7 +936,7 @@ namespace UnitTest.BlackBox
     }
 
     [TestClass]
-    public class MultiAssemblyTests : BlackBoxBase
+    public class BlackBoxMultiAssemblyTests : BlackBoxBase
     {
         [TestMethod]
         [DeploymentItem("tests/multiAssembly", "MappingMultiAssembly")]
@@ -990,7 +990,7 @@ namespace UnitTest.BlackBox
     }
 
     [TestClass]
-    public class MultiBasicTests : BlackBoxBase
+    public class BlackBoxMultiBasicTests : BlackBoxBase
     {
         [TestMethod]
         [DeploymentItem("tests/multiBasic", "MappingMultiBasic")]
@@ -1044,7 +1044,7 @@ namespace UnitTest.BlackBox
     }
 
     [TestClass]
-    public class MultiTypeGenericTests : BlackBoxBase
+    public class BlackBoxMultiTypeGenericTests : BlackBoxBase
     {
         [TestMethod]
         [DeploymentItem("tests/multiTypeGeneric", "MappingMultiTypeGeneric")]
@@ -1098,7 +1098,7 @@ namespace UnitTest.BlackBox
     }
 
     [TestClass]
-    public class NamespaceInNamespaceTests : BlackBoxBase
+    public class BlackBoxNamespaceInNamespaceTests : BlackBoxBase
     {
         [TestMethod]
         [DeploymentItem("tests/namespaceInNamespace", "MappingNamespaceInNamespace")]
@@ -1152,7 +1152,7 @@ namespace UnitTest.BlackBox
     }
 
     [TestClass]
-    public class NamespaceMergeTests : BlackBoxBase
+    public class BlackBoxNamespaceMergeTests : BlackBoxBase
     {
         [TestMethod]
         [DeploymentItem("tests/namespaceMerge", "MappingNamespaceMerge")]
@@ -1206,7 +1206,7 @@ namespace UnitTest.BlackBox
     }
 
     [TestClass]
-    public class NamespaceSplitTests : BlackBoxBase
+    public class BlackBoxNamespaceSplitTests : BlackBoxBase
     {
         [TestMethod]
         [DeploymentItem("tests/namespaceSplit", "MappingNamespaceSplit")]
@@ -1260,7 +1260,7 @@ namespace UnitTest.BlackBox
     }
 
     [TestClass]
-    public class NamespaceSplitMergeTests : BlackBoxBase
+    public class BlackBoxNamespaceSplitMergeTests : BlackBoxBase
     {
         [TestMethod]
         [DeploymentItem("tests/namespaceSplitMerge", "MappingNamespaceSplitMerge")]
@@ -1314,7 +1314,7 @@ namespace UnitTest.BlackBox
     }
 
     [TestClass]
-    public class NewConflictsTests : BlackBoxBase
+    public class BlackBoxNewConflictsTests : BlackBoxBase
     {
         [TestMethod]
         [DeploymentItem("tests/newConflicts", "MappingNewConflicts")]
@@ -1368,7 +1368,7 @@ namespace UnitTest.BlackBox
     }
 
     [TestClass]
-    public class NonRootUsingTests : BlackBoxBase
+    public class BlackBoxNonRootUsingTests : BlackBoxBase
     {
         [TestMethod]
         [DeploymentItem("tests/nonRootUsing", "MappingNonRootUsing")]
@@ -1422,7 +1422,7 @@ namespace UnitTest.BlackBox
     }
 
     [TestClass]
-    public class NothingTests : BlackBoxBase
+    public class BlackBoxNothingTests : BlackBoxBase
     {
         [TestMethod]
         [DeploymentItem("tests/nothing", "MappingNothing")]
@@ -1476,7 +1476,7 @@ namespace UnitTest.BlackBox
     }
 
     [TestClass]
-    public class OldConflictsTests : BlackBoxBase
+    public class BlackBoxOldConflictsTests : BlackBoxBase
     {
         [TestMethod]
         [DeploymentItem("tests/oldConflicts", "MappingOldConflicts")]
@@ -1530,7 +1530,7 @@ namespace UnitTest.BlackBox
     }
 
     [TestClass]
-    public class ReturnClassTests : BlackBoxBase
+    public class BlackBoxReturnClassTests : BlackBoxBase
     {
         [TestMethod]
         [DeploymentItem("tests/returnClass", "MappingReturnClass")]
@@ -1584,7 +1584,7 @@ namespace UnitTest.BlackBox
     }
 
     [TestClass]
-    public class TypeofTests : BlackBoxBase
+    public class BlackBoxTypeofTests : BlackBoxBase
     {
         [TestMethod]
         [DeploymentItem("tests/typeof", "MappingTypeof")]
@@ -1638,7 +1638,7 @@ namespace UnitTest.BlackBox
     }
 
     [TestClass]
-    public class UnusedTests : BlackBoxBase
+    public class BlackBoxUnusedTests : BlackBoxBase
     {
         [TestMethod]
         [DeploymentItem("tests/unused", "MappingUnused")]
@@ -1692,7 +1692,7 @@ namespace UnitTest.BlackBox
     }
 
     [TestClass]
-    public class VariablesTests : BlackBoxBase
+    public class BlackBoxVariablesTests : BlackBoxBase
     {
         [TestMethod]
         [DeploymentItem("tests/variables", "MappingVariables")]
