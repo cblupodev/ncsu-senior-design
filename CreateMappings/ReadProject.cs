@@ -15,9 +15,9 @@ namespace CreateMappings
         public static string CustomAttributeName = "ModelIdentifierAttribute";
         public static int sdkId;
 
-        // param 0 = folder for old sdk
-        // param 1 = folder for new sdk
-        // param 2 = name for sdk (database object)
+        // args 0 = folder for old sdk
+        // args 1 = folder for new sdk
+        // args 2 = name for sdk (database object)
         public static void Main(string[] args)
         {
             ReadProject rp = new ReadProject();
@@ -26,9 +26,6 @@ namespace CreateMappings
 
         private void Run(string oldFolderPath, string newFolderPath, string sdkName)
         {
-            // key = model identifier
-            // value = mapping
-
             SDKSQLConnector.GetInstance().SaveSDK(sdkName, newFolderPath);
             sdkId = SDKSQLConnector.GetInstance().GetByName(sdkName).id;
             ReadFolderDllFiles(oldFolderPath, true);
@@ -38,7 +35,7 @@ namespace CreateMappings
         }
 
         // itereate over all the dll files in a folder
-        // for each file ,find the custom attributes
+        // for each file, find the custom attributes
         public void ReadFolderDllFiles(string folderPath, bool isOld) {
 
             ReadFile rf = new ReadFile();
@@ -50,7 +47,5 @@ namespace CreateMappings
                 rf.FindCustomAttributes(dll, isOld);
             }
         }
-
-       
     }
 }

@@ -68,7 +68,7 @@ namespace DBConnector
             }
             catch (Exception)
             {
-                //Do nothing
+                // Do nothing
             }
             return null;
         }
