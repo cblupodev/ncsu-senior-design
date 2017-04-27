@@ -13,7 +13,7 @@ namespace CreateMappings
     public class ReadFile
     {
         // find the custom attributes in a dll and add mapping to the dictionary
-        public void findCustomAttributes(string dllPath, bool isOld)
+        public void FindCustomAttributes(string dllPath, bool isOld)
         {
 
             FileHelper.verifyFileExists(dllPath);

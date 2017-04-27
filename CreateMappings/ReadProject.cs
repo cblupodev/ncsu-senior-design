@@ -21,25 +21,25 @@ namespace CreateMappings
         public static void Main(string[] args)
         {
             ReadProject rp = new ReadProject();
-            rp.run(args[0], args[1], args[2]);
+            rp.Run(args[0], args[1], args[2]);
         }
 
-        private void run(string oldFolderPath, string newFolderPath, string sdkName)
+        private void Run(string oldFolderPath, string newFolderPath, string sdkName)
         {
             // key = model identifier
             // value = mapping
 
             SDKSQLConnector.GetInstance().SaveSDK(sdkName, newFolderPath);
             sdkId = SDKSQLConnector.GetInstance().getByName(sdkName).id;
-            readFolderDllFiles(oldFolderPath, true);
-            readFolderDllFiles(newFolderPath, false);
+            ReadFolderDllFiles(oldFolderPath, true);
+            ReadFolderDllFiles(newFolderPath, false);
 
             Console.WriteLine("Mappings were saved to database");
         }
 
         // itereate over all the dll files in a folder
         // for each file ,find the custom attributes
-        public void readFolderDllFiles(string folderPath, bool isOld) {
+        public void ReadFolderDllFiles(string folderPath, bool isOld) {
 
             ReadFile rf = new ReadFile();
             FileHelper.verifyFolderExists(folderPath);
@@ -47,7 +47,7 @@ namespace CreateMappings
 
             foreach (string dll in dllFiles)
             {
-                rf.findCustomAttributes(dll, isOld);
+                rf.FindCustomAttributes(dll, isOld);
             }
         }
 

@@ -58,15 +58,15 @@ namespace TransformClient
         // search for using statements with the old sdk. Then if they are found then look for classes that coresponded to the custom attributes
         // if classes are found then replace the old using statement with the new one
         // oldSDKUsings is a list of the old sdk using statements
-        public SyntaxTree replaceSyntax()
+        public SyntaxTree ReplaceSyntax()
         {
-            replaceUsingStatements();
-            replaceQualifiedNames();
-            replaceIdentifierNames();
+            ReplaceUsingStatements();
+            ReplaceQualifiedNames();
+            ReplaceIdentifierNames();
             return documentEditor.GetChangedRoot().SyntaxTree;
         }
 
-        private void replaceUsingStatements()
+        private void ReplaceUsingStatements()
         {
             HashSet<string> alreadyAddedUsingStatements = new HashSet<string>();
             IEnumerable<UsingDirectiveSyntax> usingDirectiveNodes = tree.GetRoot().DescendantNodes().OfType<UsingDirectiveSyntax>();
@@ -92,7 +92,7 @@ namespace TransformClient
             }
         }
 
-        private void replaceQualifiedNames()
+        private void ReplaceQualifiedNames()
         {
             IEnumerable<QualifiedNameSyntax> qualifiedNames = tree.GetRoot().DescendantNodes().OfType<QualifiedNameSyntax>();
             foreach (QualifiedNameSyntax oldQualifiedNameNode in qualifiedNames) // iterate over all qualified names in the file
@@ -117,7 +117,7 @@ namespace TransformClient
             }
         }
 
-        private void replaceIdentifierNames()
+        private void ReplaceIdentifierNames()
         {
             // https://duckduckgo.com/?q=nested+selection+linq&ia=qa
             IEnumerable<IdentifierNameSyntax> identifierNames = tree.GetRoot().DescendantNodes().OfType<IdentifierNameSyntax>();
