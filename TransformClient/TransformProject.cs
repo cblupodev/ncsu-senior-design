@@ -24,19 +24,14 @@ namespace TransformClient
         public static void Main(string[] args)
         {
             sdkId = SDKSQLConnector.GetInstance().getByName(args[1]).id;
-            (new TransformProject()).Run(args);
+            (new TransformProject()).ProcessProject(args);
         }
                 
-        public void Run(string[] args)
+        public void ProcessProject(string[] args)
         {
             Helper.verifyFileExists(args[0]);
             var filePath = args[0];
-            if (filePath.EndsWith(".soln", StringComparison.OrdinalIgnoreCase))
-            {
-                ProcessSolution(MSBuildWorkspace.Create().OpenSolutionAsync(filePath).Result);
-            }
-            else if (filePath.EndsWith(".csproj", StringComparison.OrdinalIgnoreCase)
-                || filePath.EndsWith(".vbproj", StringComparison.OrdinalIgnoreCase))
+            if (filePath.EndsWith(".csproj", StringComparison.OrdinalIgnoreCase) || filePath.EndsWith(".vbproj", StringComparison.OrdinalIgnoreCase))
             {                
                 // put all changes in new project folder
                 // create copies of the project so don't have to overwrite the original files
@@ -44,26 +39,78 @@ namespace TransformClient
                 string transformed_folder = projectParentFolder + "_transformed";
                 CopyDirectory(projectParentFolder, transformed_folder);
 
-                ProcessProject(MSBuildWorkspace.Create().OpenProjectAsync(filePath).Result, args[1], projectParentFolder, transformed_folder);
+                // Proccess the project here
+                Project proj = MSBuildWorkspace.Create().OpenProjectAsync(filePath).Result;
+                HashSet<String> namespaceSet = nsMappingConnector.GetAllNamespaces(sdkId);
+                Dictionary<String, HashSet<String>> namespaceToClassnameSetMap = new Dictionary<string, HashSet<string>>();
+
+                foreach (Document doc in proj.Documents)
+                {
+                    var semanticModel = doc.GetSemanticModelAsync().Result;
+                    var syntaxTree = doc.GetSyntaxTreeAsync().Result;
+
+                    // do processing here
+                    var documentEditor = DocumentEditor.CreateAsync(doc).Result;
+
+                    if (IsDocCSharp(doc))
+                    {
+                        TransformFileCSharp ft = new TransformFileCSharp(documentEditor);
+                        syntaxTree = ft.ReplaceSyntax();
+                    }
+
+                    if (IsDocVB(doc))
+                    {
+                        TransformFileVBasic ft = new TransformFileVBasic(documentEditor);
+                        syntaxTree = ft.ReplaceSyntax();
+                    }
+
+                    File.WriteAllText(doc.FilePath.Replace(projectParentFolder, transformed_folder), syntaxTree.GetText().ToString());
+
+                    Console.WriteLine("Transformed   " + doc.FilePath);
+                }
+
+                HashSet<String> olddllSet = asMappingConnector.GetAllOldDllPaths(sdkId);
+                TransformXml(proj.FilePath, olddllSet, Path.GetExtension(proj.FilePath), sdkId, projectParentFolder, transformed_folder);
+
+                Console.WriteLine("Project file edited to use new references");
+            } else
+            {
+                Console.WriteLine("first parameter must be .csproj or .vbproj");
             }
+        }
 
+        private bool IsDocVB(Document doc)
+        {
+            return Path.GetExtension(doc.FilePath).Equals(".vb");
+        }
 
+        private bool IsDocCSharp(Document doc)
+        {
+            return Path.GetExtension(doc.FilePath).Equals(".cs");
         }
 
         private static void RecursiveDeleteDirectory(DirectoryInfo baseDir)
         {
-            if (!baseDir.Exists)
-                return;
-
-            foreach (var dir in baseDir.EnumerateDirectories())
+            try
             {
-                RecursiveDeleteDirectory(dir);
+                if (!baseDir.Exists)
+                    return;
+
+                foreach (var dir in baseDir.EnumerateDirectories())
+                {
+                    RecursiveDeleteDirectory(dir);
+                }
+                baseDir.Delete(true);
             }
-            baseDir.Delete(true);
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         private static void CopyDirectory(string sourcePath, string destPath)
         {
+            // automatically remove a directory of the same name so don't have to manually remove it every time you run TransformClient
             RecursiveDeleteDirectory(new DirectoryInfo(destPath));
 
             if (!Directory.Exists(destPath))
@@ -84,80 +131,7 @@ namespace TransformClient
             }
         }
 
-        private void ProcessSolution(Solution soln)
-        {
-            foreach (Project proj in soln.Projects)
-            {
-                //ProcessProject(proj);
-            }
-        }
-
-        private void ProcessProject(Project proj, string sdkid, string currentParent, string newParent)
-        {
-            HashSet<String> namespaceSet = nsMappingConnector.GetAllNamespaces(sdkId);
-            Dictionary<String, HashSet<String>> namespaceToClassnameSetMap = new Dictionary<string, HashSet<string>>();
-
-
-            foreach (Document doc in proj.Documents)
-            {
-                if (IsDocCSharp(doc))
-                {
-                    ProcessDocumentCSharp(doc, namespaceSet, namespaceToClassnameSetMap, currentParent, newParent);
-                }
-
-                if (IsDocVB(doc))
-                {
-                    ProcessDocumentVB(doc, namespaceSet, namespaceToClassnameSetMap, currentParent, newParent);
-                }
-            }
-            HashSet<String> newdllSet = asMappingConnector.GetAllNewDllPaths(sdkId);
-            HashSet<String> olddllSet = asMappingConnector.GetAllOldDllPaths(sdkId);
-            // Don't remove the line below, cblupo
-            TransformXml(proj.FilePath, newdllSet, olddllSet, Path.GetExtension(proj.FilePath), sdkId, currentParent, newParent);
-            Console.WriteLine("Project file edited to use new references");
-        }
-
-        private void ProcessDocumentVB(Document doc, HashSet<String> namespaceSet, Dictionary<String, HashSet<String>> namespaceToClassnameSetMap, string currentParent, string newParent)
-        {
-            var semanticModel = doc.GetSemanticModelAsync().Result;
-            var syntaxTree = doc.GetSyntaxTreeAsync().Result;
-
-            // do processing here
-            var documentEditor = DocumentEditor.CreateAsync(doc).Result;
-
-            TransformFileVBasic ft = new TransformFileVBasic(documentEditor);
-
-            syntaxTree = ft.ReplaceSyntax();
-            File.WriteAllText(doc.FilePath.Replace(currentParent, newParent), syntaxTree.GetText().ToString());
-            Console.WriteLine("Transformed   " + doc.FilePath);
-        }
-
-        private bool IsDocVB(Document doc)
-        {
-            return Path.GetExtension(doc.FilePath).Equals(".vb");
-        }
-
-        private bool IsDocCSharp(Document doc)
-        {
-            return Path.GetExtension(doc.FilePath).Equals(".cs");
-        }
-
-        private void ProcessDocumentCSharp(Document doc, HashSet<String> namespaceSet, Dictionary<String, HashSet<String>> namespaceToClassnameSetMap, string currentParent, string newParent)
-        {
-            var semanticModel = doc.GetSemanticModelAsync().Result;
-            var syntaxTree = doc.GetSyntaxTreeAsync().Result;
-
-            // do processing here
-            var documentEditor = DocumentEditor.CreateAsync(doc).Result; 
-
-            TransformFileCSharp ft = new TransformFileCSharp(documentEditor);
-
-            syntaxTree = ft.ReplaceSyntax();
-            File.WriteAllText(doc.FilePath.Replace(currentParent, newParent), syntaxTree.GetText().ToString());
-            Console.WriteLine("Transformed   " + doc.FilePath);
-        }
-
-        private void TransformXml(string csprojFilePath, HashSet<String> newdllSet, HashSet<String> olddllSet, string projectFileExtension, int sdkid, string currentParent, string newParent)
+        private void TransformXml(string csprojFilePath, HashSet<String> olddllSet, string projectFileExtension, int sdkid, string currentParent, string newParent)
         {
             string xmlElementOutputPathName = "OutputPath";
             string xmlElementReferenceName = "Reference";
@@ -185,12 +159,14 @@ namespace TransformClient
 
             foreach (var element in elements)
             {
+                // create new reference element
                 XElement addedref = new XElement(ns + xmlElementReferenceName, 
                     new XAttribute("Include", element.Value),
                         new XElement(ns + "SpecificVersion", "False"),
                         new XElement(ns + xmlElementHintPathName, newRelativeOutputPath + Path.GetFileName(element.Key)),
                         new XElement(ns + "Private", "False")
                     );
+                // add the element to the xml
                 xdoc.Descendants(ns + "ItemGroup").First().AddFirst(addedref);
             }
         }
@@ -212,16 +188,13 @@ namespace TransformClient
                              // that checks if the reference is part of the old sdk
                              // if the reference is not part of the old sdk then don't include it in the selection output
                              // because if it is included in the output then it will get removed
-                             // where olddllSet.Contains(Path.GetFullPath(oldOutputPath + Path.GetFileName(reference.Descendants(ns + xmlElementHintPathName).First().Value)))
+                             where olddllSet.Contains(Path.GetFullPath(oldOutputPath + Path.GetFileName(reference.Descendants(ns + xmlElementHintPathName).First().Value)))
                              select reference;
             try
             {
                 foreach (var reference in references)
                 {
-                    if (olddllSet.Contains(Path.GetFullPath(oldOutputPath + Path.GetFileName(reference.Descendants(ns + xmlElementHintPathName).First().Value))))
-                    {
-                        reference.Remove();
-                    }
+                    reference.Remove();
                 }
             }
             catch (NullReferenceException nre)
@@ -230,6 +203,7 @@ namespace TransformClient
             }
         }
 
+        // Change output path to the new one
         private string ChangeOutputPath(string xmlElementOutputPathName, XNamespace ns, XDocument xdoc)
         {
             string newoutPutPath = SDKSQLConnector.GetInstance().getOutputPathById(sdkId);
