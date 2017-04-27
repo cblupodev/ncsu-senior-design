@@ -23,7 +23,7 @@ namespace TransformClient
         // args 1 = sdk name
         public static void Main(string[] args)
         {
-            sdkId = SDKSQLConnector.GetInstance().getByName(args[1]).id;
+            sdkId = SDKSQLConnector.GetInstance().GetByName(args[1]).id;
             (new TransformProject()).Run(args);
         }
                 
@@ -232,7 +232,7 @@ namespace TransformClient
 
         private string ChangeOutputPath(string xmlElementOutputPathName, XNamespace ns, XDocument xdoc)
         {
-            string newoutPutPath = SDKSQLConnector.GetInstance().getOutputPathById(sdkId);
+            string newoutPutPath = SDKSQLConnector.GetInstance().GetOutputPathById(sdkId);
             string newEndPath = newoutPutPath.Split('\\').Last();
 
             var outputPathElements = from outp in xdoc.Descendants(ns + xmlElementOutputPathName)

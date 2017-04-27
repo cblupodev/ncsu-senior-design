@@ -19,7 +19,7 @@ namespace UnitTest.WhiteBox.EFSQLConnector
         {
             name = Guid.NewGuid().ToString();
             SDKSQLConnector.GetInstance().SaveSDK(name, "");
-            id = SDKSQLConnector.GetInstance().getByName(name).id;
+            id = SDKSQLConnector.GetInstance().GetByName(name).id;
             instance = NSMappingSQLConnector.GetInstance();
         }
         [TestCleanup]
@@ -33,7 +33,7 @@ namespace UnitTest.WhiteBox.EFSQLConnector
             var mapA = instance.GetOrCreateOldNSMap(id, "space");
             var expectA = new namespace_map
             {
-                old_namespace = "path",
+                old_namespace = "space",
                 sdk_id = id
             };
             AssertAditional.NamespaceMapEquals(expectA, mapA, "issue on first create");
@@ -41,16 +41,16 @@ namespace UnitTest.WhiteBox.EFSQLConnector
             var mapB = instance.GetOrCreateOldNSMap(id, "space2");
             var expectB = new namespace_map
             {
-                old_namespace = "path2",
+                old_namespace = "space2",
                 sdk_id = id
             };
             AssertAditional.NamespaceMapEquals(expectB, mapB, "issue on second create");
             AssertAditional.NamespaceMapEquals(expectA, mapA, "impropper modification of A");
 
-            var mapC = instance.GetOrCreateOldNSMap(id, "space3");
+            var mapC = instance.GetOrCreateOldNSMap(id, "space");
             var expectC = new namespace_map
             {
-                old_namespace = "space3",
+                old_namespace = "space",
                 sdk_id = id,
                 id = mapA.id
             };
@@ -65,34 +65,35 @@ namespace UnitTest.WhiteBox.EFSQLConnector
         {
             var mapA = instance.GetOrCreateOldNSMap(id, "space");
             var mapB = instance.GetOrCreateOldNSMap(id, "space");
+            
+            var asMap = AssemblyMappingSQLConnector.GetInstance().GetOrCreateOldAssemblyMap(id, "path");
+            SDKMappingSQLConnector.GetInstance().SaveOldSDKMapping(id, "A", "A", mapA, asMap);
+            var targetA = SDKMappingSQLConnector.GetInstance().GetSDKMappingByIdentifiers(id, "A");
+            SDKMappingSQLConnector.GetInstance().SaveOldSDKMapping(id, "B", "B", mapB, asMap);
+            var targetB = SDKMappingSQLConnector.GetInstance().GetSDKMappingByIdentifiers(id, "B");
 
-            var targetSdkMap = new sdk_map2
-            {
-                namespace_map_id = mapA.id,
-                namespace_map = mapA
-            };
-
-            instance.UpdateOrCreateNSMapping(mapA, targetSdkMap, "spaceNew");
-            mapA = targetSdkMap.namespace_map;
+            instance.UpdateOrCreateNSMapping(mapA, targetA, "spaceNew");
+            SDKMappingSQLConnector.GetInstance().UpdateSDKMapping(targetA, "A");
+            var newA = instance.GetNamespaceMapsFromOldNamespace(id, "space").First(x => x.id == targetA.namespace_map_id);
             var expectNewA = new namespace_map
             {
                 old_namespace = "space",
                 sdk_id = id,
                 new_namespace = "spaceNew"
             };
-            AssertAditional.NamespaceMapEquals(expectNewA, mapA, "issue on update");
+            AssertAditional.NamespaceMapEquals(expectNewA, newA, "issue on update");
             
-            instance.UpdateOrCreateNSMapping(mapB, targetSdkMap, "spaceNew2");
-            mapB = targetSdkMap.namespace_map;
+            instance.UpdateOrCreateNSMapping(mapB, targetB, "spaceNew2");
+            SDKMappingSQLConnector.GetInstance().UpdateSDKMapping(targetB, "B");
+            var newB = instance.GetNamespaceMapsFromOldNamespace(id, "space").First(x => x.new_namespace == "spaceNew2");
             var expectNewB = new namespace_map
             {
                 old_namespace = "space",
                 sdk_id = id,
                 new_namespace = "spaceNew2"
             };
-            AssertAditional.NamespaceMapEquals(expectNewB, mapB, "issue on splitting");
-            Assert.AreNotEqual(0, mapB.id, "map probably isn't in the database");
-            AssertAditional.NamespaceMapEquals(expectNewA, mapA, "impropper modification of A");
+            AssertAditional.NamespaceMapEquals(expectNewB, newB, "issue on splitting");
+            AssertAditional.NamespaceMapEquals(expectNewA, newA, "impropper modification of A");
         }
 
         [TestMethod()]
@@ -120,36 +121,38 @@ namespace UnitTest.WhiteBox.EFSQLConnector
         public void TestNSMappingSQLConnectorGetNamespaceMapsFromOldNamespace()
         {
             Func<namespace_map,namespace_map,bool> equals = (a,b) => a.id == b.id;
-            AssertAditional.ListEquals(new List<namespace_map> { },
-                instance.GetNamespaceMapsFromOldNamespace(id, "space"), equals, "initial value");
+            Assert.IsNull( instance.GetNamespaceMapsFromOldNamespace(id, "space"), "initial value");
 
             var mapA = instance.GetOrCreateOldNSMap(id, "space");
+            var mapB = instance.GetOrCreateOldNSMap(id, "space");
             AssertAditional.ListEquals(new List<namespace_map> { mapA },
                 instance.GetNamespaceMapsFromOldNamespace(id, "space"), equals, "null new value");
-            AssertAditional.ListEquals(new List<namespace_map> {  },
-                instance.GetNamespaceMapsFromOldNamespace(id, "space2"), equals, "null new value different space");
+            Assert.IsNull(instance.GetNamespaceMapsFromOldNamespace(id, "space2"), "null new value different space");
+            
+            var asMap = AssemblyMappingSQLConnector.GetInstance().GetOrCreateOldAssemblyMap(id, "path");
+            SDKMappingSQLConnector.GetInstance().SaveOldSDKMapping(id, "A", "A", mapA, asMap);
+            var targetA = SDKMappingSQLConnector.GetInstance().GetSDKMappingByIdentifiers(id, "A");
+            SDKMappingSQLConnector.GetInstance().SaveOldSDKMapping(id, "B", "B", mapB, asMap);
+            var targetB = SDKMappingSQLConnector.GetInstance().GetSDKMappingByIdentifiers(id, "B");
 
-            var targetSdkMap = new sdk_map2();
-
-            var mapB = instance.GetOrCreateOldNSMap(id, "space");
-            var mapC = instance.GetOrCreateOldNSMap(id, "space");
-            instance.UpdateOrCreateNSMapping(mapB, targetSdkMap, "spaceNew");
+            instance.UpdateOrCreateNSMapping(mapA, targetA, "spaceNew");
+            SDKMappingSQLConnector.GetInstance().UpdateSDKMapping(targetA, "A");
+            instance.UpdateOrCreateNSMapping(mapB, targetB, "spaceNew2");
+            SDKMappingSQLConnector.GetInstance().UpdateSDKMapping(targetB, "B");
+            mapA = instance.GetNamespaceMapsFromOldNamespace(id, "space").First(x => x.new_namespace == "spaceNew");
+            mapB = instance.GetNamespaceMapsFromOldNamespace(id, "space").First(x => x.new_namespace == "spaceNew2");
             AssertAditional.ListEquals(new List<namespace_map> { mapA, mapB },
-                instance.GetNamespaceMapsFromOldNamespace(id, "space"), equals, "add value");
-            AssertAditional.ListEquals(new List<namespace_map> { },
-                instance.GetNamespaceMapsFromOldNamespace(id, "space2"), equals, "add value different space");
-
-            instance.UpdateOrCreateNSMapping(mapC, targetSdkMap, "spaceNew2");
-            AssertAditional.ListEquals(new List<namespace_map> { mapA, mapB, mapC },
                 instance.GetNamespaceMapsFromOldNamespace(id, "space"), equals, "split value");
-            AssertAditional.ListEquals(new List<namespace_map> { },
-                instance.GetNamespaceMapsFromOldNamespace(id, "space2"), equals, "split value different space");
+            Assert.IsNull(instance.GetNamespaceMapsFromOldNamespace(id, "space2"), "split value different space");
 
-            var mapD = instance.GetOrCreateOldNSMap(id, "space2");
-            instance.UpdateOrCreateNSMapping(mapD, targetSdkMap, "space");
-            AssertAditional.ListEquals(new List<namespace_map> { mapD },
+            var mapC = instance.GetOrCreateOldNSMap(id, "space2");
+            SDKMappingSQLConnector.GetInstance().SaveOldSDKMapping(id, "C", "C", mapC, asMap);
+            var targetC = SDKMappingSQLConnector.GetInstance().GetSDKMappingByIdentifiers(id, "C");
+            instance.UpdateOrCreateNSMapping(mapC, targetC, "space");
+            SDKMappingSQLConnector.GetInstance().UpdateSDKMapping(targetC, "C");
+            AssertAditional.ListEquals(new List<namespace_map> { mapC },
                 instance.GetNamespaceMapsFromOldNamespace(id, "space2"), equals, "add value to different space");
-            AssertAditional.ListEquals(new List<namespace_map> { mapA, mapB, mapC },
+            AssertAditional.ListEquals(new List<namespace_map> { mapA, mapB },
                 instance.GetNamespaceMapsFromOldNamespace(id, "space"), equals, "original space should be umodified");
 
         }

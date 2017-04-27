@@ -49,10 +49,34 @@ namespace EFSQLConnector
             }
         }
 
-        public void UpdateAssemblyMapping(assembly_map asMap, string dllPath, string assemFullName)
+        public void UpdateAssemblyMapping(assembly_map asMap, sdk_map2 sdkMap, string dllPath, string assemFullName)
         {
-            asMap.new_path = dllPath;
-            asMap.name = assemFullName;
+            var query = from nm in dbConnection.assembly_map
+                        where nm.sdk_id == asMap.sdk_id && nm.old_path == asMap.old_path && nm.new_path == dllPath
+                        select nm;
+            if (!query.Any())
+            {
+                query = from nm in dbConnection.assembly_map
+                        where nm.sdk_id == asMap.sdk_id && nm.old_path == asMap.old_path && nm.new_path == null
+                        select nm;
+                if (!query.Any())
+                {
+                    assembly_map splitAsMap = new assembly_map
+                    {
+                        sdk_id = asMap.sdk_id,
+                        old_path = asMap.old_path,
+                        new_path = dllPath,
+                        name = assemFullName
+                    };
+                    sdkMap.assembly_map_id = 0;
+                    sdkMap.assembly_map = splitAsMap;
+                }
+                else
+                {
+                    asMap.new_path = dllPath;
+                    asMap.name = assemFullName;
+                }
+            }
             try
             {
                 dbConnection.SaveChanges();

@@ -325,12 +325,29 @@ namespace UnitTest.BlackBox
             }
         }
 
+        private void SaveEntry(sdk_map2 map)
+        {
+            var id = SDKSQLConnector.GetInstance().GetByName(sdkNameId).id;
+            var ns = NSMappingSQLConnector.GetInstance().GetOrCreateOldNSMap(id, map.namespace_map.old_namespace);
+            var assem = AssemblyMappingSQLConnector.GetInstance().GetOrCreateOldAssemblyMap(id, map.assembly_map.old_path);
+            SDKMappingSQLConnector.GetInstance().SaveOldSDKMapping(id,
+                map.model_identifier, map.old_classname, ns, assem);
+            var entry = SDKMappingSQLConnector.GetInstance().GetSDKMappingByIdentifiers(id, map.model_identifier);
+            NSMappingSQLConnector.GetInstance().UpdateOrCreateNSMapping(ns, entry, map.namespace_map.new_namespace);
+            AssemblyMappingSQLConnector.GetInstance().UpdateAssemblyMapping(assem, entry,
+                map.assembly_map.new_path, map.assembly_map.name);
+            SDKMappingSQLConnector.GetInstance().UpdateSDKMapping(entry, map.new_classname);
+        }
+
         public virtual void LoadExpectedMappingsToDatabase()
         {
             LoadExpectedMappings();
             SDKSQLConnector.GetInstance().SaveSDK(sdkNameId, Path.GetFullPath(Path.Combine(TestFolder, "bin2")));
-            var sdkId = SDKSQLConnector.GetInstance().getByName(sdkNameId).id;
-            SDKMappingSQLConnector.GetInstance().SaveFullSDKMap(sdkId, expectedMappings);
+            var sdkId = SDKSQLConnector.GetInstance().GetByName(sdkNameId).id;
+            foreach ( var map in expectedMappings )
+            {
+                SaveEntry(map);
+            }
         }
         
         // MappingTest
@@ -400,8 +417,8 @@ namespace UnitTest.BlackBox
 
         public virtual void VerifyMapping()
         {
-            var sdkId = SDKSQLConnector.GetInstance().getByName(sdkNameId).id;
-            Assert.AreEqual(Path.GetFullPath(Path.Combine(TestFolder,"bin2")), SDKSQLConnector.GetInstance().getOutputPathById(sdkId),
+            var sdkId = SDKSQLConnector.GetInstance().GetByName(sdkNameId).id;
+            Assert.AreEqual(Path.GetFullPath(Path.Combine(TestFolder,"bin2")), SDKSQLConnector.GetInstance().GetOutputPathById(sdkId),
                 "Wrong output path");
             var actualMappings = SDKMappingSQLConnector.GetInstance().GetAllBySdkId(sdkId);
             Assert.AreEqual(expectedMappings.Count, actualMappings.Count, "Wrong number of generated mappings");

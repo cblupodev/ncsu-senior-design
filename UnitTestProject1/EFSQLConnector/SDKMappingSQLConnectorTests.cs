@@ -19,7 +19,7 @@ namespace UnitTest.WhiteBox.EFSQLConnector
         {
             name = Guid.NewGuid().ToString();
             SDKSQLConnector.GetInstance().SaveSDK(name, "");
-            id = SDKSQLConnector.GetInstance().getByName(name).id;
+            id = SDKSQLConnector.GetInstance().GetByName(name).id;
             instance = SDKMappingSQLConnector.GetInstance();
         }
         [TestCleanup]
@@ -108,8 +108,6 @@ namespace UnitTest.WhiteBox.EFSQLConnector
             instance.SaveOldSDKMapping(id, "D", "oldD", nsMapB, asMapB);
             expected.Add(mapD);
             AssertDatabaseState(expected, "fourth value");
-
-            Assert.Fail();
         }
 
         [TestMethod()]
@@ -152,94 +150,110 @@ namespace UnitTest.WhiteBox.EFSQLConnector
         }
 
         [TestMethod()]
-        public void TestSDKMappingSQLConnectorSaveFullSDKMap()
-        {
-            var nsA = new namespace_map()
-            {
-                old_namespace = "oldA",
-                new_namespace = "newA"
-            };
-            var nsB = new namespace_map()
-            {
-                old_namespace = "oldB",
-                new_namespace = "newB"
-            };
-            var asA = new assembly_map()
-            {
-                old_path = "pathAOld",
-                new_path = "pathANew"
-            };
-            var asB = new assembly_map()
-            {
-                old_path = "pathBOld",
-                new_path = "pathBNew"
-            };
-
-            var mapA = new sdk_map2
-            {
-                namespace_map = nsA,
-                assembly_map = asA,
-                model_identifier = "A",
-                old_classname = "oldA",
-                new_classname = "newA"
-            };
-            var mapB = new sdk_map2
-            {
-                namespace_map = nsA,
-                assembly_map = asB,
-                model_identifier = "B",
-                old_classname = "oldB",
-                new_classname = "newB"
-            };
-            var mapC = new sdk_map2
-            {
-                namespace_map = nsB,
-                assembly_map = asA,
-                model_identifier = "C",
-                old_classname = "oldC",
-                new_classname = "newC"
-            };
-            var mapD = new sdk_map2
-            {
-                namespace_map = nsB,
-                assembly_map = asB,
-                model_identifier = "D",
-                old_classname = "oldD",
-                new_classname = "newD"
-            };
-
-            instance.SaveFullSDKMap(id, new List<sdk_map2> { mapA, mapB, mapC, mapD });
-
-            AssertDatabaseState(new List<sdk_map2>
-            {
-                new sdk_map2 {namespace_map_id = nsA.id, assembly_map_id = asA.id, model_identifier = "A",
-                    old_classname = "oldA", new_classname = "newA", sdk_id = id},
-                new sdk_map2 {namespace_map_id = nsA.id, assembly_map_id = asB.id, model_identifier = "B",
-                    old_classname = "oldB", new_classname = "newB", sdk_id = id},
-                new sdk_map2 {namespace_map_id = nsB.id, assembly_map_id = asA.id, model_identifier = "C",
-                    old_classname = "oldC", new_classname = "newC", sdk_id = id},
-                new sdk_map2 {namespace_map_id = nsB.id, assembly_map_id = asB.id, model_identifier = "D",
-                    old_classname = "oldD", new_classname = "newD", sdk_id = id}
-            }, "");
-        }
-
-        [TestMethod()]
         public void TestSDKMappingSQLConnectorGetAllBySdkId()
         {
-            Assert.AreEqual(0, instance.GetAllBySdkId(id), "database should have been initialized with no entries");
-            Assert.AreEqual(0, instance.GetAllBySdkId(-1), "invalid database shouldn't contain anything");
+            Assert.AreEqual(0, instance.GetAllBySdkId(id).Count, "database should have been initialized with no entries");
+            Assert.AreEqual(0, instance.GetAllBySdkId(-1).Count, "invalid database shouldn't contain anything");
         }
 
         [TestMethod()]
         public void TestSDKMappingSQLConnectorUpdateSDKMapping()
         {
-            Assert.Fail();
+            var nsMapA = NSMappingSQLConnector.GetInstance().GetOrCreateOldNSMap(id, "space");
+            var asMapA = AssemblyMappingSQLConnector.GetInstance().GetOrCreateOldAssemblyMap(id, "path");
+            var nsMapB = NSMappingSQLConnector.GetInstance().GetOrCreateOldNSMap(id, "space2");
+            var asMapB = AssemblyMappingSQLConnector.GetInstance().GetOrCreateOldAssemblyMap(id, "path2");
+
+            var expectedA = new sdk_map2
+            {
+                namespace_map_id = nsMapA.id,
+                assembly_map_id = asMapA.id,
+                model_identifier = "modelA",
+                old_classname = "clazz",
+                sdk_id = id,
+                new_classname = "clazzNew"
+            };
+            var expectedB = new sdk_map2
+            {
+                namespace_map_id = nsMapB.id,
+                assembly_map_id = asMapB.id,
+                model_identifier = "modelB",
+                old_classname = "clazz2",
+                sdk_id = id,
+                new_classname = "clazzNew2",
+            };
+
+            instance.SaveOldSDKMapping(id, "modelA", "clazz", nsMapA, asMapA);
+            instance.UpdateSDKMapping(instance.GetSDKMappingByIdentifiers(id, "modelA"), "clazzNew");
+            AssertAditional.SDKMapEquals(expectedA, instance.GetSDKMappingByIdentifiers(id, "modelA"), "");
+            
+            instance.SaveOldSDKMapping(id, "modelB", "clazz2", nsMapB, asMapB);
+            instance.UpdateSDKMapping(instance.GetSDKMappingByIdentifiers(id, "modelB"), "clazzNew2");
+            AssertAditional.SDKMapEquals(expectedA, instance.GetSDKMappingByIdentifiers(id, "modelA"), "");
+            AssertAditional.SDKMapEquals(expectedB, instance.GetSDKMappingByIdentifiers(id, "modelB"), "");
         }
 
         [TestMethod()]
         public void TestSDKMappingSQLConnectorGetSDKMapFromClassAndNamespace()
         {
-            Assert.Fail();
+            var nsMapA = NSMappingSQLConnector.GetInstance().GetOrCreateOldNSMap(id, "space");
+            var asMapA = AssemblyMappingSQLConnector.GetInstance().GetOrCreateOldAssemblyMap(id, "path");
+            var nsMapB = NSMappingSQLConnector.GetInstance().GetOrCreateOldNSMap(id, "space2");
+            var asMapB = AssemblyMappingSQLConnector.GetInstance().GetOrCreateOldAssemblyMap(id, "path2");
+
+            var mapA = new sdk_map2
+            {
+                namespace_map_id = nsMapA.id,
+                assembly_map_id = asMapA.id,
+                model_identifier = "A",
+                old_classname = "oldA",
+                sdk_id = id
+            };
+            var mapB = new sdk_map2
+            {
+                namespace_map_id = nsMapA.id,
+                assembly_map_id = asMapB.id,
+                model_identifier = "B",
+                old_classname = "oldB",
+                sdk_id = id
+            };
+            var mapC = new sdk_map2
+            {
+                namespace_map_id = nsMapB.id,
+                assembly_map_id = asMapA.id,
+                model_identifier = "C",
+                old_classname = "oldC",
+                sdk_id = id
+            };
+            var mapD = new sdk_map2
+            {
+                namespace_map_id = nsMapB.id,
+                assembly_map_id = asMapB.id,
+                model_identifier = "D",
+                old_classname = "oldD",
+                sdk_id = id
+            };
+
+            instance.SaveOldSDKMapping(id, "A", "oldA", nsMapA, asMapA);
+            AssertAditional.SDKMapEquals(mapA, instance.GetSDKMapFromClassAndNamespace(id, "space", "oldA"), "first value");
+
+
+            instance.SaveOldSDKMapping(id, "B", "oldB", nsMapA, asMapB);
+            AssertAditional.SDKMapEquals(mapA, instance.GetSDKMapFromClassAndNamespace(id, "space", "oldA"), "invalid change");
+            AssertAditional.SDKMapEquals(mapB, instance.GetSDKMapFromClassAndNamespace(id, "space", "oldB"), "second value");
+
+
+            instance.SaveOldSDKMapping(id, "C", "oldC", nsMapB, asMapA);
+            AssertAditional.SDKMapEquals(mapA, instance.GetSDKMapFromClassAndNamespace(id, "space", "oldA"), "invalid change");
+            AssertAditional.SDKMapEquals(mapB, instance.GetSDKMapFromClassAndNamespace(id, "space", "oldB"), "invalid change");
+            AssertAditional.SDKMapEquals(mapC, instance.GetSDKMapFromClassAndNamespace(id, "space2", "oldC"), "third value");
+
+
+            instance.SaveOldSDKMapping(id, "D", "oldD", nsMapB, asMapB);
+            AssertAditional.SDKMapEquals(mapA, instance.GetSDKMapFromClassAndNamespace(id, "space", "oldA"), "invalid change");
+            AssertAditional.SDKMapEquals(mapB, instance.GetSDKMapFromClassAndNamespace(id, "space", "oldB"), "invalid change");
+            AssertAditional.SDKMapEquals(mapC, instance.GetSDKMapFromClassAndNamespace(id, "space2", "oldC"), "invalid change");
+            AssertAditional.SDKMapEquals(mapD, instance.GetSDKMapFromClassAndNamespace(id, "space2", "oldD"), "fourth value");
         }
     }
 }

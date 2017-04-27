@@ -53,7 +53,8 @@ namespace EFSQLConnector
 
         public string GetOutputPathById(int sdkId)
         {
-            return GetByWhereClause(s => s.id == sdkId).output_path;
+            var entry = GetByWhereClause(s => s.id == sdkId);
+            return entry != null ? entry.output_path : null;
         }
 
         private sdk2 GetByWhereClause(Expression<Func<sdk2, bool>> whereClause)

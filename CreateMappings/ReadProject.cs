@@ -30,7 +30,7 @@ namespace CreateMappings
             // value = mapping
 
             SDKSQLConnector.GetInstance().SaveSDK(sdkName, newFolderPath);
-            sdkId = SDKSQLConnector.GetInstance().getByName(sdkName).id;
+            sdkId = SDKSQLConnector.GetInstance().GetByName(sdkName).id;
             ReadFolderDllFiles(oldFolderPath, true);
             ReadFolderDllFiles(newFolderPath, false);
 

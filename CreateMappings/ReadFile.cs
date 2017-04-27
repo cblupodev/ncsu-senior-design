@@ -63,7 +63,7 @@ namespace CreateMappings
                             if (sdkMap != null)
                             {
                                 NSMappingSQLConnector.GetInstance().UpdateOrCreateNSMapping(sdkMap.namespace_map, sdkMap, type.Namespace);
-                                AssemblyMappingSQLConnector.GetInstance().UpdateAssemblyMapping(sdkMap.assembly_map, dllPath, assemFullName);
+                                AssemblyMappingSQLConnector.GetInstance().UpdateAssemblyMapping(sdkMap.assembly_map, sdkMap, dllPath, assemFullName);
                                 SDKMappingSQLConnector.GetInstance().UpdateSDKMapping(sdkMap, type.Name);
                             }
                         }
