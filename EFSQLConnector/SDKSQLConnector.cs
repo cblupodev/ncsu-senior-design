@@ -41,17 +41,17 @@ namespace EFSQLConnector
             return -1;
         }
 
-        public sdk2 getByName(string sdkName)
+        public sdk2 GetByName(string sdkName)
         {
             return GetByWhereClause(s => s.name == sdkName);
         }
 
-        public sdk2 getById(int sdkId)
+        public sdk2 GetById(int sdkId)
         {
             return GetByWhereClause(s => s.id == sdkId);
         }
 
-        public string getOutputPathById(int sdkId)
+        public string GetOutputPathById(int sdkId)
         {
             return GetByWhereClause(s => s.id == sdkId).output_path;
         }
