@@ -189,8 +189,24 @@ namespace UnitTestProject1
             try
             {
                 var instance = method.ReflectedType.GetConstructor(new Type[0]).Invoke(new object[0]);
-                method.Invoke(instance, new object[0]);
-                passed = true;
+                foreach ( var initializer in method.ReflectedType
+                    .GetMethods().Where(x=>x.GetCustomAttributes<TestInitializeAttribute>().Count() > 0) )
+                {
+                    initializer.Invoke(instance, new object[0]);
+                }
+                try
+                {
+                    method.Invoke(instance, new object[0]);
+                    passed = true;
+                }
+                finally
+                {
+                    foreach (var cleanup in method.ReflectedType
+                        .GetMethods().Where(x => x.GetCustomAttributes<TestCleanupAttribute>().Count() > 0))
+                    {
+                        cleanup.Invoke(instance, new object[0]);
+                    }
+                }
             }
             catch (TargetInvocationException e)
             {
