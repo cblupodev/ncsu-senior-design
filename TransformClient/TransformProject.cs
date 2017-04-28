@@ -23,7 +23,7 @@ namespace TransformClient
         // args 1 = sdk name
         public static void Main(string[] args)
         {
-            sdkId = SDKSQLConnector.GetInstance().getByName(args[1]).id;
+            sdkId = SDKSQLConnector.GetInstance().GetByName(args[1]).id;
             (new TransformProject()).ProcessProject(args);
         }
                 
