@@ -190,16 +190,9 @@ namespace TransformClient
                              // because if it is included in the output then it will get removed
                              where olddllSet.Contains(Path.GetFullPath(oldOutputPath + Path.GetFileName(reference.Descendants(ns + xmlElementHintPathName).First().Value)))
                              select reference;
-            try
+            while ( references.Count() > 0 )
             {
-                foreach (var reference in references)
-                {
-                    reference.Remove();
-                }
-            }
-            catch (NullReferenceException nre)
-            {
-                // null exception is thrown because the reference is remove from the list, so just ignore
+                references.First().Remove();
             }
         }
 
