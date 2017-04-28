@@ -34,27 +34,6 @@ namespace TransformClient
             this.semanticModel = documentEditor.SemanticModel;
         }
 
-        public TransformFileCSharp(string fileName)
-        {
-            FileHelper.verifyFileExists(fileName);
-            SyntaxTree tree;
-            this.clientFilePath = fileName;
-
-            using (var stream = File.OpenRead(clientFilePath))
-            {
-                tree = CSharpSyntaxTree.ParseText(SourceText.From(stream), path: clientFilePath);
-            }
-
-            root = (CompilationUnitSyntax)tree.GetRoot();
-
-            // https://github.com/dotnet/roslyn/wiki/Getting-Started-C%23-Semantic-Analysis
-            var compilation = CSharpCompilation.Create("client_old").AddReferences( //magic
-                                                    MetadataReference.CreateFromFile(
-                                                        typeof(object).Assembly.Location))
-                                                    .AddSyntaxTrees(tree);
-            semanticModel = compilation.GetSemanticModel(tree);
-        }
-
         // search for using statements with the old sdk. Then if they are found then look for classes that coresponded to the custom attributes
         // if classes are found then replace the old using statement with the new one
         // oldSDKUsings is a list of the old sdk using statements
