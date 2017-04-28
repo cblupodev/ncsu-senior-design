@@ -112,7 +112,13 @@ namespace TransformClient
                     var nodeTypeInfo = semanticModel.GetTypeInfo(oldNameNode);
                     if ((nodeTypeInfo.Type != null || oldNameNode.Parent is ObjectCreationExpressionSyntax) && semanticObjCreation.Symbol != null)
                     {
-                        var oldNamespace = semanticObjCreation.Symbol.ContainingNamespace.Name;
+                        var oldNamespace = "";
+                        for (var curNamespaceSymbol = semanticObjCreation.Symbol.ContainingNamespace; curNamespaceSymbol != null && curNamespaceSymbol.Name != "";
+                            curNamespaceSymbol = curNamespaceSymbol.ContainingNamespace)
+                        {
+                            oldNamespace = "." + curNamespaceSymbol.Name + oldNamespace;
+                        }
+                        oldNamespace = oldNamespace.Substring(1);
                         String oldClassname = semanticObjCreation.Symbol.Name.ToString();
                         sdk_map2 sdkMap = SDKMappingSQLConnector.GetInstance().GetSDKMapFromClassAndNamespace(TransformProject.sdkId, oldNamespace, oldClassname);
                         if (sdkMap != null)
