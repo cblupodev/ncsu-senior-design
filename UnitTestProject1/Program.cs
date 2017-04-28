@@ -176,8 +176,15 @@ namespace UnitTestProject1
 
         private bool RunTest(MethodInfo method)
         {
-            foreach ( var deploy in method.GetCustomAttributes<DeploymentItemAttribute>() ) {
-                if ( ! Directory.Exists(deploy.OutputDirectory) )
+            foreach ( var deploy in method.GetCustomAttributes<DeploymentItemAttribute>(true) ) {
+                if ( ! Directory.Exists(deploy.OutputDirectory) && ! File.Exists(deploy.OutputDirectory) )
+                {
+                    CopyDirectory(Path.Combine(startDirectory, deploy.Path), deploy.OutputDirectory);
+                }
+            }
+            foreach (var deploy in method.ReflectedType.GetCustomAttributes<DeploymentItemAttribute>(true))
+            {
+                if (!Directory.Exists(deploy.OutputDirectory) && !File.Exists(deploy.OutputDirectory))
                 {
                     CopyDirectory(Path.Combine(startDirectory, deploy.Path), deploy.OutputDirectory);
                 }
@@ -190,7 +197,7 @@ namespace UnitTestProject1
             {
                 var instance = method.ReflectedType.GetConstructor(new Type[0]).Invoke(new object[0]);
                 foreach ( var initializer in method.ReflectedType
-                    .GetMethods().Where(x=>x.GetCustomAttributes<TestInitializeAttribute>().Count() > 0) )
+                    .GetMethods().Where(x=>x.GetCustomAttributes<TestInitializeAttribute>(true).Count() > 0) )
                 {
                     initializer.Invoke(instance, new object[0]);
                 }
@@ -202,7 +209,7 @@ namespace UnitTestProject1
                 finally
                 {
                     foreach (var cleanup in method.ReflectedType
-                        .GetMethods().Where(x => x.GetCustomAttributes<TestCleanupAttribute>().Count() > 0))
+                        .GetMethods().Where(x => x.GetCustomAttributes<TestCleanupAttribute>(true).Count() > 0))
                     {
                         cleanup.Invoke(instance, new object[0]);
                     }
