@@ -176,17 +176,41 @@ namespace UnitTestProject1
 
         private bool RunTest(MethodInfo method)
         {
-            foreach ( var deploy in method.GetCustomAttributes<DeploymentItemAttribute>(true) ) {
-                if ( ! Directory.Exists(deploy.OutputDirectory) && ! File.Exists(deploy.OutputDirectory) )
+            foreach ( var deploy in method.GetCustomAttributes<DeploymentItemAttribute>(true) )
+            {
+                var depPath = Path.Combine(startDirectory, deploy.Path);
+                if (File.Exists(depPath))
                 {
-                    CopyDirectory(Path.Combine(startDirectory, deploy.Path), deploy.OutputDirectory);
+                    var outPath = Path.Combine(startDirectory, deploy.OutputDirectory, new FileInfo(deploy.Path).Name);
+                    if (!File.Exists(outPath))
+                    {
+                        File.Copy(depPath, outPath);
+                    }
+                }
+                if ( Directory.Exists(depPath) )
+                {
+                    if ( ! Directory.Exists(deploy.OutputDirectory) ) {
+                        CopyDirectory(depPath, deploy.OutputDirectory);
+                    }
                 }
             }
             foreach (var deploy in method.ReflectedType.GetCustomAttributes<DeploymentItemAttribute>(true))
             {
-                if (!Directory.Exists(deploy.OutputDirectory) && !File.Exists(deploy.OutputDirectory))
+                var depPath = Path.Combine(startDirectory, deploy.Path);
+                if (File.Exists(depPath))
                 {
-                    CopyDirectory(Path.Combine(startDirectory, deploy.Path), deploy.OutputDirectory);
+                    var outPath = Path.Combine(startDirectory, deploy.OutputDirectory, new FileInfo(deploy.Path).Name);
+                    if (!File.Exists(outPath))
+                    {
+                        File.Copy(depPath, outPath);
+                    }
+                }
+                if (Directory.Exists(depPath))
+                {
+                    if (!Directory.Exists(deploy.OutputDirectory))
+                    {
+                        CopyDirectory(depPath, deploy.OutputDirectory);
+                    }
                 }
             }
             var curDir = Directory.GetCurrentDirectory();
