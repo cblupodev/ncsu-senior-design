@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using Fujitsu.Tools.SDKExplorer.Controller.Interfaces;
 using Fujitsu.Tools.SDKExplorer.Model;
-using Fujitsu.Utilities.Security.DataAccess.Contract;
 using Fujitsu.Utilities.UserManagement.Contract;
+using Fujitsu.Utilities.UserManagement.Contract.Operations.Read;
+using Fujitsu.Utilities.UserManagement.Contract.Operations.Update;
 using Fujitsu.Utilities.UserManagement.Proxy;
 
 namespace Fujitsu.Tools.SDKExplorer.Controller.Scenarios

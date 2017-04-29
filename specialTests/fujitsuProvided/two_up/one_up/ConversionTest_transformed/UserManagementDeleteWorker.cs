@@ -1,5 +1,7 @@
-﻿using Fujitsu.Tools.SDKExplorer.Controller.Interfaces;
+using Fujitsu.Tools.SDKExplorer.Controller.Interfaces;
 using Fujitsu.Tools.SDKExplorer.Model;
+using Fujitsu.Utilities.UserManagement.Contract.Operations.Read;
+using Fujitsu.Utilities.UserManagement.Contract.Operations.Update;
 using Fujitsu.Utilities.UserManagement.Contract;
 using Fujitsu.Utilities.UserManagement.Proxy;
 

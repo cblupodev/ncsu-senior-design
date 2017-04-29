@@ -1,8 +1,10 @@
-﻿using System.Security;
+using System.Security;
 using Fujitsu.Infrastructure.Core;
 using Fujitsu.Tools.SDKExplorer.Controller.Interfaces;
 using Fujitsu.Tools.SDKExplorer.Model;
 using Fujitsu.Utilities.Security.Cryptography.Contract;
+using Fujitsu.Utilities.UserManagement.Contract.Operations.Read;
+using Fujitsu.Utilities.UserManagement.Contract.Operations.Update;
 using Fujitsu.Utilities.UserManagement.Contract;
 using Fujitsu.Utilities.UserManagement.Proxy;
 using Microsoft.Practices.Unity;
