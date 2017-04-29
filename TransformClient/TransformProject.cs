@@ -26,18 +26,21 @@ namespace TransformClient
             sdkId = SDKSQLConnector.GetInstance().GetByName(args[1]).id;
             (new TransformProject()).ProcessProject(args);
         }
-                
+
         public void ProcessProject(string[] args)
         {
             Helper.verifyFileExists(args[0]);
             var filePath = args[0];
             if (filePath.EndsWith(".csproj", StringComparison.OrdinalIgnoreCase) || filePath.EndsWith(".vbproj", StringComparison.OrdinalIgnoreCase))
-            {                
+            {
                 // put all changes in new project folder
                 // create copies of the project so don't have to overwrite the original files
                 string projectParentFolder = new FileInfo(filePath).DirectoryName;
                 string transformed_folder = projectParentFolder + "_transformed";
+                Console.WriteLine("Copying project directory");
+                Console.WriteLine("Removing the old transformed directory before copying contents");
                 CopyDirectory(transformed_folder, projectParentFolder);
+                Console.WriteLine("Begin transforming files");
 
                 // Proccess the project here
                 Project proj = MSBuildWorkspace.Create().OpenProjectAsync(filePath).Result;
@@ -72,8 +75,9 @@ namespace TransformClient
                 HashSet<String> olddllSet = asMappingConnector.GetAllOldDllPaths(sdkId);
                 TransformXml(olddllSet, sdkId, proj.FilePath, projectParentFolder, transformed_folder, Path.GetExtension(proj.FilePath));
 
-                Console.WriteLine("Project file edited to use new references");
-            } else
+                Console.WriteLine("Transformed   " + proj.FilePath);
+            }
+            else
             {
                 Console.WriteLine("first parameter must be .csproj or .vbproj");
             }
@@ -89,6 +93,8 @@ namespace TransformClient
             return Path.GetExtension(doc.FilePath).Equals(".cs");
         }
 
+        // Taken from stackoverflow "Recursive delete of files and directories in C#"
+        // id = 925192
         private static void RecursiveDeleteDirectory(DirectoryInfo baseDir)
         {
             try
@@ -108,6 +114,8 @@ namespace TransformClient
             }
         }
 
+        // Taken from stackoverflow "Copy the entire contents of a directory in C#"
+        // id = 58744
         private static void CopyDirectory(string destPath, string sourcePath)
         {
             // automatically remove a directory of the same name so don't have to manually remove it every time you run TransformClient
@@ -157,7 +165,6 @@ namespace TransformClient
         // so can use the value when adding new references
         private string GetOldSdkReferenceHintPath(HashSet<String> olddllSet, string csprojFilePath, string xmlElementHintPathName, string xmlElementReferenceName, XDocument xdoc, XNamespace ns)
         {
-
             // need to anchor the working directory to the fodler of the .csproj file so that relative path names will point to the correct location
             string originalCurrentWorkingDirectory = Directory.GetCurrentDirectory();
             Directory.SetCurrentDirectory(new FileInfo(csprojFilePath).DirectoryName);
@@ -165,8 +172,8 @@ namespace TransformClient
             // get list of the hintpaths pointing to dlls in the old sdk
             var hintpaths = from reference in xdoc.Descendants(ns + xmlElementReferenceName)
                             where reference.Element(ns + xmlElementHintPathName) != null
-                            where olddllSet.Contains(Path.GetFullPath(reference.Descendants(ns + xmlElementHintPathName).First().Value))
-                            select (reference.Descendants(ns + xmlElementHintPathName).First().Value.Split('\\'));            
+                            // where olddllSet.Contains(Path.GetFullPath(reference.Descendants(ns + xmlElementHintPathName).First().Value))
+                            select (reference.Descendants(ns + xmlElementHintPathName).First().Value.Split('\\'));
 
             // find the path with the least amount of folders
             int currentMinLength = Int32.MaxValue;
@@ -184,11 +191,13 @@ namespace TransformClient
             // do it this way with the arrays to preserve relative folder paths
             string[] pathWithLeastFolders = hintpaths.ElementAt(currentMinIndex);
             pathWithLeastFolders.SetValue("", pathWithLeastFolders.Length - 1);
+
             Directory.SetCurrentDirectory(originalCurrentWorkingDirectory);
 
             return String.Join("\\", pathWithLeastFolders);
         }
 
+        // add <Reference> tags to the new sdk
         private void AddNewDllReferences(string csprojFilePath, string hintPathRoot, string newRelativeOutputPath, string xmlElementHintPathName, string xmlElementReferenceName, XNamespace ns, XDocument xdoc)
         {
             asMappingConnector.GetAllNewDllPaths(sdkId);
@@ -199,7 +208,7 @@ namespace TransformClient
             Directory.SetCurrentDirectory(new FileInfo(csprojFilePath).DirectoryName);
 
             // find the common path
-            string commonPath = GetLongestCommonPrefix(new string[] { Path.GetFullPath(hintPathRoot), elements.ElementAt(0).Key});
+            string commonPath = GetLongestCommonPrefix(new string[] { Path.GetFullPath(hintPathRoot), elements.ElementAt(0).Key });
             // From stackoverflow: "Then you may need to cut the prefix on the right hand"
             string[] commonPathSplit = commonPath.Split('\\');
             commonPathSplit.SetValue("", commonPathSplit.Length - 1);
@@ -226,7 +235,7 @@ namespace TransformClient
                 string hintpath = prependedRelativePath + hintpathRightSide;
 
                 // create new reference element
-                XElement addedref = new XElement(ns + xmlElementReferenceName, 
+                XElement addedref = new XElement(ns + xmlElementReferenceName,
                     new XAttribute("Include", element.Value),
                         new XElement(ns + "SpecificVersion", "False"),
                         new XElement(ns + xmlElementHintPathName, hintpath),
@@ -255,6 +264,7 @@ namespace TransformClient
             return s[0].Substring(0, k);
         }
 
+        // remove <Reference> tags to the old sdk
         private static void RemoveOldDllReferences(HashSet<String> olddllSet, string csprojFilePath, string xmlElementHintPathName, string xmlElementOutputPathName, string xmlElementReferenceName, XNamespace ns, XDocument xdoc)
         {
             // need to anchor the working directory to the fodler of the .csproj file so that relative path names will point to the correct location
@@ -269,7 +279,7 @@ namespace TransformClient
                              where olddllSet.Contains(Path.GetFullPath(reference.Descendants(ns + xmlElementHintPathName).First().Value))
                              select reference;
 
-            while ( references.Count() > 0 )
+            while (references.Count() > 0)
             {
                 references.First().Remove();
             }

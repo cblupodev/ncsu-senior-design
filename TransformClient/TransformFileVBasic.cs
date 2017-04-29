@@ -50,7 +50,7 @@ namespace TransformClient
             IEnumerable<ImportsStatementSyntax> importsStatementNodes = tree.GetRoot().DescendantNodes().OfType<ImportsStatementSyntax>();
             foreach (ImportsStatementSyntax oldImportsStatementNode in importsStatementNodes) // iterate over all qualified names in the file
             {
-                // todo could be problems if this import statement isn't simple, however even if an alias is used in the import it's still simple
+                // could be problems if this import statement isn't simple, however even if an alias is used in the import it's still simple
                 SimpleImportsClauseSyntax oldSimpleImportsNode = oldImportsStatementNode.DescendantNodes().OfType<SimpleImportsClauseSyntax>().First();
                 var oldNamespace = oldSimpleImportsNode.WithoutTrivia().Name.GetText().ToString();
                 List<namespace_map> namespaces = NSMappingSQLConnector.GetInstance().GetNamespaceMapsFromOldNamespace(TransformProject.sdkId, oldNamespace);

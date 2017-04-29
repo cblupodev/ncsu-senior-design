@@ -34,9 +34,11 @@ namespace EFSQLConnector
             {
                 return dbConnection.SaveChanges();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                //Do nothing
+                Console.WriteLine(e.Message);
+                Console.WriteLine("This probably happened because that SDK name already exists");
+                Environment.Exit(1);
             }
             return -1;
         }

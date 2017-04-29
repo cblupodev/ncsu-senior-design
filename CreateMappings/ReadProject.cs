@@ -8,7 +8,6 @@ using EFSQLConnector;
 
 namespace CreateMappings
 {
-    // param 0 = folder containing dlls
     public class ReadProject
     {
 
@@ -26,8 +25,10 @@ namespace CreateMappings
 
         private void Run(string oldFolderPath, string newFolderPath, string sdkName)
         {
+            Console.WriteLine("Creating new SDK id in database");
             SDKSQLConnector.GetInstance().SaveSDK(sdkName, newFolderPath);
             sdkId = SDKSQLConnector.GetInstance().GetByName(sdkName).id;
+            Console.WriteLine("Start reading dlls for ModelIdentiers");           
             ReadFolderDllFiles(oldFolderPath, true);
             ReadFolderDllFiles(newFolderPath, false);
 
@@ -36,7 +37,8 @@ namespace CreateMappings
 
         // itereate over all the dll files in a folder
         // for each file, find the custom attributes
-        public void ReadFolderDllFiles(string folderPath, bool isOld) {
+        public void ReadFolderDllFiles(string folderPath, bool isOld)
+        {
 
             ReadFile rf = new ReadFile();
             FileHelper.verifyFolderExists(folderPath);
