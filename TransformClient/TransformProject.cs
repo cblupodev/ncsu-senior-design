@@ -23,8 +23,16 @@ namespace TransformClient
         // args 1 = sdk name
         public static void Main(string[] args)
         {
-            sdkId = SDKSQLConnector.GetInstance().GetByName(args[1]).id;
-            (new TransformProject()).ProcessProject(args);
+            if (args.Length == 2)
+            {
+                sdkId = SDKSQLConnector.GetInstance().GetByName(args[1]).id;
+                (new TransformProject()).ProcessProject(args);
+            }
+            else
+            {
+                Console.WriteLine("Incorrect amount of arguments");
+                Console.WriteLine("Usage:   <path to project file> <sdk name>");
+            }
         }
 
         public void ProcessProject(string[] args)

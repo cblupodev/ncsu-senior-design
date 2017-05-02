@@ -19,8 +19,17 @@ namespace CreateMappings
         // args 2 = name for sdk (database object)
         public static void Main(string[] args)
         {
-            ReadProject rp = new ReadProject();
-            rp.Run(args[0], args[1], args[2]);
+            if (args.Length == 3)
+            {
+                ReadProject rp = new ReadProject();
+
+                rp.Run(args[0], args[1], args[2]);
+            }
+            else
+            {
+                Console.WriteLine("Incorrect amount of arguments");
+                Console.WriteLine("Usage:   <path to old sdk folder> <path to new sdk folder> <sdk name>");
+            }
         }
 
         private void Run(string oldFolderPath, string newFolderPath, string sdkName)
