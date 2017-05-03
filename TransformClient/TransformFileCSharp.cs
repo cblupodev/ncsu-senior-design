@@ -120,10 +120,13 @@ namespace TransformClient
                         if (sdkMap != null)
                         {
                             String newClassname = sdkMap.new_classname;
-                            SyntaxToken oldNameToken = oldNameNode.DescendantTokens().First();
-                            SyntaxToken name = Identifier(newClassname).WithTriviaFrom(oldNameToken);
-                            IdentifierNameSyntax newNameNode = oldNameNode.WithIdentifier(name);
-                            documentEditor.ReplaceNode(oldNameNode, newNameNode);
+                            if (newClassname != null)
+                            {
+                                SyntaxToken oldNameToken = oldNameNode.DescendantTokens().First();
+                                SyntaxToken name = Identifier(newClassname).WithTriviaFrom(oldNameToken);
+                                IdentifierNameSyntax newNameNode = oldNameNode.WithIdentifier(name);
+                                documentEditor.ReplaceNode(oldNameNode, newNameNode);
+                            }
                         }
                     }
                 }
