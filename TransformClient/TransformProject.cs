@@ -197,8 +197,16 @@ namespace TransformClient
 
             // return the path with the least amoutn of folders and leave the filename off
             // do it this way with the arrays to preserve relative folder paths
-            string[] pathWithLeastFolders = hintpaths.ElementAt(currentMinIndex);
-            pathWithLeastFolders.SetValue("", pathWithLeastFolders.Length - 1);
+            string[] pathWithLeastFolders;
+            if (hintpaths.Any()) {
+                pathWithLeastFolders = hintpaths.ElementAt(currentMinIndex);
+                pathWithLeastFolders.SetValue("", pathWithLeastFolders.Length - 1);
+            }
+            else
+            {
+                pathWithLeastFolders = new[] { "." };
+            }
+
 
             Directory.SetCurrentDirectory(originalCurrentWorkingDirectory);
 

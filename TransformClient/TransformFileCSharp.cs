@@ -113,7 +113,10 @@ namespace TransformClient
                         {
                             oldNamespace = "." + curNamespaceSymbol.Name + oldNamespace;
                         }
-                        oldNamespace = oldNamespace.Substring(1);
+                        if (oldNamespace != "")
+                        {
+                            oldNamespace = oldNamespace.Substring(1);
+                        }
                         String oldClassname = semanticObjCreation.Symbol.Name.ToString();
                         sdk_map2 sdkMap = SDKMappingSQLConnector.GetInstance().GetSDKMapFromClassAndNamespace(TransformProject.sdkId, oldNamespace, oldClassname);
                         if (sdkMap != null)
