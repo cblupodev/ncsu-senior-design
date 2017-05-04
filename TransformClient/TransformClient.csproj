@@ -129,10 +129,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CreateMappings\CreateMappings.csproj">
-      <Project>{1c52df0c-67fd-4a54-9160-732ff0a5143f}</Project>
-      <Name>CreateMappings</Name>
-    </ProjectReference>
     <ProjectReference Include="..\EFSQLConnector\EFSQLConnector.csproj">
       <Project>{f0eefbe4-328e-4cb9-a99e-9205f6a84e5a}</Project>
       <Name>EFSQLConnector</Name>
