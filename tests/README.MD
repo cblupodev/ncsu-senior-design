@@ -1,94 +1,94 @@
-###alias
+### alias
 Client code uses alias to reference the SDK.
 
-###assemblyChange
+### assemblyChange
 The name of the output assembly is changed between the SDK versions
 
-###assemblyMerge
+### assemblyMerge
 The old SDK uses mutiple assemblies (dll files), but those are merged into a single assembly (dll file) in the new SDK.
 
-###assemblySplit
+### assemblySplit
 The old SDK uses a single assembly (dll file), but that's split into two assemblies (dll files) in the new SDK.
 
-###basic
+### basic
 Class name changes between versions.
 
-###basicNamespace
+### basicNamespace
 Root namespace changes between versions.
 
-###casting
+### casting
 The client code casts to a class in the SDK.
 
-###classDelete
+### classDelete
 A class in the old SDK no longer exists in the new SDK.
 
-###classInClass
+### classInClass
 The SDK has a class defined inside of a class.
 
-###emptyDLL
+### emptyDLL
 The SDK has an empty project, meaning a DLL with no classes.
 
-###extendsSDKClass
+### extendsSDKClass
 The client code extends an SDK class.
 
-###extraLibrary
+### extraLibrary
 The client code uses a dll file that's not from the SDK.
 
-###fullyQualified
+### fullyQualified
 Client uses fully qualified name for SDK class (rather than using a 'using' statement).
 
-###fullyQualifiedModelIdentifier
+### fullyQualifiedModelIdentifier
 The ModelIdentifier in the new and old SDK uses the full path of the ModelIdentifier, rather than relying on using/namespace sharing.
 
-###generics
+### generics
 The client code uses the SDK class as the type qualifier for a generic class.
 
-###instantiatesSDKClass
+### instantiatesSDKClass
 The client creates a new instance of an SDK class.
 
-###methodCallOnParameter
+### methodCallOnParameter
 This tests that we can handle changeing (SDK.Sample1.Test.method()) into (SDK.Change1.Test.method())
 
-###multiAssembly
+### multiAssembly
 The SDK uses multiple assemblies (dll files).
 
-###multiBasic
+### multiBasic
 Multiple namespaces, files, and classes per file in SDK.  Multiple files and classes per file in client.
 
-###multiTypeGeneric
+### multiTypeGeneric
 The client uses Dictionary<Sample1, Sample1>.
 
-###namespaceInNamespace
+### namespaceInNamespace
 The SDK has a namespace directive inside of a namespace directive, creating an implicit nesting.
 
-###namespaceMerge
+### namespaceMerge
 Classes that were in different namespaces in the old SDK, are in the same namespace in the new SDK.
 
-###namespaceSplit
+### namespaceSplit
 Classes that were in the same namespace in the old SDK, are in different namespaces in the new SDK.
 
-###namespaceSplitMerge
+### namespaceSplitMerge
 A class moves namespaces between SDK versions.
 
-###newConflicts
+### newConflicts
 Client code has class name matching a class name in the new SDK.
 
-###nonRootUsing
+### nonRootUsing
 The client's "using SDK" statement is inside of the namespace block.  This test only applies to the C# client, the VB client only exists for consistency
 
-###nothing
+### nothing
 There is no difference between the SDK versions.
 
-###oldConflicts
+### oldConflicts
 Client code has a class name matching a class name in the old SDK.
 
-###returnClass
+### returnClass
 Client method has a return type of an SDK class.
 
-###typeof
+### typeof
 The client uses the typeof expression with an SDK class as the parameter.
 
-###unused
+### unused
 Client code does not use the SDK.  Tests that we're not making assumptions about a first element existing.
 
 ##variables
