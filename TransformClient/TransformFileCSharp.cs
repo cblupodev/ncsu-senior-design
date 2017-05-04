@@ -13,7 +13,6 @@ using System;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 using EFSQLConnector;
 using Microsoft.CodeAnalysis.Editing;
-using CreateMappings;
 
 namespace TransformClient
 {
@@ -126,6 +125,10 @@ namespace TransformClient
                                 SyntaxToken name = Identifier(newClassname).WithTriviaFrom(oldNameToken);
                                 IdentifierNameSyntax newNameNode = oldNameNode.WithIdentifier(name);
                                 documentEditor.ReplaceNode(oldNameNode, newNameNode);
+                            }
+                            else
+                            {
+                                Console.WriteLine("Missing new class name for old class " + oldNamespace + "." + oldClassname);
                             }
                         }
                     }
