@@ -91,5 +91,5 @@ The client uses the typeof expression with an SDK class as the parameter.
 ### unused
 Client code does not use the SDK.  Tests that we're not making assumptions about a first element existing.
 
-##variables
+### variables
 Client has variables typed with SDK classes.
